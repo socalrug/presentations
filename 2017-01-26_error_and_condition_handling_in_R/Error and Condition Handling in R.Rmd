@@ -1,0 +1,426 @@
+---
+title: "Error and Condition Handling in R"
+author: "John Peach"
+date: "January 26, 2017"
+output: 
+  ioslides_presentation:
+    css: style.css
+    incremental: false
+    logo: logo.svg
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Outline
+
+* Built in conditions
+* Using messages instead of print
+* Controlling the output of warnings
+* Checking for errors and stopping
+* Capturing errors and handling them
+
+
+## Built in conditions
+
+- message:
+    - 'simple' diagnostic messages
+- warning:
+    - A warning message but execution continues
+- stop:
+    - An error message that can cause execution is stop
+
+## Are you using 'print' to debug?
+
+- It is a pain to add and remove the print statements
+```{r, eval= TRUE, echo=TRUE}
+add <- function (...) {
+   print(paste("add:Parameters:", paste(..., collapse = ", ")))
+   result <- sum(...)
+   print(paste("add:returned:", result))
+   result
+   invisible()
+}
+add(1:10)
+```
+
+## Using message instead of print
+
+- Instead of using 'print' for debugging, use message().
+- It goes to stderr(). Better control with using sinks
+```{r, eval= TRUE, echo=TRUE}
+add <- function (...) {
+   message(paste("add:Parameters:", paste(..., collapse = ", ")))
+   result <- sum(...)
+   message(paste("add:returned:", result))
+   result
+   invisible()
+}
+add(1:10)
+```
+
+## You can suppress the messages
+
+- Suppress messages instead of adding/removing print statements
+```{r, eval= TRUE, echo=TRUE}
+add <- function (...) {
+   message(paste("add:Parameters:", paste(..., collapse = ", ")))
+   result <- sum(...)
+   message(paste("add:returned:", result))
+   result
+   invisible()
+}
+suppressMessages(add(1:10))
+```
+
+Now you do not have to comment them out!
+
+## Advanced Bonus Method
+
+- Using restarts, you can create a handler where you do not need to wrap the call in suppressMessages()
+- Wrap the function in withCallingHandlers and choose a handler
+```{r, eval= TRUE, echo=TRUE}
+add <- function (...) {
+   withCallingHandlers( 
+      {
+          message(paste("add:Parameters:", paste(..., collapse = ", ")))
+          result <- sum(...)
+          message(paste("add:returned:", result))
+      }
+      # comment the line below to see messages
+      , message = function(c) invokeRestart("muffleMessage")
+   )
+   result
+}
+add(1:10)
+```
+
+## Warning messages
+
+- Used to advise when business logic is handling a strange situation, such as:
+    - using default parameters,
+    - type casting weirdness i.e. as.numeric("a")
+- Works similar to message() but has output controls
+```{r, eval= TRUE, echo=TRUE}
+test <- function() {
+    warning("The British are coming",
+            call. = TRUE, # make 'call' part of the message
+            immediate. = TRUE) # override getOption('warn'))
+}
+test()
+```
+
+## Controlling Output: When to print
+
+- Output is controlled with global options
+    - accessor: getOption('<font color='blue'>\<OPTION\></font>')
+    - mutator: options(<font color='blue'>\<OPTION\></font> = <font color='black'>\<VALUE\></font>)
+
+- \<Option\>: <font color='blue'>warn</font>
+    - Controls when the warnings are printed
+    - Allowed values:
+        - <font color='blue'>-1</font>: suppress output (technically warn < 0)
+        - <font color='blue'>0</font>:  printed after the top-level function has complete
+        - <font color='blue'>1</font>: printed as they occur
+        - <font color='blue'>2</font>: convert into errors (technically warn > 1)
+
+## Controlling Output: Message length
+
+- \<Option\>: <font color='blue'>warning.length</font>
+    - Truncates the length of each message (error and warning)
+    - values: 100...8170 default:1000 (long)
+```{r, eval= TRUE, echo=FALSE }
+OLD_warning.length = getOption('warning.length')
+```
+
+```{r, eval= TRUE, echo=FALSE}
+msg <- paste(LETTERS[round(runif(1000, min = 1, max = 26))], collapse = "")
+```
+
+```{r, eval= TRUE, echo=TRUE, size = "tiny"}
+options(warning.length = 100)
+warning(msg)
+```
+
+```{r, eval= TRUE, echo=TRUE}
+options(warning.length = 200)
+warning(msg)
+```
+
+```{r, eval= TRUE, echo=FALSE }
+options(warning.length = OLD_warning.length)
+rm("OLD_warning.length")
+```
+
+## Controlling Output: Number of messages printed
+    
+- \<Option\>: <font color='blue'>nwarning</font>
+    - When warn = 0, the error and warn messages are buffered
+    - sets the size of the buffer. Default: 50
+
+## Accessing the warnings
+- If getOption('warn') == 0 then there is a buffer of warning messages
+- warnings(...) prints this buffer
+- Parameters "..." are passed to cat() to control output
+- The buffer a variable called last.warning
+- last.warning is:
+    - a named list
+    - undocumented (subject to change)
+    - use it in the console but not in your scripts
+
+## Controlling Output: Modifying the message
+
+- \<Option\>: <font color='blue'>warning.expression</font>
+    - custom code is run with each call to warning()
+```{r, eval= TRUE, echo=FALSE }
+OLD_warning.expression = getOption('warning.expression')
+```
+
+```{r, eval= TRUE, echo=TRUE}
+my_warning <- function() print(getwd())
+options(warning.expression = quote(my_warning()))
+warning("Test")
+```
+
+```{r, eval= TRUE, echo=FALSE }
+options(warning.expression = OLD_warning.expression)
+rm("OLD_warning.expression")
+```
+BUG in ioslides (?) because this code outputs the following in the console:
+```{r, eval= TRUE, echo=FALSE }
+getwd()
+```
+
+## Warning messages suppression
+
+- Just like messages, we can suppress the warnings
+```{r, eval= TRUE, echo=TRUE}
+test <- function() {
+    warning("The British are coming",
+            call. = TRUE, # make 'call' part of the message
+            immediate. = TRUE) # override getOption('warn'))
+}
+suppressWarnings(test())
+```
+- The warning is not printed
+
+```{r, eval= TRUE, echo=TRUE}
+warnings()
+```
+and it is not stored in the buffer
+
+## Error Messages    
+
+- Used when there is an unrecoverable error
+- By default, program execution is halted
+```{r, eval=FALSE, echo=TRUE}
+test <- function() {
+    stop("In the name of love",
+            call. = TRUE) # call is part of the message
+}
+test()
+```
+\#\# Error in test() : In the name of love
+   
+## Global Options for Errors
+
+- error:
+    - A function to handle unhandled error conditions
+- showErrorCalls:
+    - Show a summary of the call stack. Default: TRUE in interactive mode
+- show.error.locations:
+    - Print the source locations of errors
+    - values: TRUE/FALSE/'top'/'bottom' or and integer
+- show.error.messages:
+    - Print error messages (TRUE/FALSE)
+    - There is no suppressError() function
+    
+## What was the last error?
+
+- Forgot the details of the last error message, you can use
+```{r, eval=FALSE, echo=TRUE}
+geterrmessage()
+```
+
+\#\# Error: In the name of love
+
+- A string with the last error message is returned
+- A \\n is appended to the error message
+   
+## stopifnot()
+
+- Throw an error if any condition is FALSE
+- No message is returned
+```{r, eval=FALSE, echo=TRUE}
+stopifnot(...)
+```
+... is any number of logical R expressions which should be TRUE
+
+```{r, eval=FALSE, echo=TRUE}
+stopifnot(A, B)
+# Is short hand for
+if ( any(is.na(A)) || !all(A) || any(is.na(B)) || !all(B)) stop(...)
+```
+NULL is treated as TRUE
+
+## Example: stopifnot()
+
+- Generally used to check function parameters
+- Wrapper function for sum that checks:
+    - all parameters are integer
+    - there must be a non-zero length vector
+    - there are no NULLs or NANs
+```{r, eval=TRUE, echo=TRUE}
+Sum <- function(...){
+   stopifnot(is.integer(...), length(...) > 0, 
+             !is.null(...), !is.nan(...))
+   as.integer(sum(...))
+}
+Sum(1L:10L)
+```
+
+## Condition System
+- message(), warning(), stop() are built on the Condition System
+- It is used for error handling but is more flexible than that
+- Consists of three parts
+    - Signalling Condition
+    - Handling Condition
+    - Restarting (Advanced topic)
+- The task of handling the error is split between the Handler and the Restart
+
+## Components
+
+- Signaller
+    - A method that raises / throws and exception object
+    - Creates an object derived from the S3 class 'condition'
+    - Language framework handles its execution path
+    - message(), warning() and stop() are signallers
+- Handler
+    - Agrees to catch / process exception of specific classes
+    - Handles exception only from the call stack below it
+    - Handlers lower on the stack may capture exception
+
+## Exceptions - Sequence of execution
+
+![exception](exception.png)
+## Exceptions
+
+- Errors are handled by:
+    - Exiting the failing function
+    - Calling function can recover or fail itself
+- Primary issue is that the stack unwinds
+    - Recovery code must do so without the context of the failing function
+
+## tryCatch
+
+- Unwinds the call stack 
+```{r, eval= FALSE, echo=TRUE}
+tryCatch(expression, 
+  condition_class_1 = function(var) ...,
+  condition_class_2 = function(var) ...,
+  finally = ...
+)
+```
+- expression: must be a single expression, use { }
+- var: is the condition object
+- tryCatch returns the value of expression or one of the condition_class
+- If the condition is not handled by one of the condition_class it moves up the call stack
+
+## tryCatch: Handler not invoked
+
+```{r, eval=TRUE, echo=TRUE}
+`%+%` <- function(lhs, rhs) {
+   if (!is.integer(lhs) || !is.integer(rhs)){
+      stop("parameters number be numeric")
+   }
+   lhs + rhs
+}
+tryCatch( { 5L %+% 4L },
+   error = function(e) 0
+)
+```
+- There was no error so the handler 'error' was not invoked
+- tryCatch returned the value of the expression
+
+## tryCatch: Handler invoked
+
+```{r, eval=TRUE, echo=TRUE}
+`%+%` <- function(lhs, rhs) {
+   if (!is.integer(lhs) || !is.integer(rhs)){
+      stop("parameters number be numeric")
+   }
+   lhs + rhs
+}
+tryCatch( { 5L %+% 4 },
+   error = function(e) 0
+)
+```
+- stop() was called because 4 is double not integer
+- tryCatch returned the value of the 'error' handler
+
+## tryCatch: No warning handler
+
+```{r, eval=TRUE, echo=TRUE}
+`%+%` <- function(lhs, rhs) {
+   if (is.double(rhs)) {
+      rhs = as.integer(rhs); warning("casting rhs to integer")
+   }
+   if (!is.integer(lhs) || !is.integer(rhs)){
+      stop("parameters number be numeric")
+   }
+   lhs + rhs
+}
+tryCatch( { 5L %+% 4 },
+   error = function(e) 0
+)
+```
+- Sum is computed and a warning is displayed
+
+## tryCatch: Warning handler defined
+
+```{r, eval=TRUE, echo=TRUE}
+`%+%` <- function(lhs, rhs) {
+   if (is.double(rhs)) {
+      rhs = as.integer(rhs); warning("casting rhs to integer")
+   }
+   if (!is.integer(lhs) || !is.integer(rhs)){
+      stop("parameters number be numeric")
+   }
+   lhs + rhs
+}
+tryCatch( { 5L %+% 4 },
+   error = function(e) 0,
+   warning = function(e) 1
+)
+```
+- No warning message and sum is not computed
+
+## tryCatch: finally
+
+```{r, eval=TRUE, echo=TRUE}
+tryCatch( { 
+   text <- 'foo' 
+   message(text)
+   },
+   message = function(e) { 
+      text <- paste(conditionMessage(e), 'bar')
+      text # This is the value returned by tryCatch. Different environment
+      },
+   finally = {
+      # This block is run iff a handler is called
+      print(text) # handler does not alter value
+   }
+)
+```
+
+## Comment on Condition System
+
+- I showed you how to use R like you use error systems in Java/python
+- R has a much more powerful system that is based on lisp
+- Code is not "rolled-up" the call stack, it can be restarted 
+- We can build custom conditions and handle them
+- The Condition System can be used for much more than errors
+    - Interested?
+
+
