@@ -1,0 +1,322 @@
+--- 
+title: "ggplot2: An Introduction"
+author: "Arun Rangarajan"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+#output: bookdown::gitbook
+#always_allow_html: yes
+#documentclass: book
+#bibliography: [learning_more.bib]
+#biblio-style: apalike
+#link-citations: yes
+#github-repo: rstudio/bookdown-demo
+#description: "Short intro to ggplot2."
+---
+# Background
+* R has different plotting systems:
+     + base
+     + grid
+     + lattice
+     + ggplot2
+* ggplot2 - based on the good parts of other systems
+* gg = Grammar of Graphics
+* Based on Leland Wilkinson’s “The Grammar of Graphics”
+* Developed in R by Hadley Wickham
+* This presentation is based on [Wickham, 2016] and [Kabacoff, 2015]
+* (with very little "original" content :-))
+
+# What is special about ggplot2?
+* Deep underlying grammar (just like language grammar)
+* Based on a simple set of core principles
+* Good defaults 
+* Lots of options for customization
+* Takes care of a lot of details (like legends, axes grids)
+* Plots are made iteratively
+* Easy to learn
+
+# Parts of a ggplot
+* Data
+* Aesthetics (aes)
+     + Color
+     + Shape
+     + Size
+* Geometric Objects (geoms)
+     + Points
+     + Lines
+     + Polygons
+* Statistical Transformations (stats)
+     + Histograms
+     + Boxplots
+* Legends and Axes
+* Coordinate system (coord)
+     + Cartesian
+     + Polar
+* Faceting (aka latticing/trellising)
+* Theme
+     + Background color
+     + Font size
+
+# Installation and Loading
+* ggplot2 is not shipped with base R, so:
+```{r eval=FALSE}
+install.packages("ggplot2")
+```
+* Load the library before use:
+```{r eval=FALSE}
+library(ggplot2)
+```
+
+# Data Set to Explore
+* `ggplot2` requires the data be provided in a data frame
+* Example data frame to explore: `mtcars`
+```{r}
+dim(mtcars)
+head(mtcars)
+```
+
+# Our first ggplot
+* ggplot2 uses the `+` symbol to chain functions
+```{r}
+library(ggplot2)
+ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point()
+```
+
+# Parts of our first ggplot
+```{r eval=FALSE}
+ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point()
+```
+* `ggplot()` function initializes the plot
+* Data frame specified in `data` param
+* Variables specified in `aes` (aesthetics) param
+     + x-axis is `wt`
+     + y-axis is `mpg`
+* `geom` specifies the visual output (`geom_point()` here 
+   produces scatter plot)
+
+# Adding title and axes labels
+```{r}
+ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point() + 
+  labs(title="Auto Data", x="Weight", y="Miles per Gallon")
+```
+
+# Adding colors to points
+* Color the points based on `cyl` column
+```{r}
+ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(aes(color=cyl)) + 
+  labs(title="Auto Data", x="Weight", y="Miles per Gallon")
+```
+
+* `cyl` is a numeric field, so continuous colors
+
+# Adding colors to points (cont...)
+* Convert `cyl` to factor
+```{r}
+ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(aes(color=as.factor(cyl))) + 
+  labs(title="Auto Data", x="Weight", y="Miles per Gallon", 
+       color="Cylinders")
+```
+
+# Changing the shapes
+```{r}
+ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(aes(color=as.factor(cyl), shape=as.factor(cyl))) + 
+  labs(title="Auto Data", x="Weight", y="Miles per Gallon", 
+       color="Cylinders")
+```
+
+# Fix the legend
+```{r}
+ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(aes(color=as.factor(cyl), shape=as.factor(cyl))) + 
+  labs(title="Auto Data", x="Weight", y="Miles per Gallon", 
+       color="Cylinders", shape="Cylinders")
+```
+
+# Increase the point size
+* Do this outside `aes`
+```{r}
+ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(aes(color=as.factor(cyl), shape=as.factor(cyl)), size=2) + 
+  labs(title="Auto Data", x="Weight", y="Miles per Gallon", 
+       color="Cylinders", shape="Cylinders")
+```
+
+# Adding a loess smoother
+```{r}
+ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(aes(color=as.factor(cyl), shape=as.factor(cyl)), size=2) + 
+  geom_smooth() +
+  labs(title="Auto Data", x="Weight", y="Miles per Gallon", 
+       color="Cylinders", shape="Cylinders")
+```
+
+# Remove the confidence interval
+```{r}
+ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(aes(color=as.factor(cyl), shape=as.factor(cyl)), size=2) + 
+  geom_smooth(se=FALSE) +
+  labs(title="Auto Data", x="Weight", y="Miles per Gallon", 
+       color="Cylinders", shape="Cylinders")
+```
+
+# Add a linear fit
+```{r}
+ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(aes(color=as.factor(cyl), shape=as.factor(cyl)), size=2) + 
+  geom_smooth(se=FALSE) + 
+  geom_smooth(method="lm", se=FALSE, color="purple", lty=2) +
+  labs(title="Auto Data", x="Weight", y="Miles per Gallon", 
+       color="Cylinders", shape="Cylinders")
+```
+
+# One fit per group
+```{r}
+ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(aes(color=as.factor(cyl), shape=as.factor(cyl)), size=2) + 
+  geom_smooth(se=FALSE, aes(group=as.factor(cyl), 
+                            color=as.factor(cyl))) + 
+  geom_smooth(method="lm", se=FALSE, lty=2, 
+              aes(group=as.factor(cyl), 
+                  color=as.factor(cyl))) +
+  labs(title="Auto Data", x="Weight", y="Miles per Gallon", 
+       color="Cylinders", shape="Cylinders")
+```
+
+# Separate the groups with faceting
+```{r}
+ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(aes(color=as.factor(cyl), shape=as.factor(cyl)), size=2) + 
+  geom_smooth(se=FALSE, aes(group=as.factor(cyl))) + 
+  geom_smooth(method="lm", se=FALSE, color="purple", lty=2, 
+              aes(group=as.factor(cyl))) +
+  labs(title="Auto Data", x="Weight", y="Miles per Gallon") + 
+  # remove the legend
+  theme(legend.position="none") + 
+  facet_wrap(~cyl)
+```
+
+# More Faceting
+```{r}
+mtcars$am <- factor(mtcars$am, levels=c(0, 1), labels=c("Auto", "Manual"))
+mtcars$vs <- factor(mtcars$vs, levels=c(0, 1), labels=c("V-Engine", "Straight Engine"))
+mtcars$cyl <- factor(mtcars$cyl)
+ggplot(mtcars, aes(x=hp, y=mpg, color=cyl, shape=cyl)) + 
+  geom_point(size=2) + 
+  facet_grid(am ~ vs) + 
+  labs(title="Auto Data by Engine and Transmission Type", x="Horsepower", y="mpg")
+```
+
+# Boxplots
+```{r}
+ggplot(mtcars) + 
+  geom_boxplot(aes(x=as.factor(cyl), y=mpg, fill=as.factor(cyl))) + 
+  labs(x="Cylinders") + 
+  theme(legend.position="none")
+```
+
+# Violin Plots
+```{r}
+ggplot(mtcars) + 
+  geom_violin(aes(x=as.factor(cyl), y=mpg, fill=as.factor(cyl))) + 
+  labs(x="Cylinders") + 
+  theme(legend.position="none")
+```
+
+# Combine boxplot with violin plot
+```{r}
+ggplot(mtcars) + 
+  geom_violin(aes(x=as.factor(cyl), y=mpg), fill="lightblue") + 
+  geom_boxplot(aes(x=as.factor(cyl), y=mpg), fill="lightgreen", width=0.1) + 
+  labs(x="Cylinders") + 
+  theme(legend.position="none")
+```
+
+# Histogram
+```{r}
+ggplot(mtcars) + 
+  geom_histogram(aes(mpg), binwidth=1)
+```
+
+# Bar Plots
+```{r}
+library(car)
+data(Salaries, package="car")
+head(Salaries, 2)
+ggplot(Salaries, aes(x=rank, fill=sex)) + 
+  geom_bar(position="stack")
+```
+
+# Filled Bar Plots
+```{r}
+ggplot(Salaries, aes(x=rank, fill=sex)) + 
+  geom_bar(position="fill") + 
+  # change the default y label 'count' to 'proportion'
+  labs(y="proportion")
+```
+
+# Changing the Y-axis breaks
+```{r}
+ggplot(Salaries, aes(x=rank, fill=sex)) + 
+  geom_bar(position="fill", alpha=0.7) + 
+  labs(y="proportion") + 
+  scale_y_continuous(breaks=seq(0, 1, 0.1))
+```
+
+# Manual colors
+```{r}
+ggplot(Salaries, aes(x=rank, fill=sex)) + 
+  geom_bar(position="fill", alpha=0.7) + 
+  labs(y="proportion") + 
+  scale_y_continuous(breaks=seq(0, 1, 0.1)) + 
+  scale_fill_manual(values = c("brown", "orange"))
+```
+
+# Black and White Theme
+```{r}
+ggplot(Salaries, aes(x=rank, fill=sex)) + 
+  geom_bar(position="fill", alpha=0.7) + 
+  labs(y="proportion") + 
+  scale_y_continuous(breaks=seq(0, 1, 0.1)) + 
+  scale_fill_manual(values = c("brown", "orange")) + 
+  theme_bw()
+```
+
+# Make ggplot interactive with plotly
+```{r message=FALSE}
+library(plotly)
+p <- ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(aes(color=as.factor(cyl), shape=as.factor(cyl)), 
+             size=2) + 
+  labs(title="Auto Data", x="Weight", y="Miles per Gallon", 
+       color="Cylinders", shape="Cylinders")
+ggplotly(p)
+```
+
+# Change the hover text
+```{r message=FALSE}
+library(plotly)
+mtcars$rowName <- row.names(mtcars)
+p <- ggplot(data=mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(aes(color=as.factor(cyl), 
+                 shape=as.factor(cyl), 
+                 text=paste(rowName)), 
+             size=3) + 
+  labs(title="Auto Data", x="Weight", y="Miles per Gallon", 
+       color="Cylinders", shape="Cylinders")
+ggplotly(p)
+```
+
+# Learning more {-}
+
+* Hadley Wickham, _ggplot2: Elegant Graphics for Data Analysis_, 
+  2/e, Springer, 2016.
+* Robert I Kabacoff, _R in action_, 2/e (ch 19), Manning, 2015.
+* Roger Peng, _Coursera: Exploratory Data Analysis_
+* Brian Caffo, _Coursera: Developing Data Products_
+* ggplot2 docs: http://docs.ggplot2.org/current/
+* plotly: https://plot.ly/ggplot2/

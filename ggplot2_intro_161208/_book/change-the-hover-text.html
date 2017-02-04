@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ggplot2: An Introduction</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="ggplot2: An Introduction">
+  <meta name="generator" content="bookdown 0.2 and GitBook 2.6.7">
+
+  <meta property="og:title" content="ggplot2: An Introduction" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="ggplot2: An Introduction" />
+  
+  
+  
+
+<meta name="author" content="Arun Rangarajan">
+
+
+<meta name="date" content="2016-12-11">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="make-ggplot-interactive-with-plotly.html">
+<link rel="next" href="learning-more.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-0.6/htmlwidgets.js"></script>
+<link href="libs/plotlyjs-1.16.3/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.16.3/plotly-latest.min.js"></script>
+<script src="libs/plotly-binding-4.5.2/plotly.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background</a></li>
+<li class="chapter" data-level="2" data-path="what-is-special-about-ggplot2.html"><a href="what-is-special-about-ggplot2.html"><i class="fa fa-check"></i><b>2</b> What is special about ggplot2?</a></li>
+<li class="chapter" data-level="3" data-path="parts-of-a-ggplot.html"><a href="parts-of-a-ggplot.html"><i class="fa fa-check"></i><b>3</b> Parts of a ggplot</a></li>
+<li class="chapter" data-level="4" data-path="installation-and-loading.html"><a href="installation-and-loading.html"><i class="fa fa-check"></i><b>4</b> Installation and Loading</a></li>
+<li class="chapter" data-level="5" data-path="data-set-to-explore.html"><a href="data-set-to-explore.html"><i class="fa fa-check"></i><b>5</b> Data Set to Explore</a></li>
+<li class="chapter" data-level="6" data-path="our-first-ggplot.html"><a href="our-first-ggplot.html"><i class="fa fa-check"></i><b>6</b> Our first ggplot</a></li>
+<li class="chapter" data-level="7" data-path="parts-of-our-first-ggplot.html"><a href="parts-of-our-first-ggplot.html"><i class="fa fa-check"></i><b>7</b> Parts of our first ggplot</a></li>
+<li class="chapter" data-level="8" data-path="adding-title-and-axes-labels.html"><a href="adding-title-and-axes-labels.html"><i class="fa fa-check"></i><b>8</b> Adding title and axes labels</a></li>
+<li class="chapter" data-level="9" data-path="adding-colors-to-points.html"><a href="adding-colors-to-points.html"><i class="fa fa-check"></i><b>9</b> Adding colors to points</a></li>
+<li class="chapter" data-level="10" data-path="adding-colors-to-points-cont.html"><a href="adding-colors-to-points-cont.html"><i class="fa fa-check"></i><b>10</b> Adding colors to points (cont…)</a></li>
+<li class="chapter" data-level="11" data-path="changing-the-shapes.html"><a href="changing-the-shapes.html"><i class="fa fa-check"></i><b>11</b> Changing the shapes</a></li>
+<li class="chapter" data-level="12" data-path="fix-the-legend.html"><a href="fix-the-legend.html"><i class="fa fa-check"></i><b>12</b> Fix the legend</a></li>
+<li class="chapter" data-level="13" data-path="increase-the-point-size.html"><a href="increase-the-point-size.html"><i class="fa fa-check"></i><b>13</b> Increase the point size</a></li>
+<li class="chapter" data-level="14" data-path="adding-a-loess-smoother.html"><a href="adding-a-loess-smoother.html"><i class="fa fa-check"></i><b>14</b> Adding a loess smoother</a></li>
+<li class="chapter" data-level="15" data-path="remove-the-confidence-interval.html"><a href="remove-the-confidence-interval.html"><i class="fa fa-check"></i><b>15</b> Remove the confidence interval</a></li>
+<li class="chapter" data-level="16" data-path="add-a-linear-fit.html"><a href="add-a-linear-fit.html"><i class="fa fa-check"></i><b>16</b> Add a linear fit</a></li>
+<li class="chapter" data-level="17" data-path="one-fit-per-group.html"><a href="one-fit-per-group.html"><i class="fa fa-check"></i><b>17</b> One fit per group</a></li>
+<li class="chapter" data-level="18" data-path="separate-the-groups-with-faceting.html"><a href="separate-the-groups-with-faceting.html"><i class="fa fa-check"></i><b>18</b> Separate the groups with faceting</a></li>
+<li class="chapter" data-level="19" data-path="more-faceting.html"><a href="more-faceting.html"><i class="fa fa-check"></i><b>19</b> More Faceting</a></li>
+<li class="chapter" data-level="20" data-path="boxplots.html"><a href="boxplots.html"><i class="fa fa-check"></i><b>20</b> Boxplots</a></li>
+<li class="chapter" data-level="21" data-path="violin-plots.html"><a href="violin-plots.html"><i class="fa fa-check"></i><b>21</b> Violin Plots</a></li>
+<li class="chapter" data-level="22" data-path="combine-boxplot-with-violin-plot.html"><a href="combine-boxplot-with-violin-plot.html"><i class="fa fa-check"></i><b>22</b> Combine boxplot with violin plot</a></li>
+<li class="chapter" data-level="23" data-path="histogram.html"><a href="histogram.html"><i class="fa fa-check"></i><b>23</b> Histogram</a></li>
+<li class="chapter" data-level="24" data-path="bar-plots.html"><a href="bar-plots.html"><i class="fa fa-check"></i><b>24</b> Bar Plots</a></li>
+<li class="chapter" data-level="25" data-path="filled-bar-plots.html"><a href="filled-bar-plots.html"><i class="fa fa-check"></i><b>25</b> Filled Bar Plots</a></li>
+<li class="chapter" data-level="26" data-path="changing-the-y-axis-breaks.html"><a href="changing-the-y-axis-breaks.html"><i class="fa fa-check"></i><b>26</b> Changing the Y-axis breaks</a></li>
+<li class="chapter" data-level="27" data-path="manual-colors.html"><a href="manual-colors.html"><i class="fa fa-check"></i><b>27</b> Manual colors</a></li>
+<li class="chapter" data-level="28" data-path="black-and-white-theme.html"><a href="black-and-white-theme.html"><i class="fa fa-check"></i><b>28</b> Black and White Theme</a></li>
+<li class="chapter" data-level="29" data-path="make-ggplot-interactive-with-plotly.html"><a href="make-ggplot-interactive-with-plotly.html"><i class="fa fa-check"></i><b>29</b> Make ggplot interactive with plotly</a></li>
+<li class="chapter" data-level="30" data-path="change-the-hover-text.html"><a href="change-the-hover-text.html"><i class="fa fa-check"></i><b>30</b> Change the hover text</a></li>
+<li class="chapter" data-level="" data-path="learning-more.html"><a href="learning-more.html"><i class="fa fa-check"></i>Learning more</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ggplot2: An Introduction</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="change-the-hover-text" class="section level1">
+<h1><span class="header-section-number">30</span> Change the hover text</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(plotly)
+mtcars$rowName &lt;-<span class="st"> </span><span class="kw">row.names</span>(mtcars)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>mtcars, <span class="kw">aes</span>(<span class="dt">x=</span>wt, <span class="dt">y=</span>mpg)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color=</span><span class="kw">as.factor</span>(cyl), 
+                 <span class="dt">shape=</span><span class="kw">as.factor</span>(cyl), 
+                 <span class="dt">text=</span><span class="kw">paste</span>(rowName)), 
+             <span class="dt">size=</span><span class="dv">3</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Auto Data&quot;</span>, <span class="dt">x=</span><span class="st">&quot;Weight&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Miles per Gallon&quot;</span>, 
+       <span class="dt">color=</span><span class="st">&quot;Cylinders&quot;</span>, <span class="dt">shape=</span><span class="st">&quot;Cylinders&quot;</span>)
+<span class="kw">ggplotly</span>(p)</code></pre></div>
+<div id="htmlwidget-2381" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2381">{"x":{"data":[{"x":[2.32,3.19,3.15,2.2,1.615,1.835,2.465,1.935,2.14,1.513,2.78],"y":[22.8,24.4,22.8,32.4,30.4,33.9,21.5,27.3,26,30.4,21.4],"text":["as.factor(cyl): 4<br>as.factor(cyl): 4<br>Datsun 710<br>wt: 2.32<br>mpg: 22.8","as.factor(cyl): 4<br>as.factor(cyl): 4<br>Merc 240D<br>wt: 3.19<br>mpg: 24.4","as.factor(cyl): 4<br>as.factor(cyl): 4<br>Merc 230<br>wt: 3.15<br>mpg: 22.8","as.factor(cyl): 4<br>as.factor(cyl): 4<br>Fiat 128<br>wt: 2.2<br>mpg: 32.4","as.factor(cyl): 4<br>as.factor(cyl): 4<br>Honda Civic<br>wt: 1.62<br>mpg: 30.4","as.factor(cyl): 4<br>as.factor(cyl): 4<br>Toyota Corolla<br>wt: 1.84<br>mpg: 33.9","as.factor(cyl): 4<br>as.factor(cyl): 4<br>Toyota Corona<br>wt: 2.46<br>mpg: 21.5","as.factor(cyl): 4<br>as.factor(cyl): 4<br>Fiat X1-9<br>wt: 1.94<br>mpg: 27.3","as.factor(cyl): 4<br>as.factor(cyl): 4<br>Porsche 914-2<br>wt: 2.14<br>mpg: 26","as.factor(cyl): 4<br>as.factor(cyl): 4<br>Lotus Europa<br>wt: 1.51<br>mpg: 30.4","as.factor(cyl): 4<br>as.factor(cyl): 4<br>Volvo 142E<br>wt: 2.78<br>mpg: 21.4"],"key":null,"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"4","legendgroup":"4","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text"},{"x":[2.62,2.875,3.215,3.46,3.44,3.44,2.77],"y":[21,21,21.4,18.1,19.2,17.8,19.7],"text":["as.factor(cyl): 6<br>as.factor(cyl): 6<br>Mazda RX4<br>wt: 2.62<br>mpg: 21","as.factor(cyl): 6<br>as.factor(cyl): 6<br>Mazda RX4 Wag<br>wt: 2.88<br>mpg: 21","as.factor(cyl): 6<br>as.factor(cyl): 6<br>Hornet 4 Drive<br>wt: 3.21<br>mpg: 21.4","as.factor(cyl): 6<br>as.factor(cyl): 6<br>Valiant<br>wt: 3.46<br>mpg: 18.1","as.factor(cyl): 6<br>as.factor(cyl): 6<br>Merc 280<br>wt: 3.44<br>mpg: 19.2","as.factor(cyl): 6<br>as.factor(cyl): 6<br>Merc 280C<br>wt: 3.44<br>mpg: 17.8","as.factor(cyl): 6<br>as.factor(cyl): 6<br>Ferrari Dino<br>wt: 2.77<br>mpg: 19.7"],"key":null,"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,186,56,1)","opacity":1,"size":11.3385826771654,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,186,56,1)"}},"hoveron":"points","name":"6","legendgroup":"6","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text"},{"x":[3.44,3.57,4.07,3.73,3.78,5.25,5.424,5.345,3.52,3.435,3.84,3.845,3.17,3.57],"y":[18.7,14.3,16.4,17.3,15.2,10.4,10.4,14.7,15.5,15.2,13.3,19.2,15.8,15],"text":["as.factor(cyl): 8<br>as.factor(cyl): 8<br>Hornet Sportabout<br>wt: 3.44<br>mpg: 18.7","as.factor(cyl): 8<br>as.factor(cyl): 8<br>Duster 360<br>wt: 3.57<br>mpg: 14.3","as.factor(cyl): 8<br>as.factor(cyl): 8<br>Merc 450SE<br>wt: 4.07<br>mpg: 16.4","as.factor(cyl): 8<br>as.factor(cyl): 8<br>Merc 450SL<br>wt: 3.73<br>mpg: 17.3","as.factor(cyl): 8<br>as.factor(cyl): 8<br>Merc 450SLC<br>wt: 3.78<br>mpg: 15.2","as.factor(cyl): 8<br>as.factor(cyl): 8<br>Cadillac Fleetwood<br>wt: 5.25<br>mpg: 10.4","as.factor(cyl): 8<br>as.factor(cyl): 8<br>Lincoln Continental<br>wt: 5.42<br>mpg: 10.4","as.factor(cyl): 8<br>as.factor(cyl): 8<br>Chrysler Imperial<br>wt: 5.34<br>mpg: 14.7","as.factor(cyl): 8<br>as.factor(cyl): 8<br>Dodge Challenger<br>wt: 3.52<br>mpg: 15.5","as.factor(cyl): 8<br>as.factor(cyl): 8<br>AMC Javelin<br>wt: 3.44<br>mpg: 15.2","as.factor(cyl): 8<br>as.factor(cyl): 8<br>Camaro Z28<br>wt: 3.84<br>mpg: 13.3","as.factor(cyl): 8<br>as.factor(cyl): 8<br>Pontiac Firebird<br>wt: 3.85<br>mpg: 19.2","as.factor(cyl): 8<br>as.factor(cyl): 8<br>Ford Pantera L<br>wt: 3.17<br>mpg: 15.8","as.factor(cyl): 8<br>as.factor(cyl): 8<br>Maserati Bora<br>wt: 3.57<br>mpg: 15"],"key":null,"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(97,156,255,1)","opacity":1,"size":11.3385826771654,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(97,156,255,1)"}},"hoveron":"points","name":"8","legendgroup":"8","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text"}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":37.2602739726027},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":"Auto Data","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"xaxis":{"domain":[0,1],"type":"linear","autorange":false,"tickmode":"array","range":[1.31745,5.61955],"ticktext":["2","3","4","5"],"tickvals":[2,3,4,5],"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"Weight","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"type":"linear","autorange":false,"tickmode":"array","range":[9.225,35.075],"ticktext":["10","15","20","25","30","35"],"tickvals":[10,15,20,25,30,35],"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"Miles per Gallon","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.913385826771654},"annotations":[{"text":"Cylinders","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"top","legendTitle":true}],"hovermode":"closest"},"source":"A"},"evals":[],"jsHooks":[]}</script>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="make-ggplot-interactive-with-plotly.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="learning-more.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/index.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

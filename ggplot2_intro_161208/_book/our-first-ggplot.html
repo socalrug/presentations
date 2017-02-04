@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ggplot2: An Introduction</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="ggplot2: An Introduction">
+  <meta name="generator" content="bookdown 0.2 and GitBook 2.6.7">
+
+  <meta property="og:title" content="ggplot2: An Introduction" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="ggplot2: An Introduction" />
+  
+  
+  
+
+<meta name="author" content="Arun Rangarajan">
+
+
+<meta name="date" content="2016-12-11">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="data-set-to-explore.html">
+<link rel="next" href="parts-of-our-first-ggplot.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-0.6/htmlwidgets.js"></script>
+<link href="libs/plotlyjs-1.16.3/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.16.3/plotly-latest.min.js"></script>
+<script src="libs/plotly-binding-4.5.2/plotly.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background</a></li>
+<li class="chapter" data-level="2" data-path="what-is-special-about-ggplot2.html"><a href="what-is-special-about-ggplot2.html"><i class="fa fa-check"></i><b>2</b> What is special about ggplot2?</a></li>
+<li class="chapter" data-level="3" data-path="parts-of-a-ggplot.html"><a href="parts-of-a-ggplot.html"><i class="fa fa-check"></i><b>3</b> Parts of a ggplot</a></li>
+<li class="chapter" data-level="4" data-path="installation-and-loading.html"><a href="installation-and-loading.html"><i class="fa fa-check"></i><b>4</b> Installation and Loading</a></li>
+<li class="chapter" data-level="5" data-path="data-set-to-explore.html"><a href="data-set-to-explore.html"><i class="fa fa-check"></i><b>5</b> Data Set to Explore</a></li>
+<li class="chapter" data-level="6" data-path="our-first-ggplot.html"><a href="our-first-ggplot.html"><i class="fa fa-check"></i><b>6</b> Our first ggplot</a></li>
+<li class="chapter" data-level="7" data-path="parts-of-our-first-ggplot.html"><a href="parts-of-our-first-ggplot.html"><i class="fa fa-check"></i><b>7</b> Parts of our first ggplot</a></li>
+<li class="chapter" data-level="8" data-path="adding-title-and-axes-labels.html"><a href="adding-title-and-axes-labels.html"><i class="fa fa-check"></i><b>8</b> Adding title and axes labels</a></li>
+<li class="chapter" data-level="9" data-path="adding-colors-to-points.html"><a href="adding-colors-to-points.html"><i class="fa fa-check"></i><b>9</b> Adding colors to points</a></li>
+<li class="chapter" data-level="10" data-path="adding-colors-to-points-cont.html"><a href="adding-colors-to-points-cont.html"><i class="fa fa-check"></i><b>10</b> Adding colors to points (cont…)</a></li>
+<li class="chapter" data-level="11" data-path="changing-the-shapes.html"><a href="changing-the-shapes.html"><i class="fa fa-check"></i><b>11</b> Changing the shapes</a></li>
+<li class="chapter" data-level="12" data-path="fix-the-legend.html"><a href="fix-the-legend.html"><i class="fa fa-check"></i><b>12</b> Fix the legend</a></li>
+<li class="chapter" data-level="13" data-path="increase-the-point-size.html"><a href="increase-the-point-size.html"><i class="fa fa-check"></i><b>13</b> Increase the point size</a></li>
+<li class="chapter" data-level="14" data-path="adding-a-loess-smoother.html"><a href="adding-a-loess-smoother.html"><i class="fa fa-check"></i><b>14</b> Adding a loess smoother</a></li>
+<li class="chapter" data-level="15" data-path="remove-the-confidence-interval.html"><a href="remove-the-confidence-interval.html"><i class="fa fa-check"></i><b>15</b> Remove the confidence interval</a></li>
+<li class="chapter" data-level="16" data-path="add-a-linear-fit.html"><a href="add-a-linear-fit.html"><i class="fa fa-check"></i><b>16</b> Add a linear fit</a></li>
+<li class="chapter" data-level="17" data-path="one-fit-per-group.html"><a href="one-fit-per-group.html"><i class="fa fa-check"></i><b>17</b> One fit per group</a></li>
+<li class="chapter" data-level="18" data-path="separate-the-groups-with-faceting.html"><a href="separate-the-groups-with-faceting.html"><i class="fa fa-check"></i><b>18</b> Separate the groups with faceting</a></li>
+<li class="chapter" data-level="19" data-path="more-faceting.html"><a href="more-faceting.html"><i class="fa fa-check"></i><b>19</b> More Faceting</a></li>
+<li class="chapter" data-level="20" data-path="boxplots.html"><a href="boxplots.html"><i class="fa fa-check"></i><b>20</b> Boxplots</a></li>
+<li class="chapter" data-level="21" data-path="violin-plots.html"><a href="violin-plots.html"><i class="fa fa-check"></i><b>21</b> Violin Plots</a></li>
+<li class="chapter" data-level="22" data-path="combine-boxplot-with-violin-plot.html"><a href="combine-boxplot-with-violin-plot.html"><i class="fa fa-check"></i><b>22</b> Combine boxplot with violin plot</a></li>
+<li class="chapter" data-level="23" data-path="histogram.html"><a href="histogram.html"><i class="fa fa-check"></i><b>23</b> Histogram</a></li>
+<li class="chapter" data-level="24" data-path="bar-plots.html"><a href="bar-plots.html"><i class="fa fa-check"></i><b>24</b> Bar Plots</a></li>
+<li class="chapter" data-level="25" data-path="filled-bar-plots.html"><a href="filled-bar-plots.html"><i class="fa fa-check"></i><b>25</b> Filled Bar Plots</a></li>
+<li class="chapter" data-level="26" data-path="changing-the-y-axis-breaks.html"><a href="changing-the-y-axis-breaks.html"><i class="fa fa-check"></i><b>26</b> Changing the Y-axis breaks</a></li>
+<li class="chapter" data-level="27" data-path="manual-colors.html"><a href="manual-colors.html"><i class="fa fa-check"></i><b>27</b> Manual colors</a></li>
+<li class="chapter" data-level="28" data-path="black-and-white-theme.html"><a href="black-and-white-theme.html"><i class="fa fa-check"></i><b>28</b> Black and White Theme</a></li>
+<li class="chapter" data-level="29" data-path="make-ggplot-interactive-with-plotly.html"><a href="make-ggplot-interactive-with-plotly.html"><i class="fa fa-check"></i><b>29</b> Make ggplot interactive with plotly</a></li>
+<li class="chapter" data-level="30" data-path="change-the-hover-text.html"><a href="change-the-hover-text.html"><i class="fa fa-check"></i><b>30</b> Change the hover text</a></li>
+<li class="chapter" data-level="" data-path="learning-more.html"><a href="learning-more.html"><i class="fa fa-check"></i>Learning more</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ggplot2: An Introduction</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="our-first-ggplot" class="section level1">
+<h1><span class="header-section-number">6</span> Our first ggplot</h1>
+<ul>
+<li>ggplot2 uses the <code>+</code> symbol to chain functions</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">ggplot</span>(<span class="dt">data=</span>mtcars, <span class="kw">aes</span>(<span class="dt">x=</span>wt, <span class="dt">y=</span>mpg)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-set-to-explore.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="parts-of-our-first-ggplot.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/index.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
