@@ -15,4 +15,6 @@ Presentation materials from our monthly meetings
 
 * 10/27/2016: *Bryan Smith*, [Generating Cash Flow Expectations for Lending Club](https://github.com/ocrug/presentations/tree/master/2016-10-27_lending-club-cash-flow)
 
+* 10/27/2016: *Ryan Benz*, [Virtual Realities](https://github.com/ocrug/presentations/tree/master/2016-10-27_vr)
+
 * 12/08/2016: *Arun Rangarajan*, [ggplot2: An Introduction](https://github.com/ocrug/presentations/tree/master/2016-12-08_ggplot2_intro) 
