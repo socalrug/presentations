@@ -10,6 +10,10 @@ Presentation materials from our monthly meetings
 
 * 01/26/2017: *Lawrence Wu*, [rstudio::conf 2016 Recap](https://github.com/ocrug/presentations/tree/master/2017-01-26_rstudio_conf_and_the_tidyverse)
 
+* 02/23/2017: *Pasha Safarzadeh*, [Swirlify](https://github.com/ocrug/presentations/tree/master/2017-02-23_swirlify)
+
+* 02/23/2017: *Ryan Benz*, [An Introduction to Predictive Modeling in R](https://github.com/ocrug/presentations/tree/master/2017-02-23_pred_modeling_intro)
+
 
 ## 2016 ##
 
