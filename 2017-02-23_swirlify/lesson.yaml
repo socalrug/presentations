@@ -1,0 +1,35 @@
+- Class: meta
+  Course: Statistics
+  Lesson: Scatterplots
+  Author: your name goes here
+  Type: Standard
+  Organization: your organization's name goes here
+  Version: 2.4.2
+
+
+- Class: text
+  Output: Welcome to scatterplots!
+
+- Class: text
+  Output: The function for creating a scatterplot is "plot".
+
+- Class: cmd_question
+  Output: Create a scatterplot of x vs y.
+  CorrectAnswer: plot(x,y)
+  AnswerTests: omnitest(correctExpr='plot(x,y)')
+  Hint: Try plot(x,y).
+
+- Class: text
+  Output: A title can be added to a scatterplot by using the "title" function.
+
+- Class: mult_question
+  Output: Which of the following commands would add a title to the scatterplot?
+  AnswerChoices: plot(x,y,title="scatterplot");plot(x,y,title=scatterplot);plot(x,y,scatterplot);plot(x,y,"scatterplot")
+  CorrectAnswer: plot(x,y,title="scatterplot")
+  AnswerTests: omnitest(correctVal='plot(x,y,title="scatterplot")')
+  Hint: The one with title = "scatterplot"
+
+- Class: figure
+  Output: A trend line can be added to a scatterplot using the "abline" function.
+  Figure: line.R
+  FigureType: new
