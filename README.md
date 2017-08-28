@@ -20,7 +20,7 @@ Presentation materials from our monthly meetings
 
 * 06/27/2017: *Ryan Benz*, [RRII: Recent R Items of Interest](https://github.com/ocrug/presentations/tree/master/2017-06-27_rrii)
 
-* 08/24/2017: *Yemi Odeyemi*, Basic Introduction To Image Analysis with R
+* 08/24/2017: *Yemi Odeyemi*, [Basic Introduction To Image Analysis with R](https://github.com/ocrug/presentations/tree/master/2017-08-24_basic_intro_to_image_processing)
 
 * 08/24/2017: *Paul Glezen*, [R "Warm-up"- Split-Apply-Combine](https://github.com/ocrug/warm-ups/tree/master/sac)
 
