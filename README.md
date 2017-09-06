@@ -14,7 +14,7 @@ Presentation materials from our monthly meetings
 
 * 02/23/2017: *Ryan Benz*, [An Introduction to Predictive Modeling in R](https://github.com/ocrug/presentations/tree/master/2017-02-23_pred_modeling_intro)
 
-* 04/27/2017: *Guanjun Bella Feng*, R Programming in a Regulated Environment
+* 04/27/2017: *Guanjun Bella Feng*, [R Programming in a Regulated Environment](https://github.com/ocrug/presentations/tree/master/2017-04-27_r_programming_in_a_regulated_environment)
 
 * 04/27/2017: *Ash Pahwa*, Sports Predictive Analytics
 
