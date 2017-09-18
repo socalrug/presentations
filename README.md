@@ -16,7 +16,7 @@ Presentation materials from our monthly meetings
 
 * 04/27/2017: *Guanjun Bella Feng*, [R Programming in a Regulated Environment](https://github.com/ocrug/presentations/tree/master/2017-04-27_r_programming_in_a_regulated_environment)
 
-* 04/27/2017: *Ash Pahwa*, Sports Predictive Analytics
+* 04/27/2017: *Ash Pahwa*, [Sports Predictive Analytics](https://github.com/ocrug/presentations/tree/master/2017-04-27_sports_predictive_analytics)
 
 * 06/27/2017: *Ryan Benz*, [RRII: Recent R Items of Interest](https://github.com/ocrug/presentations/tree/master/2017-06-27_rrii)
 
