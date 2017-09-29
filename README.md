@@ -22,7 +22,9 @@ Presentation materials from our monthly meetings
 
 * 08/24/2017: *Yemi Odeyemi*, [Basic Introduction To Image Analysis with R](https://github.com/ocrug/presentations/tree/master/2017-08-24_basic_intro_to_image_processing)
 
-* 08/24/2017: *Paul Glezen*, [R "Warm-up"- Split-Apply-Combine](https://github.com/ocrug/warm-ups/tree/master/sac)
+* 08/24/2017: *Paul Glezen*, [R "Warm-up"- Split-Apply-Combine (Lesson 1)](https://github.com/ocrug/warm-ups/blob/master/sac/sac1-factors.ipynb)
+
+* 09/29/2017: *Paul Glezen*, [R "Warm-up"- Distributions)](ihttps://github.com/ocrug/warm-ups/blob/master/distributions/distributions.ipynb)
 
 ## 2016 ##
 
