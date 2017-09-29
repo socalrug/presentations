@@ -24,7 +24,7 @@ Presentation materials from our monthly meetings
 
 * 08/24/2017: *Paul Glezen*, [R "Warm-up"- Split-Apply-Combine (Lesson 1)](https://github.com/ocrug/warm-ups/blob/master/sac/sac1-factors.ipynb)
 
-* 09/29/2017: *Paul Glezen*, [R "Warm-up"- Distributions)](ihttps://github.com/ocrug/warm-ups/blob/master/distributions/distributions.ipynb)
+* 09/29/2017: *Paul Glezen*, [R "Warm-up"- Distributions)](https://github.com/ocrug/warm-ups/blob/master/distributions/distributions.ipynb)
 
 ## 2016 ##
 
