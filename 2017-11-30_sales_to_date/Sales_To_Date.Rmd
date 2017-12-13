@@ -1,0 +1,173 @@
+---
+title: "Sales To Date"
+author: "Peter Stemler"
+date: "December 13, 2017"
+output: html_document
+---
+Show sales over time.
+
+## Libraries
+
+```{r libraries, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(magrittr)
+library(reshape2)
+library(forcats)
+library(lubridate)
+library(stringr)
+library(ggrepel)
+library(scales)
+```
+
+## Import csv files from CRM
+
+```{r files}
+quota_file <- "quota_data.csv"
+forecast_file <- "forecast_data.csv"
+attainment_file <- "attainment_data.csv"
+```
+
+## Choose dates
+
+```{r choose_dates}
+start_month <- 2
+start_year <- 2017
+end_month <- 1
+end_year <- 2018
+```
+
+## Join csv files
+
+```{r data, message=FALSE}
+periods <- data.frame(year = c(rep(2017, 12), rep(2018, 12), rep(2019, 12)), month = rep(1:12, 3))
+
+quotas <- read_csv(quota_file)
+
+attainments <- read_csv(
+  attainment_file, 
+  col_types = cols(
+    account = col_character(),
+    sale_date = col_date(format = "%m/%d/%Y"),
+    attainment = col_integer()
+    )
+  ) %>%
+  mutate(year = year(sale_date),
+         month = month(sale_date)) %>%
+  select(year, month, attainment) %>%
+  group_by(year, month) %>%
+  summarize(attainment = sum(attainment))
+
+forecasts <- read_csv(
+  forecast_file, 
+  col_types = cols(
+    account = col_character(),
+    forecast_date = col_date(format = "%m/%d/%Y"),
+    forecast = col_integer()
+    )
+  ) %>%
+  mutate(year = year(forecast_date),
+         month = month(forecast_date)
+         ) %>%
+  select(year, month, forecast) %>%
+  group_by(year, month) %>%
+  summarize(forecast = sum(forecast))
+
+periods %<>% left_join(quotas, by = c("year", "month")) %>%
+  left_join(attainments, by = c("year", "month")) %>%
+  left_join(forecasts, by = c("year", "month")) %>%
+  group_by(year, month) %>%
+  summarize_all(sum) %>%
+  as.data.frame() %>%
+  rowid_to_column(var = "period_id")
+
+start_period <- periods %>%
+  filter(month == start_month,
+         year == start_year) %>%
+  select(period_id) %>%
+  as.numeric()
+
+end_period <- periods %>%
+  filter(month == end_month,
+         year == end_year) %>%
+  select(period_id) %>%
+  as.numeric()
+
+periods %<>% filter(period_id >= start_period,
+                    period_id <= end_period) %>%
+  as.data.frame() %>%
+  select(-period_id) %>%
+  rowid_to_column(var = "period_id")
+```
+
+## Fix NAs in attainment and forecast
+
+```{r NAs, warning=FALSE}
+current_period_id <- periods %>%
+  filter(month == month(today()),
+         year == year(today())) %>%
+  select(period_id) %>%
+  as.numeric()
+
+for (i in seq_along(periods$quota[start_period:end_period])) {
+  if_else(is.na(periods$quota[i]), 0, as.double(periods$quota[i]))
+}
+
+for (i in seq_along(periods$attainment)) {
+  if (i <= current_period_id) {
+    periods$attainment[i] <- if_else(is.na(periods$attainment[i]), 0, as.double(periods$attainment[i]))
+  } else {
+    periods$attainment[i] <- periods$attainment[i]
+  }
+}
+
+for (i in seq_along(periods$forecast)) {
+  if (i >= current_period_id) {
+    periods$forecast[i] <- if_else(is.na(periods$forecast[i]), 0, as.double(periods$forecast[i]))
+  } else {
+    periods$forecast[i] <- periods$forecast[i]
+  }
+}
+
+periods_view <- periods %>%
+  select(year, month, quota, attainment, forecast)
+```
+
+## Convert to cumulative
+
+```{r cumulative}
+periods %<>%
+  mutate(quota = cumsum(quota),
+         attainment = cumsum(attainment))
+
+periods$forecast[current_period_id] <- with(periods, forecast[current_period_id] + attainment[current_period_id])
+
+periods %<>%
+  mutate(forecast = c(forecast[1:current_period_id-1], cumsum(forecast[current_period_id:length(forecast)])))
+```
+
+## Sales plot
+
+```{r plot, warning=FALSE, fig.width=10.75, fig.align="center"}
+periods %<>% mutate(
+  period = fct_inorder(str_c(month(month, label = TRUE, abbr = TRUE), " ", str_sub(year, 3)))) %>%
+  select(period, quota, attainment, forecast)
+
+periods <- melt(periods, measure.vars = c("quota", "attainment", "forecast"))
+
+ggplot(periods, aes(period, value, group = variable, color = variable)) +
+  geom_line() +
+  geom_point() +
+  geom_label_repel(aes(label = dollar(value)), box.padding = .25, size = 3, show.legend = FALSE, segment.color = "grey50") +
+  scale_x_discrete(name = NULL) +
+  scale_y_continuous(name = NULL, labels = dollar) +
+  scale_color_discrete(name = NULL) +
+  ggtitle(label = "Sales To Date") +
+  labs(caption = str_c("Current as of ", month(today(), label = TRUE, abbr = FALSE), " ", day(today()), ", ", year(today()))) +
+  theme_classic()
+```
+
+## Sales data
+
+```{r }
+periods_view
+```
