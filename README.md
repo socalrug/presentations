@@ -4,6 +4,12 @@ Presentation materials from our monthly meetings
 
 ---
 
+## 2018 ##
+
+* 01/23/2018: *John Peach*, [Categorical and Regression Trees (CART)](https://github.com/ocrug/presentations/tree/master/2018-01-23_cart)
+
+* 01/23/2018: *Robert Mohr*, [Using and Improving Decision Trees in R](https://github.com/ocrug/presentations/tree/master/2018-01-23_decision_trees)
+
 ## 2017 ##
 
 * 01/26/2017: *John Peach*, [Error and Condition Handling in R](https://github.com/ocrug/presentations/tree/master/2017-01-26_error_and_condition_handling_in_R)
