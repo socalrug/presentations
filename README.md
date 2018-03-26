@@ -38,8 +38,6 @@ Presentation materials from our monthly meetings
 
 * 09/29/2017: *Paul Glezen*, [R "Warm-up"- Distributions](https://github.com/ocrug/warm-ups/blob/master/distributions/distributions.ipynb)
 
-* 11/30/2017: *Peter*, [ggplot2 for Sales]
-
 * 11/30/2017: *Bella Feng*, [Introduction to Machine Learning with R](https://github.com/ocrug/presentations/tree/master/2017-11-30_intro_to_machine_learning_with_r)
 
 * 11/30/2017: *Peter Stemler*, [Sales to Date](https://github.com/ocrug/presentations/tree/master/2017-11-30_sales_to_date)
