@@ -6,6 +6,12 @@ Presentation materials from our monthly meetings
 
 ## 2018 ##
 
+* 03/20/2018: *Bella Feng*, Slides coming soon
+
+* 02/27/2018: *Paul Glezen*, [Classification Trees](https://github.com/ocrug/warm-ups/tree/master/islr)
+
+* 02/27/2018: *J. Alfredo Freites*, [Exploring Decision Trees with R](https://github.com/ocrug/presentations/tree/master/2018-02-27_exploring_decision_trees_with_r)
+
 * 01/23/2018: *John Peach*, [Categorical and Regression Trees (CART)](https://github.com/ocrug/presentations/tree/master/2018-01-23_cart)
 
 * 01/23/2018: *Robert Mohr*, [Using and Improving Decision Trees in R](https://github.com/ocrug/presentations/tree/master/2018-01-23_decision_trees)
