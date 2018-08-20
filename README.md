@@ -12,7 +12,7 @@ Presentation materials from our monthly meetings
 
 * 05/29/2018: *DF3*, [DataFest - Chapman University](https://github.com/ocrug/presentations/tree/master/2018-05-29_DataFest_DF3_Chapman/presentation.nb.html)
 
-* 05/29/2018: *Terminal R*, [DataFest - CSU Fullerton](https://github.com/ocrug/presentations/trees/master/2018-05-29_DataFest_Terminal_R_CSU_Fullerton/B5TheTerminalRPresentation.pptx)
+* 05/29/2018: *Terminal R*, [DataFest - CSU Fullerton](https://github.com/ocrug/presentations/tree/master/2018-05-29_DataFest_Terminal_R_CSU_Fullerton/B5TheTerminalRPresentation.pptx)
 
 * 03/20/2018: *Bella Feng*, [Machine Learning with Tree-Based Models in R](https://github.com/ocrug/presentations/tree/master/2018-03-20_machine_learning_with_tree-based_models_in_r)
 
