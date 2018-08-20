@@ -6,6 +6,14 @@ Presentation materials from our monthly meetings
 
 ## 2018 ##
 
+* 07/31/2018: *Wanyi Huang*, [UCI Capstone - Pacific Life's Deferred Annuity](https://github.com/ocrug/presentations/tree/master/2018-07-31_pacific_life_mortality_analysis/PL_Mortality_Company_Presentation-2.pptx)
+
+* 07/31/2018: *Gloria Gong*, [UCI Capstone - IBM Watson - The True Benefits of HR Contracts](https://github.com/ocrug/presentations/tree/master/2018-07-31_city_of_LA-HR_contracts_analysis/IBM-CityofLA_Capstone_PPT_MSBA.pptx)
+
+* 05/29/2018: *DF3*, [DataFest - Chapman University](https://github.com/ocrug/presentations/tree/master/2018-05-29_DataFest_DF3_Chapman/presentation.nb.html)
+
+* 05/29/2018: *Terminal R*, [DataFest - CSU Fullerton](https://github.com/ocrug/presentations/trees/master/2018-05-29_DataFest_Terminal_R_CSU_Fullerton/B5TheTerminalRPresentation.pptx)
+
 * 03/20/2018: *Bella Feng*, [Machine Learning with Tree-Based Models in R](https://github.com/ocrug/presentations/tree/master/2018-03-20_machine_learning_with_tree-based_models_in_r)
 
 * 02/27/2018: *Paul Glezen*, [Classification Trees](https://github.com/ocrug/warm-ups/tree/master/islr)
