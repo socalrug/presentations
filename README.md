@@ -6,6 +6,8 @@ Presentation materials from our monthly meetings
 
 ## 2018 ##
 
+* 08/28/2018: *Yemi Odeyemi*, [Cancer Mutations Scores](https://github.com/ocrug/presentations/tree/master/2018-08-28_Cancer_Mutations_Scores/Classification.pdf)
+
 * 07/31/2018: *Wanyi Huang*, [UCI Capstone - Pacific Life's Deferred Annuity](https://github.com/ocrug/presentations/tree/master/2018-07-31_pacific_life_mortality_analysis/PL_Mortality_Company_Presentation-2.pptx)
 
 * 07/31/2018: *Gloria Gong*, [UCI Capstone - IBM Watson - The True Benefits of HR Contracts](https://github.com/ocrug/presentations/tree/master/2018-07-31_city_of_LA-HR_contracts_analysis/IBM-CityofLA_Capstone_PPT_MSBA.pptx)
