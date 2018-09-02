@@ -14,6 +14,8 @@ Presentation materials from our monthly meetings
 
 * 05/29/2018: *Terminal R*, [DataFest - CSU Fullerton](https://github.com/ocrug/presentations/tree/master/2018-05-29_DataFest_Terminal_R_CSU_Fullerton/B5TheTerminalRPresentation.pptx)
 
+* 05/29/2018: *Team Epsilon*, [DataFest - UC Irvine](https://github.com/ocrug/presentations/tree/master/2018-05-29_Team_Epsilon/Team_Epsilon.pptx)
+
 * 03/20/2018: *Bella Feng*, [Machine Learning with Tree-Based Models in R](https://github.com/ocrug/presentations/tree/master/2018-03-20_machine_learning_with_tree-based_models_in_r)
 
 * 02/27/2018: *Paul Glezen*, [Classification Trees](https://github.com/ocrug/warm-ups/tree/master/islr)
