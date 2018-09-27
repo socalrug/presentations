@@ -6,6 +6,8 @@ Presentation materials from our monthly meetings
 
 ## 2018 ##
 
+* 09/25/2018: *Emil Hvitfeldt*, [Similarity Measure in the Space of Color Palettes](https://github.com/ocrug/presentations/tree/master/2018-09-25_Color_talk/color-talk.pdf)
+
 * 08/28/2018: *Ryan Benz*, [RStudio Tune-up](https://github.com/ocrug/presentations/tree/master/2018-08-28_RStudio_TuneUp/RStudioTuneUp_RBenz_180828.pdf)
 
 * 08/28/2018: *Yemi Odeyemi*, [Cancer Mutations Scores](https://github.com/ocrug/presentations/tree/master/2018-08-28_Cancer_Mutations_Scores/Classification.pdf)
