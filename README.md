@@ -18,9 +18,11 @@ Presentation materials from our monthly meetings
 
 * 05/29/2018: *DF3*, [DataFest - Chapman University](https://github.com/ocrug/presentations/tree/master/2018-05-29_DataFest_DF3_Chapman/presentation.nb.html)
 
+* 05/29/2018: *Data Dirtbags*, [DataFest - CSU Fullerton and Long Beach](https://github.com/ocrug/presentations/tree/master/2018-05-29_DataFest_Data_Dirtbags/DataDirtbagsPDF.pdf)
+
 * 05/29/2018: *Terminal R*, [DataFest - CSU Fullerton](https://github.com/ocrug/presentations/tree/master/2018-05-29_DataFest_Terminal_R_CSU_Fullerton/B5TheTerminalRPresentation.pptx)
 
-* 05/29/2018: *Team Epsilon*, [DataFest - Seems Logit](https://github.com/ocrug/presentations/tree/master/2018-05-29_DataFest_Seems_Logit/Seems_Logit_CalPolyPomona.pdf)
+* 05/29/2018: *Seems Logit*, [DataFest - Seems Logit](https://github.com/ocrug/presentations/tree/master/2018-05-29_DataFest_Seems_Logit/Seems_Logit_CalPolyPomona.pdf)
 
 * 05/29/2018: *Team Epsilon*, [DataFest - UC Irvine](https://github.com/ocrug/presentations/tree/master/2018-05-29_DataFest_Team_Epsilon/Team_Epsilon.pptx)
 
