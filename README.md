@@ -5,6 +5,9 @@ Presentation materials from our monthly meetings
 ---
 
 ## 2018 ##
+* 10/30/2018: *Robert Thomas*, [How Marketing Teams Leverage Web Service API’s to support their Data Science initiatives](https://github.com/ocrug/presentations/tree/master/)
+
+* 10/30/2018: *Hasan Hboubati*, [Using R to build large-scale models with Alteryx](https://github.com/ocrug/presentations/tree/master/2018-10-30_Using_R_to_build_large-scale_models_with_Alteryx/Using_R_to_build_large-scale_models_with_Alteryx.pdf)
 
 * 09/25/2018: *Emil Hvitfeldt*, [Similarity Measure in the Space of Color Palettes](https://github.com/ocrug/presentations/tree/master/2018-09-25_Color_talk/color-talk.pdf)
 
