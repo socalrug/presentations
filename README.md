@@ -5,6 +5,8 @@ Presentation materials from our monthly meetings
 ---
 
 ## 2018 ##
+* 11/27/2018: *Alyssa Columbus*, [Data Storytelling](https://github.com/ocrug/presentations/tree/master/2018-11-27_Data_Storytelling/2018-11-27_Data-Storytelling.pptx)
+
 * 10/30/2018: *Robert Thomas*, [How Marketing Teams Leverage Web Service API’s to support their Data Science initiatives](https://github.com/ocrug/presentations/tree/master/2018-10-30_How_Marketing_Teams_Leverage_Web_Service_APIs_to_support_their_Data_Science_initiatives/Marketing_Predictive_Analytics_Presentation_v3.2.pptx)
 
 * 10/30/2018: *Hasan Hboubati*, [Using R to build large-scale models with Alteryx](https://github.com/ocrug/presentations/tree/master/2018-10-30_Using_R_to_build_large-scale_models_with_Alteryx/Using_R_to_build_large-scale_models_with_Alteryx.pdf)
