@@ -4,6 +4,11 @@ Presentation materials from our monthly meetings
 
 ---
 
+## 2019 ##
+
+* 01/29/2019: *Ryan Benz*, [Tibbles & List Columns & Nested Data Frames Oh My!](https://github.com/ocrug/presentations/tree/master/2019-01-29_Tibbles_Oh_My)
+
+
 ## 2018 ##
 * 11/27/2018: *Alan Dipert*, [Connecting Javascript to Shiny](https://github.com/ocrug/presentations/tree/master/2018-11-27_Connecting_Javascript_to_Shiny)
 
