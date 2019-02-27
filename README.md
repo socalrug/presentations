@@ -6,6 +6,10 @@ Presentation materials from our monthly meetings
 
 ## 2019 ##
 
+* 02/26/2019: *Yemi Odoyemi*, [Opinion Mining of Climate Change Research](https://github.com/ocrug/presentations/tree/master/2019-02-26_opinion_mining)
+
+* 02/26/2019: *Zhi Yang*, [How to make slides in R using xaringan](https://github.com/ocrug/presentations/tree/master/2019-02-26/2019-02-26_xaringan_tutorial)
+
 * 01/29/2019: *Ryan Benz*, [Tibbles & List Columns & Nested Data Frames Oh My!](https://github.com/ocrug/presentations/tree/master/2019-01-29_Tibbles_Oh_My)
 
 * 01/29/2019: *Emil Hvitfeldt*, [Working with tidymodel](https://github.com/ocrug/presentations/tree/master/2019-01-29_working_with_tidymodels)
