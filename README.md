@@ -6,6 +6,10 @@ Presentation materials from our monthly meetings
 
 ## 2019 ##
 
+* 03/26/2019: *Ash Pahwa*, [Deep Learning Using R and TensorFlow (Part 1)](https://github.com/ocrug/presentations/tree/master/2019-03-26_Deep_Learning_Using_R_and_TensorFlow)
+
+* 03/26/2019: *John Peach*, [It's not that we don't test our code, it's that we don't store our tests](https://github.com/ocrug/presentations/tree/master/2019-03-26_unit_testing)
+
 * 02/26/2019: *Yemi Odoyemi*, [Opinion Mining of Climate Change Research](https://github.com/ocrug/presentations/tree/master/2019-02-26_opinion_mining)
 
 * 02/26/2019: *Zhi Yang*, [How to make slides in R using xaringan](https://github.com/ocrug/presentations/tree/master/2019-02-26_xaringan_tutorial)
