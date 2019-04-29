@@ -6,6 +6,10 @@ Presentation materials from our monthly meetings
 
 ## 2019 ##
 
+* 04/29/2019: *Ash Pahwa*, [Deep Learning Using R and TensorFlow (Part 2)](https://github.com/ocrug/presentations/tree/master/2019-04-29_Deep_Learning_Using_R_and_TensorFlow)
+
+* 04/29/2019: *Peter Stemler*, REST APIs and Shiny
+
 * 03/26/2019: *Ash Pahwa*, [Deep Learning Using R and TensorFlow (Part 1)](https://github.com/ocrug/presentations/tree/master/2019-03-26_Deep_Learning_Using_R_and_TensorFlow)
 
 * 03/26/2019: *John Peach*, [It's not that we don't test our code, it's that we don't store our tests](https://github.com/ocrug/presentations/tree/master/2019-03-26_unit_testing)
