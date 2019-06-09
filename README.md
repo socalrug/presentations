@@ -6,6 +6,14 @@ Presentation materials from our monthly meetings
 
 ## 2019 ##
 
+* 05/28/2019: *Captain Rrrr*, [OCRUG Hackathon - Captain Rrrr](https://github.com/ocrug/tree/master/2019-05-28_OCRUG_Hackathon_Captain_Rrrr)
+
+* 05/28/2019: *watR inspectR*, [OCRUG Hackathon - watR inspectR](https://github.com/ocrug/tree/master/2019-05-28_OCRUG_Hackathon_watR_inspectR)
+
+* 05/28/2019: *Save the woRld*, [OCRUG Hackathon - Save the woRld](https://github.com/ocrug/tree/master/2019-05-28_OCRUG_Hackathon_Save_the_woRld)
+
+* 05/28/2019: *Peyman Mohajerian*, Using R in big data (Spark, databases, EMR, Hadoop, H2O.ai)
+
 * 04/29/2019: *Ash Pahwa*, [Deep Learning Using R and TensorFlow (Part 2)](https://github.com/ocrug/presentations/tree/master/2019-04-29_Deep_Learning_Using_R_and_TensorFlow)
 
 * 04/29/2019: *Peter Stemler*, REST APIs and Shiny
