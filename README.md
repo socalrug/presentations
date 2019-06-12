@@ -6,11 +6,11 @@ Presentation materials from our monthly meetings
 
 ## 2019 ##
 
-* 05/28/2019: *Captain Rrrr*, [OCRUG Hackathon - Captain Rrrr](https://github.com/ocrug/tree/master/2019-05-28_OCRUG_Hackathon_Captain_Rrrr)
+* 05/28/2019: *Captain Rrrr*, [Factors Affecting Water Level Across CA Counties - OCRUG Hackathon](https://github.com/ocrug/presentations/tree/master/2019-05-28_OCRUG_Hackathon_Captain_Rrrr)
 
-* 05/28/2019: *watR inspectR*, [OCRUG Hackathon - watR inspectR](https://github.com/ocrug/tree/master/2019-05-28_OCRUG_Hackathon_watR_inspectR)
+* 05/28/2019: *watR inspectR*, [watR inspectR - OCRUG Hackathon](https://github.com/ocrug/presentations/tree/master/2019-05-28_OCRUG_Hackathon_watR_inspectR)
 
-* 05/28/2019: *Save the woRld*, [OCRUG Hackathon - Save the woRld](https://github.com/ocrug/tree/master/2019-05-28_OCRUG_Hackathon_Save_the_woRld)
+* 05/28/2019: *Save the woRld*, [Save the woRld - OCRUG Hackathon](https://github.com/ocrug/presentations/tree/master/2019-05-28_OCRUG_Hackathon_Save_the_woRld)
 
 * 05/28/2019: *Peyman Mohajerian*, Using R in big data (Spark, databases, EMR, Hadoop, H2O.ai)
 
