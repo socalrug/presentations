@@ -1,0 +1,147 @@
+---
+title: "OCRUG - Hackathon 2019"
+author: "Team: save the woRld"
+date: "5/19/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load Packages & Data
+
+```{r}
+# Inrease limit of memory
+memory.limit(200000)
+
+library(data.table)
+measurements <- fread("measurements.csv", sep = ",")
+perforations <- fread("perforations.csv", sep = ",")
+stations <- fread("stations.csv", sep = ",")
+chemicals <- fread("cal_chemicals.csv", sep = ",")
+health <- fread("Health_by_Year_by_County.csv", sep = ",")
+population <- fread("dof_dru_pop_1970_2050_csya_wide.csv", sep = ",")
+countyarea <- fread("AreaByCounty.csv", sep = ",")
+violations <- fread("Violations_active2019.csv", sep = ",")
+
+# Rename columns
+colnames(chemicals)[2] <- "chemical"
+colnames(violations)[6] <- "CHEMICAL"
+
+# Remove attributes from countyarea object
+#attr(countyarea, '.internal.selfref') <- NULL
+#str(health)
+```
+
+## Data Munging
+
+```{r}
+library(dplyr)
+# Calculate weighted average value by county and year for given chemical
+chemical_summary <- chemicals %>%
+  group_by(fips, county, year, chemical) %>%
+  mutate(popXvalue = pop_served * value)
+
+chemical_summary <- chemical_summary %>%
+  group_by(fips, county, year, chemical) %>%
+  summarise(wtd_avg_value = sum(popXvalue)/sum(pop_served),
+            PopServed = sum(pop_served))
+
+write.csv(chemical_summary, "Chemicals_by_County_by_Year.csv")
+
+# Calculate population by County by Year
+population_summary <- population %>%
+  group_by(fips, year) %>%
+  summarise(population = sum(pop_total))
+
+```
+
+## Data Visualizations
+
+```{r}
+library(ggplot2)
+
+chem_plot <- ggplot(chemical_summary, aes(year, wtd_avg_value,
+  fill=chemical)) + geom_col()
+
+chem_plot + facet_grid(chemical~.)
+
+```
+
+```{r}
+violations$CHEMICAL[violations$CHEMICAL=="URANIUM-238"] <- "URANIUM"
+violations$CHEMICAL[violations$CHEMICAL=="COMBINED URANIUM"] <- "URANIUM"
+colnames(violations)[11] <- "YEAR"
+
+write.csv(violations, "Violations_by_County_by_Year.csv")
+
+ggplot(violations, aes(YEAR, log(VALUE), color=CHEMICAL)) +
+  geom_jitter() + geom_smooth() + facet_grid(CHEMICAL~.) + ylim(0,6)
+
+```
+
+## More Data Munging
+Reshape chemical_summary from long to wide and then further manipulate as needed
+
+```{r}
+library(plyr)
+library(reshape2)
+chem_wide <- dcast(chemical_summary,
+                  fips + county + year ~ chemical,
+                  value.var="wtd_avg_value")
+                  
+chem_wide <- merge(x = chem_wide, y = health,
+                by.x = c("fips", "year"),
+                by.y = c("FIPS", "Year"), all.x = TRUE)
+
+chem_wide$State <- NULL
+chem_wide$County <- NULL
+
+chem_to_model <- chem_wide %>% filter(chem_wide$year >= 2010 & chem_wide$year <= 2016)
+chem_to_model <- merge(x = chem_to_model, y = population_summary,
+                by.x = c("fips", "year"),
+                by.y = c("fips", "year"), all.x = TRUE)
+
+chem_to_model <- chem_to_model %>% rename(c("fips"="FIPS", "year"="Year", "county"="County", "population"="Population"))
+
+chem_to_model <- merge(x = chem_to_model, y = countyarea,
+                by = "County", all.x = TRUE)
+
+chem_to_model$Rank <- NULL
+
+# Calculate density variable
+chem_to_model$Density <- chem_to_model$Population / chem_to_model$LandArea
+
+# Per March of Dimes data, the low birthweight average in CA is 6.8%
+chem_to_model$LBL_Label <- as.integer(if_else(chem_to_model$`% LBW` > 6.8, 1, 0))
+
+# Per Public Policy Institute of CA data, 19.9% of children are in poverty level households
+chem_to_model$Poverty_Label <- as.integer(if_else(chem_to_model$`% Children in Poverty` > 19.9, 1, 0))
+
+# Per County Health Records data, 18% of Californias are report poor or fair health
+chem_to_model$PoorHealth_Label <- as.integer(if_else(chem_to_model$`% Fair/Poor` > 18, 1, 0))
+
+# Create 2016 version for logistic regression insights
+chem_to_model_2016 <- chem_to_model %>% filter(chem_to_model$Year == 2016)
+
+# Save csv files
+write.csv(chem_to_model, "Chemicals_for_Modeling.csv")
+write.csv(chem_to_model_2016, "Chemicals_for_Modeling_2016.csv")
+```
+
+## Preparation for modeling
+
+```{r}
+library(broom)
+
+# Remove Alpine county from 2016 df for logistic regression
+chem_to_model_2016 <- chem_to_model_2016[-2,]
+
+LBL_model <- glm(LBL_Label ~ County,
+                 data=chem_to_model_2016, family="binomial")
+
+# Exponentiated variable coefficients
+tidy(LBL_model, exponentiate = TRUE)
+
+```

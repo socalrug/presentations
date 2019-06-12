@@ -1,0 +1,2 @@
+X: Average pollutant level by FIPS over 2000-2019
+Y: health outcomes in 2019
