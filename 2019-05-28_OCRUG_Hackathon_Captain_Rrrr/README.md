@@ -1,8 +1,11 @@
-# Best Visualization Award
+# OCRUG 2019 Hackathon
+## Best Visualization Award
 
-## Team Name: Captain Rrrr
+* 2019-05-28
+* Team Name: Captain Rrrr
+* Team Members: Carey Huh, Crystal Yang, Dhruba Banerjee, Divya Swaminathan, Grace Gupta
 
-### Team Members: Carey Huh, Crystal Yang, Dhruba Banerjee, Divya Swaminathan, Grace Gupta
+## Abstract
 
 - Investigated the relationship between population size and water depletion
 - Found a sharper gradient (faster groundwater depletion) in agricultural vs. urban counties

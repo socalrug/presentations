@@ -1,8 +1,9 @@
-#Speaker: Ash Pahwa
+# Deep Learning using R and TensorFlow (Part 1)
 
-##Title: Deep Learning using R and TensorFlow (Part 1)
+* 2019-03-26
+* Speaker: Ash Pahwa
 
-###Abstract:
+## Abstract:
 Google released TensorFlow software in 2015 targeted for the Deep Learning applications. Two primary misconceptions about TensorFlow are as follows. First, it can only be used with Python and second, it can only be used for building deep learning applications
 
 This talk will demystify these concepts. First, TensorFlow can also be used with R and any programming language. Second, TensorFlow’s main objective is to solve the mathematical problem (including differential equations) which contains multi-dimensional arrays (or tensors). Deep Learning Neural Networks is just another application of TensorFlow.

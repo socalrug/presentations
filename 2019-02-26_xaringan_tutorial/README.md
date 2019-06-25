@@ -1,5 +1,8 @@
 # XaringanTutorial <img src="imgs/icon.png" align="right" width="120" />
 
+* 2019-02-26
+* Speaker: Zhi Yang
+
 
 A quick tutorial on making slides using xaringan
 

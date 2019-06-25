@@ -1,8 +1,11 @@
-# Best Model Award
+# OCRUG 2019 Hackathon
+## Best Model Award
 
-## Team Name: Save The WoRld
+* 2019-05-28
+* Team Name: Save The WoRld
+* Team Members: Faizanul Syed Haque, Gregory Faletto, Javier Orraca, Sam Park, Shruhi Desai
 
-### Team Members: Faizanul Syed Haque, Gregory Faletto, Javier Orraca, Sam Park, Shruhi Desai
+## Abstract
 
 - Modelled the proportion of residents in fair/poor health in a county based on the contaminant levels and standard demographic controls
 - Investigated both ordinary least squares regression and generalized additive models
