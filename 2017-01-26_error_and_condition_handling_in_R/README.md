@@ -1,8 +1,9 @@
 # Error and Condition Handling in R
 
-* Orange County R User's Group
 * 2017-01-26
-* Author: John Peach
+* Speaker: John Peach
+
+## Abstract
 
 Being an interactive language, it is common to not perform a lot of error checking in R. Even popular packages lack often lack the robustness seen in similar tools in other languages. This may be in part due to the background of R developers, the environments where R scripts are used, cultural norms or because the error handling system in R is a little different. Generally, a language handles errors in one of three ways. A function returns a special value on an error (i.e. C, bash) or it throws an exception that unwinds the call stack where the error is dealt with in a different scope (i.e. Java, python). The approach used in R is based on Lisp. In general, errors are handled by a 'condition system' that is powerful and flexible. 
 

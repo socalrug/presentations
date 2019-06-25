@@ -1,5 +1,8 @@
-#Speaker: Yemi O.
+# Basic Introduction To Image Analysis with R
 
-##Title: Basic Introduction To Image Analysis with R
+* 2017-08-24
+* Speaker: Yemi O.
 
-###Abstract
+
+## Abstract
+This talk covers some of the fundimentals of how images are stored and processed in R.
