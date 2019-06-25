@@ -1,5 +1,7 @@
-#Speaker: Ash Pahwa
+# Sports Predictive Analytics: NFL Prediction Model
 
-##Title: Sports Predictive Analytics
+* 2017-04-27
+* Speaker: Ash Pahwa
 
-###Abstract
+## Abstract
+This talk discusses the area of sports analytics and builds out several models
