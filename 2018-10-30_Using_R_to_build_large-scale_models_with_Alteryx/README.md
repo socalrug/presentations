@@ -1,8 +1,9 @@
-#Speaker: Alteryx
+# Using R to build large-scale models with Alteryx
 
-##Title: Using R to build large-scale models with Alteryx
+* 2018-10-30
+* Speaker: Alteryx
 
-###Abstract:
+## Abstract:
 
 Alteryx will demonstrate how you can leverage your R skills in Alteryx to build large-scale models and deploy them. Alteryx makes deploying a predictive model easy with the click of a button. Alteryx exposes an R and Python interface via standard REST API requests, instead of recoding the models from within their native languages, integration of your most advanced analytic models into production systems is simple and painless. build and deploy models.
 
