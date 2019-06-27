@@ -1,4 +1,4 @@
-# Making an R 
+# Making an R package with use this
 
 * 2019-06-25
 * Speaker: Emil Hvitfeldt
