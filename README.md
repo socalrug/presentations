@@ -6,11 +6,11 @@ Presentation materials from our monthly meetings
 
 ## 2019 ##
 
-* 06/25/2019: *Emil Hvitfeltdt*, [Making an R package with use this](https://github/ocrug/presentations/tree/master/2019-06-28_Making_an_R_Package_with_usethis)
+* 06/25/2019: *Emil Hvitfeltdt*, [Making an R package with use this](https://github.com/ocrug/presentations/tree/master/2019-06-25_Making_an_R_Package_with_usethis)
 
-* 06/25/2019: *UCI Capstone - Pacific Life* [Pacific Life: Predicting policyholder lapse behavior](https://github/ocrug/presentations/tree/master/2019-06-25_Pacific_Life_Predicincting_Policyholder_Lapse_Behavior)
+* 06/25/2019: *UCI Capstone - Pacific Life* [Pacific Life: Predicting policyholder lapse behavior](https://github.com/ocrug/presentations/tree/master/2019-06-25_Pacific_Life_Predicincting_Policyholder_Lapse_Behavior)
 
-* 06/25/2019: *UCI Capstone - Amazon Alexa Skill Store* [Amazon Alexa Skill Store](https://github/ocrug/presentations/tree/master/2019-06-25_Amazon_Alexa_Skill_Store)
+* 06/25/2019: *UCI Capstone - Amazon Alexa Skill Store* [Amazon Alexa Skill Store](https://github.com/ocrug/presentations/tree/master/2019-06-25_Amazon_Alexa_Skill_Store)
 
 * 05/28/2019: *Captain Rrrr*, [Factors Affecting Water Level Across CA Counties - OCRUG Hackathon](https://github.com/ocrug/presentations/tree/master/2019-05-28_OCRUG_Hackathon_Captain_Rrrr)
 
