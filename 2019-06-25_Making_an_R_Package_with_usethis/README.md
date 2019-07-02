@@ -1,4 +1,4 @@
-# Making an R package with use this
+# Making an R package with usethis
 
 * 2019-06-25
 * Speaker: Emil Hvitfeldt
