@@ -5,6 +5,8 @@ Presentation materials from our monthly meetings
 ---
 
 ## 2019 ##
+* 07/30/2019: *Zhi Yang*, [Topic modeling in cancer patients' mutational profiles](https://github.com/ocrug/presentations/tree/master/2019-07-30_extracting_topics_from_cancer_patients_mutational_profiles)
+
 * 07/30/2019: *John Peach*, [Error and Condition Handling in R](https://github.com/ocrug/presentations/tree/master/2019-07-30_error_and_condition_handling_in_R/)
 
 * 06/25/2019: *Emil Hvitfeltdt*, [Making an R package with use this](https://github.com/ocrug/presentations/tree/master/2019-06-25_Making_an_R_Package_with_usethis)
