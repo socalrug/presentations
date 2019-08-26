@@ -1,0 +1,62 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400);
+@import url(https://fonts.googleapis.com/css?family=Inconsolata);
+
+.image-50 img {
+  width: 50%;
+}
+
+.image-200 img {
+  width: 200%;
+}
+
+
+.red { color: #910c07; }
+
+.bl { color: #525252; }
+
+.blue { color: #33b2db; }
+
+.small { font-size: 25px;}
+
+.median { font-size: 35px;}
+
+.grey {color:#dbdde4;}
+
+body {
+  font-family: 'Roboto Slab', serif;
+  font-weight: normal;
+  color: #272822;
+}
+h1, h2, h3, h4 {
+  font-family: 'Roboto Slab', serif;
+  font-weight: normal;
+}
+.remark-code, .remark-inline-code {
+  font-family: 'Inconsolata', monospace;
+}
+
+.remark-slide-content h1 {
+    font-size: 50px;
+}
+
+.remark-slide-content h2 {
+    font-size: 40px;
+}
+
+.remark-slide-content h3 {
+    font-size: 35px;
+    color: #525252;
+}
+
+.remark-slide-content h4 {
+    font-size: 25px;
+}
+
+.footnote {
+  color: #910c07;
+  position: absolute;
+  bottom: 1em;
+  padding-right: 4em;
+  font-size: 0.6em;
+}
+

@@ -6,8 +6,9 @@ Presentation materials from our monthly meetings
 
 ## 2019 ##
 
+* 08/27/2019: *Olga Korosteleva*, [Regression Models for Count Data](https://github.com/ocrug/presentations/tree/master/2019-08-27_regression_models_for_count_data/)
 
-* 08/27/2019: *John Peach*, [Regression Models for Count Data](https://github.com/ocrug/presentations/tree/master/2019-08-27_regression_models_for_count_data/)
+* 07/30/2019: *Zhi Yang*, [Topic modeling in cancer patients' mutational profiles](https://github.com/ocrug/presentations/tree/master/2019-07-30_extracting_topics_from_cancer_patients_mutational_profiles)
 
 * 07/30/2019: *John Peach*, [Error and Condition Handling in R](https://github.com/ocrug/presentations/tree/master/2019-07-30_error_and_condition_handling_in_R/)
 
