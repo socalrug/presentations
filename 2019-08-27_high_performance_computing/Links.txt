@@ -1,0 +1,5 @@
+A Brief Introduction to Using R for High-Performance Computing
+
+https://gvegayon.github.io/ocrug-hpc-august2019
+
+https://github.com/gvegayon/ocrug-hpc-august2019
