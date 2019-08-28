@@ -6,6 +6,8 @@ Presentation materials from our monthly meetings
 
 ## 2019 ##
 
+* 08/27/2019: *Olga Korosteleva*, [Regression Models for Count Data](https://github.com/ocrug/presentations/tree/master/2019-08-27_a_brief_intro_to_using_r_for_hpc/))
+
 * 08/27/2019: *Olga Korosteleva*, [Regression Models for Count Data](https://github.com/ocrug/presentations/tree/master/2019-08-27_regression_models_for_count_data/)
 
 * 07/30/2019: *Zhi Yang*, [Topic modeling in cancer patients' mutational profiles](https://github.com/ocrug/presentations/tree/master/2019-07-30_extracting_topics_from_cancer_patients_mutational_profiles)
@@ -22,7 +24,7 @@ Presentation materials from our monthly meetings
 
 * 05/28/2019: *watR inspectR*, [watR inspectR - OCRUG Hackathon](https://github.com/ocrug/presentations/tree/master/2019-05-28_OCRUG_Hackathon_watR_inspectR)
 
-* 05/28/2019: *Save the woRld*, [Save the woRld - OCRUG Hackathon](https://github.com/ocrug/presentations/tree/master/2019-05-28_OCRUG_Hackathon_Save_the_woRld)
+*_brief_intro_to_using_r_for_hpc_brief_intro_to_using_r_for_hpc_brief_intro_to_using_r_for_hpc 05/28/2019: *Save the woRld*, [Save the woRld - OCRUG Hackathon](https://github.com/ocrug/presentations/tree/master/2019-05-28_OCRUG_Hackathon_Save_the_woRld)
 
 * 05/28/2019: *Peyman Mohajerian*, Using R in big data (Spark, databases, EMR, Hadoop, H2O.ai)
 
