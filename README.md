@@ -6,6 +6,8 @@ Presentation materials from our monthly meetings
 
 ## 2019 ##
 
+* 08/27/2019: *George G. Vega Yon*, [A Brief Introduction to Using R for High-Performance Computing](https://github.com/ocrug/presentations/tree/master/2019-08-27_high_performance_computing)
+
 * 08/27/2019: *Olga Korosteleva*, [Regression Models for Count Data](https://github.com/ocrug/presentations/tree/master/2019-08-27_regression_models_for_count_data/)
 
 * 07/30/2019: *Zhi Yang*, [Topic modeling in cancer patients' mutational profiles](https://github.com/ocrug/presentations/tree/master/2019-07-30_extracting_topics_from_cancer_patients_mutational_profiles)
