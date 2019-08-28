@@ -6,7 +6,7 @@ Presentation materials from our monthly meetings
 
 ## 2019 ##
 
-* 08/27/2019: *Olga Korosteleva*, [Regression Models for Count Data](https://github.com/ocrug/presentations/tree/master/2019-08-27_a_brief_intro_to_using_r_for_hpc/))
+* 08/27/2019: *George G. Vega Yon*, [A Brief Introduction to Using R for High-Performance Computing](https://github.com/ocrug/presentations/tree/master/2019-08-27_high_performance_computing)
 
 * 08/27/2019: *Olga Korosteleva*, [Regression Models for Count Data](https://github.com/ocrug/presentations/tree/master/2019-08-27_regression_models_for_count_data/)
 
