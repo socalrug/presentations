@@ -6,6 +6,11 @@ Presentation materials from our monthly meetings
 
 ## 2019 ##
 
+
+* 09/24/2019: *Ash Pahwa*, [Convolutional Neural Networks](https://github.com/ocrug/presentations/tree/master/2019-09-24_convolutional_neural_networks/)
+
+* 09/24/2019: *Luke Klein*, [Speeding up R with Rcpp](https://github.com/ocrug/presentations/tree/master/2019-09-24_speeding_up_R_with_Rcpp/)
+
 * 08/27/2019: *George G. Vega Yon*, [A Brief Introduction to Using R for High-Performance Computing](https://github.com/ocrug/presentations/tree/master/2019-08-27_high_performance_computing)
 
 * 08/27/2019: *Olga Korosteleva*, [Regression Models for Count Data](https://github.com/ocrug/presentations/tree/master/2019-08-27_regression_models_for_count_data/)
@@ -24,7 +29,7 @@ Presentation materials from our monthly meetings
 
 * 05/28/2019: *watR inspectR*, [watR inspectR - OCRUG Hackathon](https://github.com/ocrug/presentations/tree/master/2019-05-28_OCRUG_Hackathon_watR_inspectR)
 
-*_brief_intro_to_using_r_for_hpc_brief_intro_to_using_r_for_hpc_brief_intro_to_using_r_for_hpc 05/28/2019: *Save the woRld*, [Save the woRld - OCRUG Hackathon](https://github.com/ocrug/presentations/tree/master/2019-05-28_OCRUG_Hackathon_Save_the_woRld)
+* 05/28/2019: *Save the woRld*, [Save the woRld - OCRUG Hackathon](https://github.com/ocrug/presentations/tree/master/2019-05-28_OCRUG_Hackathon_Save_the_woRld)
 
 * 05/28/2019: *Peyman Mohajerian*, Using R in big data (Spark, databases, EMR, Hadoop, H2O.ai)
 
