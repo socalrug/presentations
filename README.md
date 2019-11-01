@@ -6,6 +6,7 @@ Presentation materials from our monthly meetings
 
 ## 2019 ##
 
+* 10/29/2019: *Malcolm Barrett*, [The YAML problem: Writing and working with YAML with ymlthis](https://github.com/ocrug/presentations/tree/master/2019-10-29_writing_and_working_with_YAML_withymlthis)
 
 * 09/24/2019: *Ash Pahwa*, [Convolutional Neural Networks](https://github.com/ocrug/presentations/tree/master/2019-09-24_convolutional_neural_networks/)
 
