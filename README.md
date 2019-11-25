@@ -5,6 +5,9 @@ Presentation materials from our monthly meetings
 ---
 
 ## 2019 ##
+* 11/19/2019: *Emil Hvitfeldt*, [Building Packages in an Ecosystem](https://github.com/ocrug/presentations/tree/master/2019-11-19_Building_Packages_in_an_Ecosystem)
+
+* 11/19/2019: *Alan Dipert*, [Integrating React.js and Shiny](https://github.com/ocrug/presentations/tree/master/2019-11-19_Integrating_Reactjs_and_Shiny)
 
 * 10/29/2019: *Malcolm Barrett*, [The YAML problem: Writing and working with YAML with ymlthis](https://github.com/ocrug/presentations/tree/master/2019-10-29_writing_and_working_with_YAML_withymlthis)
 
@@ -20,7 +23,7 @@ Presentation materials from our monthly meetings
 
 * 07/30/2019: *John Peach*, [Error and Condition Handling in R](https://github.com/ocrug/presentations/tree/master/2019-07-30_error_and_condition_handling_in_R/)
 
-* 06/25/2019: *Emil Hvitfeltdt*, [Making an R package with use this](https://github.com/ocrug/presentations/tree/master/2019-06-25_Making_an_R_Package_with_usethis)
+* 06/25/2019: *Emil Hvitfeldt*, [Making an R package with use this](https://github.com/ocrug/presentations/tree/master/2019-06-25_Making_an_R_Package_with_usethis)
 
 * 06/25/2019: *UCI Capstone - Pacific Life* [Pacific Life: Predicting policyholder lapse behavior](https://github.com/ocrug/presentations/tree/master/2019-06-25_Pacific_Life_Predicincting_Policyholder_Lapse_Behavior)
 
