@@ -3,6 +3,8 @@
 Presentation materials from our monthly meetings
 
 ---
+## 2020 ##
+* 01/28/2020: *Michael Espero*, [The YAML problem: Writing and working with YAML with ymlthis](https://github.com/ocrug/presentations/tree/master/2020-01-28_reticulate)
 
 ## 2019 ##
 
