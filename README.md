@@ -4,7 +4,7 @@ Presentation materials from our monthly meetings
 
 ---
 ## 2020 ##
-* 01/28/2020: *Michael Espero*, [The YAML problem: Writing and working with YAML with ymlthis](https://github.com/ocrug/presentations/tree/master/2020-01-28_reticulate)
+* 01/28/2020: *Michael Espero*, [reticulate: R Interface to Python](https://github.com/ocrug/presentations/tree/master/2020-01-28_reticulate)
 
 ## 2019 ##
 * 11/19/2019: *Emil Hvitfeldt*, [Building Packages in an Ecosystem](https://github.com/ocrug/presentations/tree/master/2019-11-19_Building_Packages_in_an_Ecosystem)
