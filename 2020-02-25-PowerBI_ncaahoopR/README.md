@@ -1,3 +1,0 @@
-Power BI is a business analytics solution that lets you visualize data, share insights, or embed them in an app or website. It allows easy access to connect to hundreds of data sources, create dashboards and reports. Power BI, can run R scripts and create data models and visualizations. Suresh will give a demo on how you can use your R stills to interact with Power BI.
-
-March Madness, the NCAA basketball tournament that takes us by storm every March is right around the corner. ncaahoopR is an R package for working with NCAA Basketball Play-by-Play Data. It scrapes play-by-play data and returns it to the user in a tidy format and allows the user to explore the data with assist networks and in-game win-probability charts.

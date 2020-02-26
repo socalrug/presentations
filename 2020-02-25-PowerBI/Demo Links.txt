@@ -1,0 +1,7 @@
+https://community.powerbi.com/t5/Data-Stories-Gallery/Coronavirus-Outbreak/td-p/914037
+
+How to get started?
+Quick Start Example: https://docs.microsoft.com/en-us/power-bi/desktop-r-visuals
+
+Machine Learning with Microsoft Technologies - Liela Eatati
+https://www.youtube.com/watch?v=Y88s8Vra_1g - Guy in a cube video

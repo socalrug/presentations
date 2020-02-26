@@ -4,7 +4,9 @@ Presentation materials from our monthly meetings
 
 ---
 ## 2020 ##
-* 02/25/2020: *Luke Morris*, [Basketball: Let's Explore March Madness with ncaahoopR](https://github.com/ocrug/presentations/blob/master/2020-02-25-PowerBI_ncaahoopR/Bracketball_%20Let%E2%80%99s%20Explore%20March%20Madness%20with%20ncaahoopR.pdf)
+* 02/25/2020: *Suresh Datla*, [Using R in Power BI](https://github.com/ocrug/presentations/blob/master/2020-02-25-PowerBI)
+
+* 02/25/2020: *Luke Morris*, [Basketball: Let's Explore March Madness with ncaahoopR](https://github.com/ocrug/presentations/blob/master/2020-02-25-ncaahoopR)
 
 * 01/28/2020: *Michael Espero*, [reticulate: R Interface to Python](https://github.com/ocrug/presentations/tree/master/2020-01-28_reticulate)
 
