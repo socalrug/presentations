@@ -4,6 +4,10 @@ Presentation materials from our monthly meetings
 
 ---
 ## 2020 ##
+* 08/18/2020: *Adam Austin*, [Dissecting a Function](https://github.com/ocrug/presentations/blob/master/2020-08-18-Dissecting_a_Function/profiling-benchmarking-adam-austin.pdf)
+
+* 08/18/2020: *Karolis Koncevicius*, [Non-exhaustive list of lesser used base R features](https://github.com/ocrug/presentations/blob/master/2020-08-18-Non-exhaustive_list_of_lesser_used_base_R_features/Non-exhaustive_list_of_lesser_used_base_R_features.pdf)
+
 * 02/25/2020: *Suresh Datla*, [Using R in Power BI](https://github.com/ocrug/presentations/blob/master/2020-02-25-PowerBI)
 
 * 02/25/2020: *Luke Morris*, [Basketball: Let's Explore March Madness with ncaahoopR](https://github.com/ocrug/presentations/blob/master/2020-02-25-ncaahoopR)
