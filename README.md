@@ -4,6 +4,9 @@ Presentation materials from our monthly meetings
 
 ---
 ## 2020 ##
+
+* 09/22/2020: *Edward Visel*, [Tools for uncomfortably Big Data](https://github.com/ocrug/presentations/blob/master/2020-09-22-Tools_for_uncomfortably_big_data/)
+
 * 08/18/2020: *Adam Austin*, [Dissecting a Function](https://github.com/ocrug/presentations/blob/master/2020-08-18-Dissecting_a_Function/profiling-benchmarking-adam-austin.pdf)
 
 * 08/18/2020: *Karolis Koncevicius*, [Non-exhaustive list of lesser used base R features](https://github.com/ocrug/presentations/blob/master/2020-08-18-Non-exhaustive_list_of_lesser_used_base_R_features/Non-exhaustive_list_of_lesser_used_base_R_features.pdf)
