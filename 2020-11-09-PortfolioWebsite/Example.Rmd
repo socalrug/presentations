@@ -1,0 +1,73 @@
+---
+title: "Iris example"
+author: "Pablo"
+date: "11/9/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Install/Load packages packages
+```{r, warning=FALSE, message=FALSE}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(Formula, partykit, party, rpart, rpartplot)
+```
+Load data
+```{r}
+data(iris)
+```
+
+Examine Data
+```{r}
+dim(iris)
+```
+```{r}
+names(iris)
+```
+```{r}
+str(iris)
+```
+```{r}
+head(iris)
+```
+```{r}
+summary(iris)
+```
+Plot Data
+```{r}
+pie(table(iris$Species))
+
+```
+```{r}
+var(iris$Sepal.Length)
+
+```
+```{r}
+cov(iris$Sepal.Length, iris$Petal.Length)
+```
+```{r}
+cor(iris$Sepal.Length, iris$Petal.Length)
+```
+```{r}
+hist(iris$Sepal.Length)
+```
+```{r}
+plot(density(iris$Sepal.Length))
+```
+```{r}
+plot(iris)
+```
+```{r}
+iris_ctree <- rpart(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width, data=iris)
+print(iris_ctree)
+
+```
+```{r}
+rpart.plot::rpart.plot(iris_ctree)
+
+```
+
+
+```
+
