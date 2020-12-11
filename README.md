@@ -5,6 +5,8 @@ Presentation materials from our monthly meetings
 ---
 ## 2020 ##
 
+* 12/08/2020: *Alison Hill*, [The Download](https://github.com/ocrug/presentations/blob/master/2020-12-09_the_download)
+
 * 10/27/2020: *Will Landau*, [Reproducible computation at scale in R](https://github.com/ocrug/presentations/blob/master/2020-10-27_reproducible_computation_at_scale_in_R)
 
 * 09/22/2020: *Edward Visel*, [Tools for uncomfortably Big Data](https://github.com/ocrug/presentations/blob/master/2020-09-22-Tools_for_uncomfortably_big_data/)
