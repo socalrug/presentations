@@ -6,8 +6,11 @@ Presentation materials from our monthly meetings
 
 ## 2021 ##
 
-* 02/23/2021: *Hossein Falaki*, [Unified Data Applications with Shiny on Delta Lakes (Shiny Lakehouse)](https://github.com/ocrug/presentations/blob/master/2021-02-23_Unified_Data_Applications_with_Shiny_on_Delta_Lakes)
+* 03/24/2021: *James Lamb*, [R in the Command Line](https://github.com/ocrug/presentations/blob/master/2021-03-24_R_in_the_command_line/R_in_the_command_line_james.pdf)
+* 03/24/2021: *Neal Fultz*, [R in the Command Line](https://github.com/ocrug/presentations/blob/master/2021-03-24_R_in_the_command_line/R_in_the_command_line_neal.pdf)
 
+
+* 02/23/2021: *Hossein Falaki*, [Unified Data Applications with Shiny on Delta Lakes (Shiny Lakehouse)](https://github.com/ocrug/presentations/blob/master/2021-02-23_Unified_Data_Applications_with_Shiny_on_Delta_Lakes)
 
 ## 2020 ##
 
