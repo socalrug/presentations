@@ -6,8 +6,6 @@ Presentation materials from our monthly meetings
 
 ## 2021 ##
 
-2021-04-27_Column_Names_as_Contracts/Column_Names_as_Contracts.pdf
-
 * 04/27/2021: *Emily Riederer*, [Column Names as Contracts](https://github.com/ocrug/presentations/blob/master/2021-04-27_Column_Names_as_Contracts/Column_Names_as_Contracts.pdf)
 
 * 03/24/2021: *James Lamb*, [R in the Command Line](https://github.com/ocrug/presentations/blob/master/2021-03-24_R_in_the_command_line/R_in_the_command_line_james.pdf)
