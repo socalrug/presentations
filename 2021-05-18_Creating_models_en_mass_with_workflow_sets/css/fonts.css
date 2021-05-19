@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital@0;1&display=swap');
+
+
+body {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  color: var(--charcoal);
+}
+
+h1 {
+  font-family: 'Zilla Slab', serif;
+  font-weight: 300;
+  color: var(--redish);
+}
+
+h2 {
+  font-family: 'Zilla Slab', serif;
+  font-weight: 300;
+  color: var(--charcoal);
+}
+
+h3 {
+  font-family: 'Jost', sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--redish);
+  font-size: 1.3em !important;
+}
+
+h4, h5, h6 {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  color: var(--charcoal);
+}
+
+@media print {
+  body {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+}
+
+

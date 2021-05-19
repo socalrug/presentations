@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Creating model en mass with workflow sets</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Max Kuhn" />
+    <meta name="date" content="2021-05-18" />
+    <script src="libs/header-attrs-2.7.4/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="css/fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, left, middle
+background-position: 85% 50%
+background-size: 30%
+background-color: #F9F8F3
+
+.pull-left[
+
+# Creating model _en mass_ with workflow sets
+
+### Max Kuhn
+
+### 2021-05-18
+]
+
+
+
+
+---
+layout: false
+class: inverse, middle, center
+
+# [`tidymodels.org`](https://www.tidymodels.org/)
+
+# _Tidy Modeling with R_ ([`tmwr.org`](https://www.tmwr.org/))
+
+
+
+---
+# A quick(ish) tour of tidymodels
+
+In tidymodels, there is the idea that a model-oriented data analysis consists of
+
+ - a preprocessor, and 
+ - a model
+ 
+The preprocessor might be a simple formula or a sophisticated recipe.  
+
+It's important to consider both of these activities as part of the data analysis process.
+
+ - Post-model activities should also be included there (e.g. calibration, cut-off optimization, etc.)
+ - We don't have those implemented yet. 
+
+
+---
+# Basic tidymodels components
+
+&lt;img src="images/blocks.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# A relavant example
+
+Let's say that we have some highly correlated predictors and we want to reduce the correlation by first applying principal component analysis to the data. 
+
+ - AKA principal component regression
+ 
+---
+# A relavant example
+
+Let's say that we have some highly correlated predictors and we want to reduce the correlation by first applying principal component analysis to the data. 
+
+ - AKA ~~principal component regression~~ feature extraction
+
+
+---
+# A relavant example
+
+Let's say that we have some highly correlated predictors and we want to reduce the correlation by first applying principal component analysis to the data. 
+
+ - AKA ~~principal component regression~~ feature extraction
+
+What do we consider the estimation part of this process? 
+
+
+---
+# Is it this? 
+
+&lt;img src="images/faux-model.svg" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Or is it this? 
+
+&lt;img src="images/the-model.svg" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# What's the difference?
+
+It is easy to think that the model fit is the only estimation steps. 
+
+There are cases where this could go really wrong: 
+
+* Poor estimation of performance (buy treating the PCA parts as known)
+
+* Selection bias in feature selection
+
+* Information leakage
+
+These problems are exacerbated as the preprocessors increase in complexity and/or effectiveness. 
+
+
+
+---
+# The model workflow
+
+A _model workflow_ is an object that combines a preprocessor and a model object. 
+
+Why? 
+
+Two reasons: 
+
+* It can help organize your work (in case you try a lot of models and preprocessors)
+
+* It encapsulates all of the estimation parts in one object
+
+You can't just estimate one part. 
+
+
+---
+# The model workflow in R
+
+
+```r
+library(tidymodels)
+data(Chicago)
+
+split &lt;- initial_split(Chicago)
+chicago_train &lt;- training(split)
+chicago_test &lt;- testing(split)
+
+reg_model &lt;- linear_reg() %&gt;% set_engine("lm")
+
+pca_rec &lt;- recipe(ridership ~ ., data = chicago_train) %&gt;% 
+  step_date(date, features = c("dow", "month", "year")) %&gt;% 
+  step_holiday(date) %&gt;% 
+  update_role(date, new_role = "id") %&gt;% 
+  step_dummy(all_nominal_predictors()) %&gt;% 
+  step_normalize(all_numeric_predictors()) %&gt;% 
+  step_pca(one_of(stations), num_comp = 10) 
+
+pca_lm_wflow &lt;- 
+  workflow() %&gt;% 
+  add_model(reg_model) %&gt;% 
+  add_recipe(pca_rec)
+```
+
+
+---
+# The good and bad estimation
+
+Bad approach leading to information leakage:
+
+
+```r
+modeling_data &lt;- 
+  prep(pca_rec, training = Chicago) %&gt;% 
+  bake(new_data = NULL)
+
+bad &lt;- fit(reg_model, modeling_data)
+
+predict(bad, chicago_test)
+```
+
+Much better:
+
+
+```r
+good &lt;- fit(pca_lm_wflow, chicago_train)
+
+predict(good, chicago_test)
+```
+
+
+---
+# Many workflows
+
+You can imagine a case where, for a new data set, we don't know what predictors, features, or model are most effective.
+
+.font80[
+
+* A good example of this, for the Chicago data, is shown in our [_Feature Engineering and Selection_](https://bookdown.org/max/FES/a-more-complex-example.html) book. 
+
+]
+
+We might want to define a group of preprocessors to try in concert with numerous models. 
+
+.font80[
+
+* PCA versus PLS and other extraction methods.
+* Simple filtering of highly correlated predictors. 
+* No extraction and use a regularized model. 
+
+]
+
+and so on. 
+
+---
+# Where do I use a workflow set?
+
+## When would you use this? 
+
+It's good for cases where you are starting from scratch and need to fit (and/or tune) a lot of models. 
+
+It might be good for variable selection  (see example at end). 
+
+## Would you always want to do this? 
+
+**Absolutely not**. For well-defined problems, it is overkill. 
+
+I was hesitant to even create this package since it might be used inappropriately. 
+
+
+---
+# A workflow set
+
+These are objects that contain multiple workflows. 
+
+They can be estimated, evaluates, and ranked with simple APIs. 
+
+Let's create one by crossing several recipes with two models for the Chicago data.
+
+---
+# Example objects
+
+
+```r
+reg_model &lt;- linear_reg() %&gt;% set_engine("lm")
+
+nnet_model &lt;- 
+  mlp(penalty = tune(), hidden_units = tune(), epochs = tune()) %&gt;% 
+  set_engine("nnet") %&gt;% 
+  set_mode("regression")
+```
+
+
+```r
+simple_rec &lt;- recipe(ridership ~ ., data = chicago_train) %&gt;% 
+  step_date(date, features = c("dow", "month", "year")) %&gt;% 
+  step_holiday(date) %&gt;% 
+  update_role(date, new_role = "id") %&gt;% 
+  step_dummy(all_nominal_predictors()) %&gt;% 
+  step_normalize(all_numeric_predictors()) 
+
+pca_rec &lt;- simple_rec %&gt;% 
+  step_pca(one_of(stations), num_comp = tune()) 
+
+pls_rec &lt;- simple_rec %&gt;% 
+  step_pls(one_of(stations), outcome = "ridership", num_comp = tune()) 
+
+filter_rec &lt;- simple_rec %&gt;% 
+  step_corr(one_of(stations), threshold = tune())
+```
+
+
+---
+# Creating the workflow set
+
+
+```r
+chicago_wflows &lt;- 
+  workflow_set(
+    preproc = list(basic = simple_rec, pca = pca_rec, pls = pls_rec,
+                   filtered = filter_rec),
+    models = list(lm = reg_model, nnet = nnet_model)
+  )
+chicago_wflows
+```
+
+```
+## # A workflow set/tibble: 8 x 4
+##   wflow_id      info             option      result    
+##   &lt;chr&gt;         &lt;list&gt;           &lt;list&gt;      &lt;list&gt;    
+## 1 basic_lm      &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;list [0]&gt;
+## 2 basic_nnet    &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;list [0]&gt;
+## 3 pca_lm        &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;list [0]&gt;
+## 4 pca_nnet      &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;list [0]&gt;
+## 5 pls_lm        &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;list [0]&gt;
+## 6 pls_nnet      &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;list [0]&gt;
+## 7 filtered_lm   &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;list [0]&gt;
+## 8 filtered_nnet &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;list [0]&gt;
+```
+
+
+---
+# Evaluating many models
+
+
+```r
+# 43 resamples via rolling forecast origin resampling
+chicago_rs &lt;- 
+  sliding_period(
+    chicago_train,
+    date,
+    period = "month",
+    lookback = 12 * 12,  # a rolling 12-year data set for fitting
+    assess_stop = 1      # evaluate the model on the first new month
+  )
+
+chicago_res &lt;- 
+  chicago_wflows %&gt;% 
+  workflow_map(resamples = chicago_rs,
+               seed = 1, 
+               # Optional arguments to tune_grid()
+               grid = 20,
+               metrics = metric_set(rmse))
+```
+
+
+---
+# Results
+
+
+```r
+chicago_res
+```
+
+```
+## # A workflow set/tibble: 8 x 4
+##   wflow_id      info             option      result   
+##   &lt;chr&gt;         &lt;list&gt;           &lt;list&gt;      &lt;list&gt;   
+## 1 basic_lm      &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;rsmp[+]&gt;
+## 2 basic_nnet    &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;tune[+]&gt;
+## 3 pca_lm        &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;tune[+]&gt;
+## 4 pca_nnet      &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;tune[+]&gt;
+## 5 pls_lm        &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;tune[+]&gt;
+## 6 pls_nnet      &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;tune[+]&gt;
+## 7 filtered_lm   &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;tune[+]&gt;
+## 8 filtered_nnet &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;tune[+]&gt;
+```
+
+
+---
+# Rankings
+
+
+```r
+chicago_res %&gt;% 
+  rank_results(select_best = TRUE) %&gt;% 
+  dplyr::select(wflow_id, .metric, mean, std_err, n, rank)
+```
+
+```
+## # A tibble: 8 x 6
+##   wflow_id      .metric  mean std_err     n  rank
+##   &lt;chr&gt;         &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt;
+## 1 pls_nnet      rmse     2.01   0.169    43     1
+## 2 pls_lm        rmse     2.05   0.164    43     2
+## 3 pca_lm        rmse     2.05   0.159    43     3
+## 4 basic_lm      rmse     2.05   0.161    43     4
+## 5 pca_nnet      rmse     2.06   0.163    43     5
+## 6 filtered_lm   rmse     2.06   0.163    43     6
+## 7 filtered_nnet rmse     2.08   0.154    43     7
+## 8 basic_nnet    rmse     2.18   0.212    43     8
+```
+
+
+---
+# Rankings (everything)
+
+
+.pull-left[
+
+```r
+chicago_res %&gt;% 
+  autoplot()
+```
+]
+.pull-right[
+&lt;img src="workflow_sets_files/figure-html/plot-all-1.svg" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+---
+# Rankings (best of each workflow)
+
+
+.pull-left[
+
+
+```r
+chicago_res %&gt;% 
+  autoplot(select_best = TRUE)
+```
+
+]
+.pull-right[
+
+&lt;img src="workflow_sets_files/figure-html/plot-1.svg" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+# Passing individual options to models
+
+The _minimum_ correlation between station predictors is 0.88. Let's adjust the parameter range for the threshold parameter to be between 0.87 and .99. 
+
+We can create `dials` parameter objects to do this. 
+
+
+```r
+lm_param &lt;- 
+  pull_workflow(chicago_wflows, "filtered_lm") %&gt;% 
+  parameters() %&gt;% 
+  update(threshold = threshold(c(0.87, .99)))
+
+nnet_param &lt;- 
+  pull_workflow(chicago_wflows, "filtered_nnet") %&gt;% 
+  parameters() %&gt;% 
+  update(threshold = threshold(c(0.87, .99)))
+```
+
+---
+# Passing individual options to models
+
+Now let's update the `option` file for those two workflows and refit: 
+
+
+```r
+filtered_res &lt;- 
+  chicago_res %&gt;% 
+  option_add(param_info = lm_param,   id = "filtered_lm") %&gt;% 
+  option_add(param_info = nnet_param, id = "filtered_nnet") %&gt;% 
+  filter(grepl("filtered", wflow_id)) %&gt;% 
+  workflow_map(resamples = chicago_rs,
+               seed = 1, 
+               # Optional arguments to tune_grid()
+               grid = 20,
+               metrics = metric_set(rmse))
+```
+
+```
+## Warning: There are existing options that are being modified
+## 	filtered_lm: 'resamples', 'grid', 'metrics'
+## 	filtered_nnet: 'resamples', 'grid', 'metrics'
+```
+
+
+---
+# Updating the set
+
+.code70[
+
+.pull-left[
+
+```r
+updated_res &lt;- 
+  chicago_res %&gt;% 
+  filter(!grepl("filtered", wflow_id)) %&gt;% 
+  bind_rows(filtered_res)
+
+updated_res %&gt;% 
+  rank_results(select_best = TRUE) %&gt;% 
+  dplyr::select(wflow_id, .metric, mean, std_err, n, rank)
+```
+
+```
+## # A tibble: 8 x 6
+##   wflow_id      .metric  mean std_err     n  rank
+##   &lt;chr&gt;         &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt;
+## 1 filtered_nnet rmse     1.97   0.154    43     1
+## 2 pls_nnet      rmse     2.01   0.169    43     2
+## 3 filtered_lm   rmse     2.05   0.160    43     3
+## 4 pls_lm        rmse     2.05   0.164    43     4
+## 5 pca_lm        rmse     2.05   0.159    43     5
+## 6 basic_lm      rmse     2.05   0.161    43     6
+## 7 pca_nnet      rmse     2.06   0.163    43     7
+## 8 basic_nnet    rmse     2.18   0.212    43     8
+```
+]
+.pull-right[
+
+Plot the tuning results for a model:
+
+
+```r
+updated_res %&gt;% 
+  autoplot(id = "filtered_nnet")
+```
+&lt;img src="workflow_sets_files/figure-html/tune-1.svg" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+]
+
+
+
+
+---
+# Bayesian analysis of the results
+
+
+.pull-left[
+
+```r
+library(tidyposterior)
+rmse_res &lt;-
+  updated_res %&gt;%
+  perf_mod(
+    iter = 5000,
+    chains = 10,
+    cores = 10,
+    seed = 2,
+    refresh = 0
+  )
+
+# Assess a difference of 150 riders in MAE
+rmse_res %&gt;% 
+  autoplot(type = "ROPE", size = 0.15) 
+```
+]
+.pull-right[
+&lt;img src="workflow_sets_files/figure-html/bayes-1.svg" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Bonus: Fast screening using racing
+
+Racing is an adaptive grid search method that only focuses on tuning parameter combinations that have a good probability of being the best results. 
+
+After an initial period, some tuning parameter combinations are removed if they have no chance of being best. 
+
+This reduces the overall number of model fits. 
+
+See Sections [13.4.4](https://www.tmwr.org/grid-search.html#racing) and [15.4](https://www.tmwr.org/workflow-sets.html#racing-example) of _Tidy Models with R_
+
+---
+# Bonus: Fast screening using racing
+
+To use it, map over `"tune_race_anova"` or `"tune_race_win_loss"` after loading the `finetune` package:
+
+
+```r
+library(finetune)
+racing_res &lt;- 
+  chicago_res %&gt;% 
+  workflow_map("tune_race_anova",
+               resamples = chicago_rs,
+               seed = 1, 
+               grid = 20,
+               metrics = metric_set(rmse))
+```
+
+
+---
+# Bonus Bonus: Create an ensemble via stacking
+
+
+```r
+library(stacks)
+ens &lt;- 
+  stacks() %&gt;% 
+  add_candidates(updated_res) %&gt;% 
+  blend_predictions() %&gt;% 
+  fit_members()
+```
+
+This requires the devel version of `stacks` and you will have had to save the out-of-sample predictions for each model (via a `control` argument).
+
+This is similar to the approach taken in [h2o AutoML](https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html). 
+
+See [`stacks.tidymodels.org`](https://stacks.tidymodels.org/) and the upcoming [Chapter 20 of _Tidy Models with R_](https://www.tmwr.org/ensemble.html) for more information. 
+
+---
+# Model selection/variable assessment 
+
+Let's say that we want to assess the impact of each predictor in a model. 
+
+We can fit the model with and without the predictor and assess the effect. 
+
+
+```r
+data(biomass)
+biomass &lt;- biomass %&gt;% select(-sample, -dataset)
+
+f &lt;- HHV ~ (.)^2
+loo_f &lt;- leave_var_out_formulas(f, data = biomass, full_model = TRUE)
+length(loo_f)
+```
+
+```
+## [1] 16
+```
+
+```r
+loo_f[["oxygen"]]
+```
+
+```
+## HHV ~ carbon + hydrogen + nitrogen + sulfur + carbon:hydrogen + 
+##     carbon:nitrogen + carbon:sulfur + hydrogen:nitrogen + hydrogen:sulfur + 
+##     nitrogen:sulfur
+## &lt;environment: base&gt;
+```
+
+
+---
+# Model selection/variable assessment 
+
+
+.pull-left[
+
+.code80[
+
+
+```r
+set.seed(3)
+boots &lt;- bootstraps(biomass)
+biomass_models &lt;-
+  workflow_set(
+    preproc = loo_f,
+    models = list(lm = reg_model)
+  ) %&gt;%
+  workflow_map(
+    "fit_resamples",
+    resamples = boots,
+    metrics = metric_set(mae),
+    seed = 4
+  )
+
+mae_stats &lt;-
+  collect_metrics(biomass_models, 
+                  summarize = FALSE) %&gt;%
+  dplyr::select(wflow_id, .estimate, id)
+
+full_model &lt;-
+  filter(mae_stats, 
+         wflow_id == "everything_lm") %&gt;%
+  dplyr::select(id, full_model = .estimate)
+```
+
+]
+
+]
+.pull-right[
+Estimate the mean absolute error for various predictor subsets. 
+
+If the predictor is important, removing it makes performance worse.
+]
+
+
+---
+# Which model terms are important?
+
+.pull-left[
+
+.code70[
+
+
+```r
+left_join(mae_stats, full_model, by = "id") %&gt;% 
+  mutate(loss = .estimate - full_model) %&gt;% 
+  filter(wflow_id != "everything_lm") %&gt;% 
+  mutate(term = gsub("_lm", "", wflow_id)) %&gt;% 
+  nest_by(term) %&gt;%
+  mutate(stats = list(t.test(loss ~ 1, data = data))) %&gt;%
+  summarise(tidy(stats), .groups = "drop") %&gt;% 
+  ggplot(aes(x = estimate, y = reorder(term, estimate)))+ 
+  geom_point() + 
+  geom_vline(xintercept = 0, lty = 2, col = "red") + 
+  geom_errorbar(aes(xmin = conf.low, xmax = conf.high), 
+                width = .25) +
+  labs(x = "Loss of MAE", y = NULL)
+```
+
+]
+
+]
+.pull-right[
+&lt;img src="workflow_sets_files/figure-html/loss-plot-1.svg" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+# Summary
+
+Workflow sets can be very helpful when you need to fit a lot of models or want to create a stacking ensemble. 
+
+They can also be nice if you want to track/collate/rank results over models that have already been fit (via `as_workflow_set()`). 
+
+I don't see them as a staple of regular tidymodels analyses. 
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>\n",
+"highlightStyle": "solarized-light",
+"highlightLanguage": ["r", "css", "yaml"],
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

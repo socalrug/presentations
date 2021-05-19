@@ -1,0 +1,243 @@
+:root {
+/* CSS HEX */
+--spring-wood: #F9F8F3ff;
+--armadillo: #3E3A2Eff;
+--charcoal: #404040;
+--lagoon: #027F85;
+--electric: #86F7FD;
+--redish: #850802;
+}
+
+
+.remark-slide-content p, ul, ol, li {
+  font-size: 1.6rem;
+}
+
+ul li::marker {
+  color: var(--lagoon);
+  font-size: 1.2em;
+}
+
+.remark-slide-content {
+  background-color: var(--spring-wood);
+}
+
+.footnote {
+	bottom: 1em;
+	font-size: 75%;
+}
+
+img {
+	margin-bottom: 1.5rem;
+	overflow: hidden;
+	/*background: #fff;*/
+}
+
+/* link color */
+
+:any-link {
+    color: var(--lagoon);
+    text-decoration: underline;
+}
+
+/* mouse over link */
+a:hover, a:active, a:focus {
+    color: var(--armadillo);
+    text-decoration: underline;
+}
+
+.inverse {
+  background-color: var(--armadillo);
+  color: #fff;
+  text-shadow: none;
+}
+
+.inverse h1, .inverse h2, .inverse h3, .inverse h4 {
+	color: var(--spring-wood);
+}
+
+.inverse a {
+  color: var(--spring-wood);
+}
+
+.inverse a:hover {
+  color: var(--electric);
+}
+
+
+/* Two-column layout */
+.left-column {
+  color: #777;
+  width: 30%;
+  height: 92%;
+  float: left;
+  font-size: 18px;
+}
+
+.left-column h2:last-of-type, .left-column h3:last-child {
+  color: #000;
+}
+
+.left-column1 {
+  color: #777;
+  width: 34%;
+  height: 92%;
+  float: left;
+  font-size: 18px;
+}
+
+.right-column {
+  width: 67%;
+  float: right;
+  padding-top: 0em;
+}
+
+.right-column1 {
+  width: 63%;
+  float: right;
+  padding-top: 0em;
+}
+
+.pull-left {
+  float: left;
+  width: 47%;
+}
+.pull-right {
+  float: right;
+  width: 47%;
+}
+.pull-right ~ * {
+  clear: both;
+}
+
+img, video, iframe {
+  max-width: 100%;
+}
+table {
+  margin: auto;
+  border-top: 1px solid #666;
+  border-bottom: 1px solid #666;
+}
+table thead th { border-bottom: 1px solid #ddd; }
+th, td { padding: 5px; }
+thead, tfoot, tr:nth-child(even) { background: #eee }
+
+@page { margin: 0; }
+
+
+.title-slide h1 {
+  font-family: 'Zilla Slab', serif;
+  color: var(--charcoal);
+  font-size: 3em;
+  word-wrap: break-word;
+  margin-bottom: 1em !important;
+  font-weight: 300;
+}
+
+.title-slide h2 {
+  font-family: 'Zilla Slab', serif;
+  font-weight: 300;
+  font-size: 1.5em;
+  color: var(--charcoal);
+  text-shadow: none;
+  line-height: 2em;
+  margin-bottom: 1em !important;
+}
+
+.title-slide h3 {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 1.3em;
+  color: var(--charcoal);
+  text-transform: none;
+}
+
+/* footer */
+
+div.my-footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 20px;
+    width: 100%;
+}
+
+div.my-footer span {
+    font-size: 10pt;
+    color: #ffffff;
+    position: absolute;
+    left: 15px;
+    bottom: 2px;
+}
+
+a.footer-link {
+    position: absolute;
+    bottom: 5px;
+    right: 50px;
+    height: 40px;
+    width: 150px;
+    color: #023d4d;
+}
+
+/* Headers, body */
+
+h4 {
+  font-size: 1.8em;
+}
+
+.big-text {
+  font-size: 2.5em !important;
+}
+
+/* https://github.com/yihui/xaringan/wiki/Progressbar */
+.remark-slide-number {
+  position: inherit;
+}
+
+.remark-slide-number .progress-bar-container {
+  position: absolute;
+  bottom: 0;
+  height: 8px;
+  display: block;
+  left: 0;
+  right: 0;
+}
+
+.remark-slide-number .progress-bar {
+  height: 100%;
+  background-color: var(--orchid-pink);
+}
+
+.title-slide .remark-slide-number .progress-bar-container {
+  height: 0px;
+}
+
+hr {
+  color: #023d4d80;
+}
+
+.remark-slide-number {
+  margin-bottom: -11.6px;
+  margin-right: 10px;
+  opacity: 1; /* default: 0.5 */
+  position: absolute;
+}
+
+.pull-left-a-lot {
+  float: left;
+  width: 60%;
+}
+.pull-right-a-little {
+  float: right;
+  width: 37%;
+}
+
+
+.code70 .remark-code {
+  font-size: 70%;
+}
+
+.code80 .remark-code {
+  font-size: 80%;
+}
+
