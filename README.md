@@ -6,6 +6,8 @@ Presentation materials from our monthly meetings
 
 ## 2021 ##
 
+* 10/26/2021: *Mine Dogucu*, [Teaching and Learning Bayesian Statistics with {bayesrules}](https://github.com/ocrug/presentations/blob/master/2021-10-26Teaching%20and%20Learning%20Bayesian%20Statistics%20with%20%7Bbayesrule/Teaching%20and%20Learning%20Bayesian%20Statistics%20with%20%7Bbayesrules%7D.pdf)
+
 * 05/18/2021: *Max Kuhn*, [Create Models en mass with Workflow Sets](https://github.com/ocrug/presentations/blob/master/2021-05-18_Creating_models_en_mass_with_workflow_sets/Creating_models_en_mass_with_workflow_sets.pdf)
 
 * 04/27/2021: *Emily Riederer*, [Column Names as Contracts](https://github.com/ocrug/presentations/blob/master/2021-04-27_Column_Names_as_Contracts/Column_Names_as_Contracts.pdf)
