@@ -5,6 +5,7 @@ Presentation materials from our monthly meetings
 ---
 
 ## 2021 ##
+* 11/16/2021: *Daniel Sjorberg*, [Reporting Research Study Results with {gtsummary}](https://github.com/socalrug/presentations/blob/master/2021-11-16_Reporting_Research_Study_Results_with_gtsummary/Reporting%20Research%20Study%20Results%20with%20%7Bgtsummary%7D.pdf)
 
 * 10/26/2021: *Mine Dogucu*, [Teaching and Learning Bayesian Statistics with {bayesrules}](https://github.com/ocrug/presentations/blob/master/2021-10-26Teaching%20and%20Learning%20Bayesian%20Statistics%20with%20%7Bbayesrule/Teaching%20and%20Learning%20Bayesian%20Statistics%20with%20%7Bbayesrules%7D.pdf)
 
