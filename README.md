@@ -1,4 +1,4 @@
-# Orange County R Users Group Presentations #
+# Southern California R Users Group Presentations #
 
 Presentation materials from our monthly meetings
 
