@@ -4,6 +4,9 @@ Presentation materials from our monthly meetings
 
 ---
 
+## 2022 ##
+* 02/2/2022: *Julia Silge*, [Creating features for machine learning from text]()
+
 ## 2021 ##
 * 11/16/2021: *Daniel Sjorberg*, [Reporting Research Study Results with {gtsummary}](https://github.com/socalrug/presentations/blob/master/2021-11-16_Reporting_Research_Study_Results_with_gtsummary/Reporting%20Research%20Study%20Results%20with%20%7Bgtsummary%7D.pdf)
 
