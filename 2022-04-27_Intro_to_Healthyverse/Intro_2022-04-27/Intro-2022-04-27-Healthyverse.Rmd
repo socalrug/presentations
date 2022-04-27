@@ -1,0 +1,74 @@
+---
+title: "**Meetup** <br> Southern California R Users Group"
+subtitle: "Intro to the Healthyverse Packages"
+author: ""
+date: "2022-04-27"
+output: 
+  xaringan::moon_reader:
+    css: [default, metropolis, metropolis-fonts]
+    includes:
+      after_body: insert-logo.html
+lib_dir: libs
+nature:
+  highlightStyle: github
+highlightLines: true
+countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+options(servr.daemon = TRUE)
+```
+
+# Welcome
+
+.large[
+* Schedule
+    * 6:00 - 6:05 Welcome & Announcements
+    * 6:05 - 7:00 Intro to the Healthyverse Packages
+]
+
+---
+class: hide-logo
+# Sponsors
+<br>
+<br>
+  
+![](images/UCI_Merage_Business_School.jpg)
+---
+class: hide-logo
+# Sponsors
+<br>
+<br>
+
+![](images/MDS-Homepage-Header-1536x512.jpg)
+
+---
+class: hide-logo
+# Connect with us
+**SoCal RUG**
+.large[
+* Website: https://socalr.org
+* GitHub: https://github.com/socalrug
+* Slack: https://socalrug.slack.com
+* YouTube: https://www.youtube.com/c/SouthernCaliforniaRUsersGroup
+* Twitter @socalrug
+* Linkedin: https://www.linkedin.com/company/socalrug/
+]
+
+---
+class: hide-logo
+background-image: url(images/healthyverse.png)
+# Intro to the Healthyverse Packages
+
+---
+class: hide-logo
+# Intro to the Healthyverse Packages
+
+#### Speaker: **Steven Paul Sanderson II**
+* Steven Paul Sanderson II developed and maintains the [`healthyverse`](https://www.spsanderson.com/healthyverse/) collection of packages. He currently works as a Data Scientist at NYU Langone Health at Long Island Community Hospital where he writes custom SQL procedures and R scripts for reporting and analysis.
+
+#### Abstract: 
+The goal of the healthyverse set of packages is to present to the user a consistent and easy-to-use verb framework that allows for the analysis and presentation of typical hospital data. The focus is on a low code solution for hospitals or those that analyze hospital data to work without the burden of heavy license fees, and ease of use to the non-programmer.
+
+The healthyverse is a set of packages that work in harmony because they share common data representations and API design. The healthyverse package is designed to make it easy to install and load core packages from the healthyverse in a single command.
