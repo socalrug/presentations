@@ -1,0 +1,866 @@
+---
+title: "The {healthyverse}"
+subtitle: "A Presentation to the SoCal RUG"
+author: "Steven P Sanderson II, MPH"
+date: "`r Sys.Date()`"
+output: 
+    ioslides_presentation:
+        logo: healthyverse.png
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(tidyquant)
+library(timetk)
+library(healthyverse)
+library(tidymodels)
+library(modeltime)
+```
+
+# About Me
+
+## Education
+
+- BA Economics: SUNY Stony Brook University
+- MPH: SUNY Stony Brook University
+
+## Employment
+
+- Data Scientist/IT Manager: NYU Langone Health at Long Island Community Hospital
+- Head Data Scientist: Manchu Technologies Corp. (Consulting in `SQL`, `R`)
+- Developer: `healthyverse` packages.
+- Researcher: FMTangerman LLC https://www.fmtangerman.com/
+
+## Sites
+
+GitHub: https://github.com/spsanderson
+
+LinkedIn: https://www.linkedin.com/in/spsanderson/
+
+Personal: https://www.spsanderson.com
+
+## Interests
+
+- Data Analysis
+- R (probably obvious)
+- Plex Server (Music is life) - Is 88K mp3's to much? NO!
+
+## How I got Started
+
+I got started with R in my first job out of undergrad.
+
+Employer: "Do you know SQL and any other analysis programming?"
+Me: Yes, not a problem at all.
+
+Reality...a little different, maybe an alternative fact.
+
+SO...Google Searching...saved the day? YES!
+
+## What are we going to talk about
+
+So what are we going to discuss today?
+
+The `healthyverse` suite of packages.
+
+## Healthyverse Packages
+
+There are currently five packages in the `healthyverse`
+
+
+| Package | r-universe badge |
+|:-------:|:----------------:|
+| `healthyR` |  [![healthyR status badge](https://spsanderson.r-universe.dev/badges/healthyR)](https://spsanderson.r-universe.dev) |
+| `healthyR.data` |  [![healthyR.data status badge](https://spsanderson.r-universe.dev/badges/healthyR.data)](https://spsanderson.r-universe.dev) |
+| `healthyR.ai` | [![healthyR.ai status badge](https://spsanderson.r-universe.dev/badges/healthyR.ai)](https://spsanderson.r-universe.dev) |
+| `healthyR.ts` | [![healthyR.ts status badge](https://spsanderson.r-universe.dev/badges/healthyR.ts)](https://spsanderson.r-universe.dev) |
+| `TidyDensity` | [![TidyDensity status badge](https://spsanderson.r-universe.dev/badges/TidyDensity)](https://spsanderson.r-universe.dev) |
+
+The `healthyverse` package is really just a meta package like tidyverse.
+
+## `healthyR`
+
+First came `healthyR`
+
+The desire of this package is to be...
+
+It is experimental
+
+Site: https://www.spsanderson.com/healthyR/
+
+## LOS RA Index Plot
+This plot takes place at the end of a work flow. Let's take a look at an example. First we need some data.
+
+```{r warning=FALSE, message=FALSE}
+set.seed(123)
+data_tbl <- tibble(
+  "alos"                 = rnorm(186, 6.5, 3)
+  , "elos"               = rnorm(186, 6, 3)
+  , "readmit_rate"       = rnorm(186, .1, .05)
+  , "readmit_rate_bench" = rnorm(186, .075, .05)
+)
+
+data_tbl
+```
+
+## LOS RA Index Plot (summary)
+Now that we have our data, let's take a look at the summary table.
+
+```{r warning=FALSE, message=FALSE}
+summary_tbl <- los_ra_index_summary_tbl(
+  .data = data_tbl
+  , .max_los       = 12
+  , .alos_col      = alos
+  , .elos_col      = elos
+  , .readmit_rate  = readmit_rate
+  , .readmit_bench = readmit_rate_bench
+)
+
+head(summary_tbl, 5)
+```
+
+## LOS RA Index Plot (plot)
+
+Now lets take a look at the resulting plot and discuss what it tells us.
+
+```{r warning=FALSE, message=FALSE}
+los_ra_index_plt(summary_tbl)
+```
+
+## K-Means
+
+What is it? In it's simplest form, K-Means will partition data into K non-overlapping clusters.
+
+Example? Think a bank wanting to give people credit cards, this is a clustering
+problem, high income, average income, low income, etc.
+
+It's easy to understand how many applications this has.
+
+Healthcare is no different.
+
+## Scree Plot
+
+We are only going to focus on the scree plot. This helps us to decide how many
+clusters are in our data.
+
+This plot is also many times referred to as the elbow plot.
+
+## Example
+
+```{r warning=FALSE, message=FALSE}
+data_tbl <- healthyR_data%>%
+   filter(ip_op_flag == "I") %>%
+   filter(payer_grouping != "Medicare B") %>%
+   filter(payer_grouping != "?") %>%
+   select(service_line, payer_grouping) %>%
+   mutate(record = 1) %>%
+   as_tibble()
+
+ui_tbl <-  kmeans_user_item_tbl(
+   .data           = data_tbl
+   , .row_input    = service_line
+   , .col_input    =  payer_grouping
+   , .record_input = record
+ )
+
+kmm_tbl <- kmeans_mapped_tbl(ui_tbl)
+
+kmeans_scree_plt(.data = kmm_tbl)
+```
+
+## What Just Happened?
+
+What just happened? Magic? Maybe?
+
+First the data. Using the `healthyR_data` from my package `healthyR.data` we get a tibble of records with a service line and a payer grouping.
+
+A patients service line is the row record and the payer grouping is the item, this gives us the user item matrix we need.
+
+Next we get a tibble with multiple centers via the function `kmeans_mapped_tbl()`
+
+Lastly, we plot that mapped tibble.
+
+## Magic Chart
+
+Have you seen the Gartner Magic Quadrant Chart?
+
+If so, then you know, if not, then I'll show.
+
+First let's take a look at the function call.
+
+## Function Call
+
+```{r, eval=FALSE, echo=TRUE}
+gartner_magic_chart_plt(
+  .data = tibble::tibble(
+      x = rnorm(100, 0, 1)
+      , y = rnorm(100,0,1)
+  )
+  , .x_col = x
+  , .y_col = y
+  , .x_lab = "LOS"
+  , .y_lab = "Readmit"
+  , .plt_title = "Test Plot"
+  , .tr_lbl = "High RA-LOS"
+  , .tl_lbl = "High RA"
+  , .bl_lbl = "Leader"
+  , .br_lbl = "High LOS"
+)
+```
+
+## Plot Output
+
+```{r}
+gartner_magic_chart_plt(
+  .data = tibble::tibble(
+      x = rnorm(100, 0, 1)
+      , y = rnorm(100,0,1)
+  )
+  , .x_col = x
+  , .y_col = y
+  , .x_lab = "LOS"
+  , .y_lab = "Readmit"
+  , .plt_title = "Test Plot"
+  , .tr_lbl = "High RA-LOS"
+  , .tl_lbl = "High RA"
+  , .bl_lbl = "Leader"
+  , .br_lbl = "High LOS"
+)
+```
+
+## `healthyR.ts`
+
+What is `healthyR.ts`
+
+Site: https://www.spsanderson.com/healthyR.ts/
+
+The intent is that it be a easy to use verb framework for quick modeling of
+time-series data.
+
+It is experimental.
+
+In this section we are going to go over the processes of model tuning.
+
+## Time Series Data
+
+For this we use the internal `AirPassengers` data set.
+
+```{r, echo=TRUE}
+data_ts <- AirPassengers
+
+head(data_ts)
+```
+
+## Transform to `tibble` 
+
+Most of the work done inside of `healthyR.ts` requires the use of a `tibble`, and where a `ts` object can be used, it is typically converted to a `tibble` internally to the function. This is done on purpose so that it works well with the rest of the `tidyverse`
+
+```{r echo=TRUE}
+data_tbl <- ts_to_tbl(data_ts) %>%
+  select(-index)
+
+head(data_tbl, 5)
+```
+
+## `ts` to `tibble`
+
+With the function `ts_to_tbl()` we can take a time-series object and make it into a `tibble` object.
+
+## Splits Oject
+
+Now that we have our data, we need to make our time series split object. We use `timetk::time_series_split()`
+
+```{r, echo=TRUE}
+splits <- time_series_split(
+    data_tbl
+    , date_col
+    , assess = 12
+    , skip = 3
+    , cumulative = TRUE
+)
+
+head(training(splits), 1)
+```
+
+## Recipe
+
+Now that we have our splits object we can go ahead and make the recipe. For this
+we will use `ts_auto_recipe()` which creates four different recipes and outputs them into a list object.
+
+```{r, echo=TRUE}
+rec_objs <- ts_auto_recipe(
+  .data       = data_tbl
+  , .date_col = date_col
+  , .pred_col = value
+)
+
+```
+
+## Recipe (con't)
+
+Lets take a look at it
+
+```{r, echo=TRUE}
+rec_objs[[1]]
+```
+
+We are not going to look at all of them.
+
+## Workflow Sets and `healthyR.ts`
+Now that we have our data and our recipe, we can make our automatic `workflowsets` object. As mentioned at the top we are going to use the MARS algorithm with the earth engine. This function from `healthyR.ts` will take in a list of recipes and a `.model_type parameter`, and create a `workflowsets` `tibble`, where `cross` is set to `TRUE`
+
+We use `ts_wfs_mars()` in this example.
+
+```{r eval=FALSE, echo=TRUE}
+ts_wfs_mars(
+  .model_type = "earth",
+  .recipe_list,
+  .num_terms = 200,
+  .prod_degree = 1,
+  .prune_method = "backward"
+)
+```
+
+## (con't)
+
+Lets make the workflowset objec.
+
+```{r echo=TRUE}
+wfsets <- ts_wfs_mars(
+  .model_type = "earth"
+  , .recipe_list = rec_objs
+)
+
+wfsets
+```
+
+## (con't)
+
+I tried to give reasonable defaults for all of the functions used in the `healthyverse` set of packages.
+
+Many times hospitals, especially smaller non-academic or even small academic ones do not have a department of analysts. It could be that there are none or just one.
+
+## Modeltime workflow
+
+This workflow is outside of the scope of the `healthyverse` but necessary as it is an intermediate step before we get to the tuning process.
+
+```{r echo=TRUE}
+wf_fits <- wfsets %>%
+  modeltime_fit_workflowset(
+    data = training(splits)
+    , control = control_fit_workflowset(
+     allow_par = FALSE
+     , verbose = FALSE
+    )
+  )
+
+models_tbl <- wf_fits %>%
+  filter(.model != "NULL")
+```
+
+## (con't)
+
+You will see that we did `.model != "NULL"` this is because if a certain model tries to run, lets say an `ets` model where alpha < beta then it will fail and the `.model` output will be equal to `"NULL"`
+
+Lets see the models_tbl
+
+```{r echo=TRUE}
+models_tbl
+```
+
+## Calibration 
+
+This is another part of the `modeltime` workflow that is used. We _calibrate_ the data with the testing split using `testing(splits)`
+
+```{r echo=TRUE}
+calibration_tbl <- models_tbl %>%
+  modeltime_calibrate(new_data = testing(splits))
+
+calibration_tbl
+```
+
+## Automatic Tuning
+
+```{r eval=FALSE, echo=TRUE}
+output <- healthyR.ts::ts_model_auto_tune(
+  .modeltime_model_id = 1,
+  .calibration_tbl    = calibration_tbl,
+  .splits_obj         = splits,
+  .drop_training_na   = TRUE,
+  .date_col           = date_col,
+  .value_col          = value,
+  .tscv_assess        = "12 months",
+  .tscv_skip          = "3 months",
+  .num_cores          = 1
+)
+```
+
+## What happened?
+
+We just automatically tuned the parameters of a model.
+
+## Outputs
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+output <- healthyR.ts::ts_model_auto_tune(
+  .modeltime_model_id = 1,
+  .calibration_tbl    = calibration_tbl,
+  .splits_obj         = splits,
+  .drop_training_na   = TRUE,
+  .date_col           = date_col,
+  .value_col          = value,
+  .tscv_assess        = "12 months",
+  .tscv_skip          = "3 months",
+  .num_cores          = 5
+)
+```
+
+There are three sections of output from the function.
+
+1. Data
+2. Model Info
+3. Plots
+
+## Data
+
+The function returns the following:
+
+1. Calibration tibble from modeltime workflow
+2. Calibration tuned tibble from tuned model
+3. Time Series Cross Validation tibble
+4. Tuned Model Results
+5. Best tuned results
+6. Time Series Cross Validation object (rsample object)
+
+## Model Info
+
+The following model information is available:
+
+1. Model Specification
+2. Parsnip Engine used
+3. Plucked Model (The original model before tuning)
+4. Tuned Workflow specification
+5. Tuning Grid used
+6. Tuned Time Series Cross Validation Workflow 
+
+## Plots
+
+The following plots are returned;
+
+1. Tuning Grid Plot
+2. Cross Validation Plan
+
+https://www.spsanderson.com/healthyR.ts/articles/auto-model-tune.html#data
+
+
+## `healthyR.ai`
+
+What is `healthyR.ai`?
+
+The desire of this package is to be...
+
+It is experimental
+
+Site: https://www.spsanderson.com/healthyR.ai/
+
+## `healthyR.ai` Topics
+
+We are going to talk about two functions and one workflow.
+
+Functions:
+
+1. `hai_histogram_facet_plot()`
+2. `pca_your_recipe()`
+
+Workflow:
+
+1. Distribution Comparison of X
+
+## Histogram Facet Plot
+
+Function Call
+
+```{r eval=FALSE, echo=TRUE}
+hai_histogram_facet_plot(
+  .data,
+  .bins = 10,
+  .scale_data = FALSE,
+  .ncol = 5,
+  .fct_reorder = FALSE,
+  .fct_rev = FALSE,
+  .fill = "steelblue",
+  .color = "white",
+  .scale = "free",
+  .interactive = FALSE
+)
+```
+
+## Example Iris Data Not Scaled
+
+```{r echo=TRUE}
+hai_histogram_facet_plot(.data = iris)
+```
+
+## Example Iris Data Scaled
+
+```{r echo=TRUE}
+hai_histogram_facet_plot(.data = iris, .scale_data = TRUE)
+```
+
+## Function Reference
+
+[Histogram Facet Plot](https://www.spsanderson.com/healthyR.ai/reference/hai_histogram_facet_plot.html)
+
+## PCA Your Recipe
+
+What is PCA?
+
+Principal component analysis (PCA) is a transformation of a group of variables that produces a new set of artificial features or components. These components are designed to capture the maximum amount of information (i.e. variance) in the original variables.
+
+The function will automatically center and scale data along with dropping nzv columns before PCA is performed.
+
+## The output
+
+The function `pca_your_data()` returns invisibly a list object with a lot of information.
+
+[Reference pca_your_data()](https://www.spsanderson.com/healthyR.ai/reference/pca_your_recipe.html)
+
+## Lets test it out
+
+```{r initialize_pca_data, echo=TRUE}
+data_tbl <- healthyR_data %>%
+    select(visit_end_date_time) %>%
+    summarise_by_time(
+        .date_var = visit_end_date_time,
+        .by       = "month",
+        value     = n()
+    ) %>%
+    set_names("date_col","value") %>%
+    filter_by_time(
+        .date_var = date_col,
+        .start_date = "2013",
+        .end_date = "2020"
+    )
+
+splits <- initial_split(data = data_tbl, prop = 0.8)
+
+rec_obj <- recipe(value ~ ., training(splits)) %>%
+    step_timeseries_signature(date_col) %>%
+    step_rm(matches("(iso$)|(xts$)|(hour)|(min)|(sec)|(am.pm)"))
+```
+
+## Now lets PCA the Recipe
+
+```{r echo=TRUE}
+output_list <- pca_your_recipe(rec_obj, .data = data_tbl)
+
+names(output_list)
+```
+
+## Lets Look at the Plots
+
+```{r, echo=TRUE}
+output_list[["pca_variance_scree_plt"]]
+```
+
+## PCA Variance Scree Plot
+
+This shows us how much variability is captured by each principal component
+
+## PCA Loadings Plot
+
+```{r, echo=TRUE}
+output_list[["pca_loadings_plt"]]
+```
+
+## PCA Top N Loadings Plot
+
+```{r echo=TRUE}
+output_list$pca_top_n_loadings_plt
+```
+
+## PC Loadings
+
+Remember loadings are coefficients in linear combination predicting a varible by the standardized components, `pca_your_data()` will standardize your numberic components only for now.
+
+[PCA On StatQuest](https://statquest.org/pca-clearly-explained/)
+
+## Distribution Comparison
+
+This is a workflow, meaning we pipe certain commands together to get the data. We will do this step by step. Here is an example of the full workflow:
+
+```{r echo=TRUE}
+df <- hai_scale_zero_one_vec(.x = mtcars$mpg)
+
+dist_comp_tbl <- hai_distribution_comparison_tbl(
+    .x = df,
+    .distributions = c("beta"),
+    .normalize = FALSE
+)
+
+dist_tbl <- hai_get_density_data_tbl(.data = dist_comp_tbl)
+
+dens_plt <- hai_density_plot(dist_tbl, distribution, x, y, 
+                             .interactive = FALSE)
+```
+
+## Scaling Data
+
+So first we used `hai_scale_zero_one_vec()` which is a vectorized function that returns data on a vector from [0, 1] inclusive.
+
+Did it here to showcase.
+
+## Distribution Comparison Table
+
+[Function Reference](https://www.spsanderson.com/healthyR.ai/reference/hai_distribution_comparison_tbl.html)
+
+The end user can choose from several different distributions to make the comparison to the empirical data provided. 
+
+Might drop this in favor of moving the functionality to TidyDensity
+
+## (con't)
+
+Lets see some output
+
+```{r echo=TRUE}
+dist_comp_tbl
+```
+
+## (con't)
+
+This function as the library is experimental. There are some minor issues to flush out but the gist is that you can provide some vector x and choose from the list of supported distributions and get back certain information on them.
+
+The vector x is passed through the resulting base `r_` distribution function and that creates the dist_data column.
+
+The dist_data column is passed through to the `density()` function to get the density object. Right now the default n of 512 is used. May change this to the actual `n` or give user the option.
+
+## Distribution Data
+
+We used the function `hai_get_density_data_tbl()` which extracts the information we want from the dis_comp_tbl that was created.
+
+```{r echo=TRUE}
+head(dist_tbl, 5)
+```
+
+## (con't)
+
+Simply what the function does is act as a sort of 'getter'. It grabs the density data from the `dist_comp_tbl` and puts it into a `tibble`
+
+[Function Reference](https://www.spsanderson.com/healthyR.ai/reference/hai_get_density_data_tbl.html)
+
+## Density Comparison Plot
+
+```{r echo=TRUE}
+dens_plt
+```
+
+## (con't)
+
+So what we see now is the densities plotted against each other. The work to get to this point was minimal, only three functions.
+
+[Function Reference](https://www.spsanderson.com/healthyR.ai/reference/hai_density_plot.html)
+
+## `healthyR.data`
+
+The desire of this package is to be...
+
+It is stable
+
+Site: https://www.spsanderson.com/healthyR.data/
+
+## `TidyDensity`
+
+The desire of this package is to be...
+
+It is stable
+
+Site: https://www.spsanderson.com/TidyDensity/
+
+## Underlying Packages
+
+Heavy use of base R
+`actuar` for other distributions
+
+Simple piped workflow, tries to be consistent with `tidyverse`
+
+## Simple functions
+
+`rnorm()` = `tidy_normal()`
+
+Try to use sensible defaults.
+
+Referred to as `tidy_` distribution functions.
+
+Syntax that is in all `tidy_` distribution functions `.n` and `.num_sims` where `.n` is the number of randomly generated points and `.num_sims` is how many simulations should be run.
+
+# Examples
+
+## What to Generate
+
+Generate five simulations of 100 points for normal and poisson distributions.
+
+```{r echo=TRUE}
+n <- 100
+ns <- 5
+```
+
+## Tidy Normal
+
+```{r echo=TRUE}
+tn <- tidy_normal(.n = n, .num_sims = ns)
+head(tn, 1)
+tn %>% group_by(sim_number) %>% summarise(mean_val = mean(y))
+```
+
+## Tidy Poisson
+
+```{r echo=TRUE}
+tp <- tidy_poisson(.n = n, .num_sims = ns)
+head(tp, 1)
+tp %>% group_by(sim_number) %>% summarise(mean_val = mean(y))
+```
+
+## What do we notice
+
+We see that there is some random variation in the data...so what does it look like?
+
+## Ploting
+
+Hello `tidy_autoplot()`
+
+Let's take a look at both `tn` and `tp`
+
+## Plot Tidy Normal
+
+```{r echo=TRUE}
+tn %>% tidy_autoplot()
+```
+
+## Plot Tidy Poisson
+
+```{r echo=TRUE}
+tp %>% tidy_autoplot()
+```
+
+## What other plots are there?
+
+[Function Reference](https://www.spsanderson.com/TidyDensity/reference/tidy_autoplot.html)
+
+-  "density"
+-  "probability"
+-  "quantile"
+-  "qq"
+
+Plots can also be interactive. Tried to make them as automatic as possible.
+
+## Combined Distributions
+
+Can we combine distributions and visualize them? Yes!
+
+We can do this with `tidy_combine_distributions()` and `tidy_combined_autoplot()`
+
+How does it work? 
+
+## (con't)
+
+```{r echo=TRUE}
+combined_tbl <- tidy_combine_distributions(
+    tidy_normal(), 
+    tidy_beta()
+)
+head(combined_tbl, 5)
+```
+
+## (con't)
+
+```{r echo=TRUE}
+combined_tbl %>% 
+    group_by(dist_type) %>% 
+    summarise(mean_val = mean(y)) %>% 
+    ungroup()
+```
+
+## Visualize the Distributions Density
+
+```{r echo=TRUE}
+combined_tbl %>% tidy_combined_autoplot()
+```
+
+## Visualize the Distributions QQ
+
+```{r echo=TRUE}
+combined_tbl %>% tidy_combined_autoplot(.plot_type = "qq")
+```
+
+## Multiple Versions of One distribution?
+
+What if you want to see different parameters for a single distribution?
+
+`tidy_multi_single_dist()` to the rescue!
+
+## Function Call
+
+```{r echo=TRUE, eval=FALSE}
+tidy_multi_single_dist(
+  .tidy_dist = "tidy_normal",
+  .param_list = list(
+    .n = n,
+    .mean = c(-1, 0, 1),
+    .sd = 1,
+    .num_sims = ns
+  )
+)
+```
+
+## Inspect
+
+```{r echo=FALSE}
+tmn <- tidy_multi_single_dist(
+  .tidy_dist = "tidy_normal",
+  .param_list = list(
+    .n = n,
+    .mean = c(-1, 0, 1),
+    .sd = 1,
+    .num_sims = ns
+  )
+)
+
+```
+
+```{r echo=TRUE}
+tmn %>% with_groups(dist_name, summarise, mean(y))
+```
+
+## Visualize
+
+```{r echo=TRUE}
+tmn %>% tidy_multi_dist_autoplot()
+```
+
+## Parameter Estimation
+
+Lets pick on the `beta` distribution.
+
+Lets define a vector x
+
+```{r echo=TRUE}
+x <- tidy_beta(.n = n, .shape1 = 0.1, .shape2 = 0.4)$y
+```
+
+## Beta Estimates
+
+Outputs a list object, here we want to see the estimates tibble.
+
+```{r echo=TRUE}
+util_beta_param_estimate(x)$parameter_tbl %>% 
+    select(dist_type, shape1, shape2, method)
+```
+
+## Visualize the Empirical vs Estimated
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+util_beta_param_estimate(x)$combined_data_tbl %>%
+  tidy_combined_autoplot()
+```
+
+# Thank You!!
