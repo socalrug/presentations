@@ -1,0 +1,1070 @@
+---
+title: "{reactable**fmtr**}"
+subtitle: "Streamlined Table Styling and Formatting for {reactable}"
+author: "Kyle Cuilla <br><i class='fa fa-twitter'></i> @kc_analytics | <i class='fa fa-github'></i> @kcuilla"
+date: "July 26th, 2022"
+output:
+  xaringan::moon_reader:
+    css: ['xaringan-themer.css', 'my-style.css']
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+library(xaringanExtra)
+
+style_mono_accent(
+  base_color = "#15607A",
+  code_inline_color = "#FA8C00",
+  text_bold_color = "#FA8C00",
+  header_h1_font_size = "2.5rem",
+  header_h2_font_size = "2rem",
+  header_h3_font_size = "1.5rem",
+  base_font_size = "18px",
+  header_font_google = google_font("Martel"),
+  text_font_google   = google_font("Montserrat", "300", "300i"),
+  code_font_google   = google_font("Fira Mono")
+)
+```
+
+
+class: large-font
+# Goals of this package
+
+- Reduce the number of **lines of code** needed to generate styled tables
+
+- **Reproducible functions** that are highly customizable
+
+- Remove the need for **external CSS files** and **image folders**
+
+- Lower the **barrier to entry** for {reactable}
+
+- Increase the number of **formatting and style options**
+
+.hex-logo[![](https://raw.githubusercontent.com/kcuilla/reactablefmtr/main/man/figures/reactablefmtr_hex_logo.png)]
+
+
+---
+# Features
+
+Column formatters:
+- `bubble_grid()`
+- `color_scales(), color_tiles()`
+- `data_bars()`
+- `embed_img()`
+- `gauge_chart()`
+- `icon_assign(), icon_sets()`
+- `pill_buttons()`
+- `react_sparkline(), react_sparkbar()`
+
+Table themes & formatters:
+- `add_title(), add_subtitle(), add_source()`
+- `add_legend()`
+- `google_font()`
+- 25+ themes, including: `espn(), fivethirtyeight(), nytimes()`
+
+& more!
+
+.table-example[![](https://raw.githubusercontent.com/kcuilla/reactablefmtr/main/man/figures/fivethirtyeightthemeexample.gif)]
+
+
+---
+class: middle, center, inverse
+# Examples
+
+
+---
+# Install package
+
+Install from CRAN:
+```{r cran_install, eval=FALSE}
+install.packages("reactablefmtr")
+```
+
+Install latest dev version from GitHub:
+```{r github_install, eval=FALSE}
+remotes::install_github("kcuilla/reactablefmtr")
+```
+
+
+---
+# Load data
+
+.pull-left[
+```{r load_data, eval=FALSE}
+library(reactablefmtr)
+library(tidyverse)
+
+df <- mtcars %>%
+  rownames_to_column(var = 'model') %>% 
+  mutate(mpg = round(mpg, 0)) %>%
+  select(c(model, mpg)) %>%
+  arrange(model) %>% 
+  slice(20:29) %>%
+  arrange(desc(mpg))
+
+reactable(df)
+```
+]
+
+.pull-right[
+```{r ref.label="load_data", echo=FALSE}
+```
+]
+
+
+---
+class: middle, center
+# **Column formatters**
+
+
+---
+# Column formatting options
+
+```{r xaringan-panelset, include=FALSE, echo=FALSE}
+xaringanExtra::use_panelset()
+```
+
+.panelset[
+.panel[.panel-name[`data_bars()`]
+
+.pull-left[
+```{r data_bars, eval=FALSE}
+reactable(
+  df,
+  columns = list(       
+    mpg = colDef(
+      cell = data_bars(df)  #<<
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="data_bars", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[`color_scales()`]
+
+.pull-left[
+```{r color_scales, eval=FALSE}
+reactable(
+  df,
+  columns = list(       
+    mpg = colDef(
+      style = color_scales(df)  #<<
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="color_scales", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[`color_tiles()`]
+
+.pull-left[
+```{r color_tiles, eval=FALSE}
+reactable(
+  df,
+  columns = list(       
+    mpg = colDef(
+      cell = color_tiles(df)  #<<
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="color_tiles", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[`icon_sets()`]
+
+.pull-left[
+```{r icon_sets, eval=FALSE}
+reactable(
+  df,
+  columns = list(       
+    mpg = colDef(
+      cell = icon_sets(df)  #<<
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="icon_sets", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[`icon_assign()`]
+
+.pull-left[
+```{r icon_assign, eval=FALSE}
+reactable(
+  df,
+  columns = list(       
+    mpg = colDef(
+      cell = icon_assign(df, icon = "star", buckets = 5, align_icons = "right")  #<<
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="icon_assign", echo=FALSE}
+```
+]
+]
+]
+
+
+---
+class: middle, center
+#**Customization options**
+
+
+---
+# `data_bars()` color options
+
+.panelset[
+.panel[.panel-name[single]
+
+.pull-left[
+```{r single_color, eval=FALSE}
+reactable(
+  df,
+  columns = list(
+    mpg = colDef(
+      cell = data_bars(
+        data = df,
+        fill_color = '#157a62')  #<<
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="single_color", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[multiple]
+
+.pull-left[
+```{r multiple_colors, eval=FALSE}
+reactable(
+  df,
+  columns = list(
+    mpg = colDef(
+      cell = data_bars(
+        data = df,
+        fill_color = c("#80ED99","#57CC99","#38A3A5","#22577A"))  #<<
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="multiple_colors", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[gradient]
+
+.pull-left[
+```{r gradient_colors, eval=FALSE}
+reactable(
+  df,
+  columns = list(
+    mpg = colDef(
+      cell = data_bars(
+        data = df,
+        fill_color = c("#80ED99","#57CC99","#38A3A5","#22577A"),
+        text_color = 'white',
+        fill_gradient = TRUE)  #<<
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="gradient_colors", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[background]
+
+.pull-left[
+```{r background_color, eval=FALSE}
+reactable(
+  df,
+  columns = list(
+    mpg = colDef(
+      cell = data_bars(
+        data = df,
+        fill_color = '#157a62',
+        background = 'transparent')  #<<
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="background_color", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[conditional]
+
+.pull-left[
+```{r model_conditional, eval=FALSE}
+df %>%
+  mutate(
+    toyota = case_when(                #<<
+      str_detect(model,'Toyota') ~ '#EB0A1E', 
+      TRUE ~ '#C1C1C1'                        #<<
+  )
+) %>% 
+reactable(
+  columns = list(
+    mpg = colDef(
+      cell = data_bars(
+        data = .,
+        background = 'transparent',
+        fill_color_ref = 'toyota')          #<<
+    ),
+    toyota = colDef(show = FALSE)           #<<
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="model_conditional", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[fill_by]
+
+.pull-left[
+```{r fill_by, eval=FALSE}
+reactable(
+  df,
+  columns = list(
+    model = colDef(
+      cell = data_bars(
+        data = df,
+        fill_color = '#157a62',
+        text_position = 'above',
+        fill_by = 'mpg' #<<
+      )          
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="fill_by", echo=FALSE}
+```
+]
+]
+]
+
+
+---
+class: middle, center
+# **Sparklines**
+
+
+---
+# Load data
+
+.pull-left[
+```{r storm_data, eval=FALSE}
+library(nycflights13)
+
+df <- weather %>%
+  group_by(origin, month, day) %>%
+  summarize(avg_temp = mean(temp, na.rm=TRUE)) %>% 
+  group_by(Airport = origin) %>% 
+  summarize(`Avg Daily Temp` = list(avg_temp)) #<<
+
+reactable(head(df,1))
+```
+]
+
+.pull-right[
+```{r ref.label="storm_data", echo=FALSE}
+```
+]
+
+
+---
+# Chart types
+
+.panelset[
+.panel[.panel-name[`react_sparkline()`]
+
+.pull-left[
+```{r react_sparkline, eval=FALSE}
+reactable(
+  df,
+  columns = list(
+    Airport = colDef(minWidth = 30),
+    `Avg Daily Temp` = colDef(
+      cell = react_sparkline(df, height = 75)  #<<
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="react_sparkline", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[`react_sparkbar()`]
+
+.pull-left[
+```{r react_sparkbar, eval=FALSE}
+reactable(
+  df,
+  columns = list(
+    Airport = colDef(minWidth = 30),
+    `Avg Daily Temp` = colDef(
+      cell = react_sparkbar(df, height = 75)  #<<
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="react_sparkbar", echo=FALSE}
+```
+]
+]
+]
+
+
+---
+# Sparkline options
+
+.panelset[
+.panel[.panel-name[`highlight_points`]
+
+.pull-left[
+```{r highlight_points, eval=FALSE}
+reactable(
+  df,
+  columns = list(
+    Airport = colDef(minWidth = 30),
+    `Avg Daily Temp` = colDef(
+      cell = react_sparkline( 
+        data = df,
+        highlight_points = highlight_points(min="blue",max="red"), #<<
+        height = 75
+      )  
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="highlight_points", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[`labels`]
+
+.pull-left[
+```{r labels, eval=FALSE}
+reactable(
+  df,
+  columns = list(
+    Airport = colDef(minWidth = 30),
+    `Avg Daily Temp` = colDef(
+      cell = react_sparkline( 
+        data = df,
+        highlight_points = highlight_points(min="blue",max="red"), 
+        labels = c("min","max"), #<<
+        height = 75
+      )  
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="labels", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[`bandline`]
+
+.pull-left[
+```{r bandline, eval=FALSE}
+reactable(
+  df,
+  columns = list(
+    Airport = colDef(minWidth = 30),
+    `Avg Daily Temp` = colDef(
+      cell = react_sparkline( 
+        data = df,
+        highlight_points = highlight_points(min="blue",max="red"), 
+        labels = c("min","max"),
+        bandline = "innerquartiles", #<<
+        bandline_color = "#FA8C00", #<<
+        height = 75
+      )  
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="bandline", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[`statline`]
+
+.pull-left[
+```{r statline, eval=FALSE}
+reactable(
+  df,
+  columns = list(
+    Airport = colDef(minWidth = 30),
+    `Avg Daily Temp` = colDef(
+      cell = react_sparkline( 
+        data = df,
+        highlight_points = highlight_points(min="blue",max="red"), 
+        labels = c("min","max"),
+        statline = "mean", #<<
+        statline_color = "#FA8C00", #<< 
+        height = 75
+      )  
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="statline", echo=FALSE}
+```
+]
+]
+
+
+.panel[.panel-name[`show_area`]
+
+.pull-left[
+```{r show_area, eval=FALSE}
+reactable(
+  df,
+  columns = list(
+    Airport = colDef(minWidth = 30),
+    `Avg Daily Temp` = colDef(
+      cell = react_sparkline( 
+        data = df,
+        show_area = TRUE, #<<
+        height = 75
+      )  
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="show_area", echo=FALSE}
+```
+]
+]
+
+
+.panel[.panel-name[`line_color_ref`]
+
+.pull-left[
+```{r line_color_ref, eval=FALSE}
+df %>% 
+  mutate(
+    airport_colors = case_when(   #<<
+      Airport == "EWR" ~ "#f5a24b", #<<
+      Airport == "JFK" ~ "#af52d5",  #<<
+      TRUE ~ "#4c9b9b"             #<<
+    )
+  ) %>% 
+reactable(
+  columns = list(
+    Airport = colDef(minWidth = 30),
+    airport_colors = colDef(show = FALSE),
+    `Avg Daily Temp` = colDef(
+      cell = react_sparkline( 
+        data = .,
+        show_area = TRUE,
+        line_color_ref = "airport_colors", #<<
+        height = 75
+      )  
+    )
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="line_color_ref", echo=FALSE}
+```
+]
+]
+]
+
+
+---
+class: middle, center
+# **Embed images**
+
+
+---
+# Load data
+
+.pull-left[
+```{r nfl_data, eval=FALSE}
+library(nflreadr)
+library(nflfastR)
+
+df <- load_player_stats(2021) %>%
+  arrange(desc(passing_yards)) %>% 
+  head(10) %>% 
+  left_join(load_rosters(2021), by = c('player_id' = 'gsis_id')) %>% 
+  left_join(teams_colors_logos, by = c('recent_team' = 'team_abbr')) %>% 
+  select(headshot_url,logo_url=team_logo_espn,player_name,wk=week,yds=passing_yards)
+
+reactable(df)
+```
+]
+
+.pull-right[
+```{r ref.label="nfl_data", echo=FALSE}
+```
+]
+
+
+---
+# Image options
+.panelset[
+.panel[.panel-name[`embed_img()`]
+
+.pull-left[
+```{r embed_img, eval=FALSE}
+reactable(
+  df,
+  defaultPageSize = 5,
+  columns = list(
+    player_name = colDef(minWidth = 120),
+    wk = colDef(width = 50),
+    yds = colDef(width = 70),
+    headshot_url = colDef(cell = embed_img(height = 45, width = 65)), #<<
+    logo_url = colDef(cell = embed_img(height = 45, width = 50)) #<<
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="embed_img", echo=FALSE}
+```
+]
+]
+
+
+.panel[.panel-name[`background_img()`]
+
+.pull-left[
+```{r background_img, eval=FALSE}
+reactable(
+  df,
+  defaultPageSize = 5,
+  columns = list(
+    player_name = colDef(minWidth = 120),
+    wk = colDef(width = 50),
+    yds = colDef(width = 70),
+    headshot_url = colDef(
+      cell = embed_img(height = 45, width = 65),
+      style = background_img(data = df, img_ref = 'logo_url', height = '105%', width = '65%')), #<<
+    logo_url = colDef(show = FALSE) 
+  )
+)
+```
+]
+
+.pull-right[
+```{r ref.label="background_img", echo=FALSE}
+```
+]
+]
+]
+
+
+---
+class: middle, center
+# **Table themes**
+
+
+---
+# Theme examples
+.panelset[
+.panel[.panel-name[`fivethirtyeight()`]
+
+.pull-left[
+```{r fivethirtyeight, eval=FALSE}
+mtcars %>%
+  rownames_to_column(var = 'model') %>% 
+  mutate(Make = word(model, 1)) %>% 
+  group_by(Make) %>% 
+  summarize(
+    `Avg MPG` = round(mean(mpg), 0),
+    `Avg HP` = round(mean(hp), 0)
+  ) %>% 
+  reactable(
+    theme = fivethirtyeight() #<<
+  )
+```
+]
+
+.pull-right[
+```{r ref.label="fivethirtyeight", echo=FALSE}
+```
+]
+]
+
+
+.panel[.panel-name[`nytimes()`]
+
+.pull-left[
+```{r nytimes, eval=FALSE}
+mtcars %>%
+  rownames_to_column(var = 'model') %>% 
+  mutate(Make = word(model, 1)) %>% 
+  group_by(Make) %>% 
+  summarize(
+    `Avg MPG` = round(mean(mpg), 0),
+    `Avg HP` = round(mean(hp), 0)
+  ) %>% 
+  reactable(
+    theme = nytimes() #<<
+  )
+```
+]
+
+.pull-right[
+```{r ref.label="nytimes", echo=FALSE}
+```
+]
+]
+
+
+.panel[.panel-name[`espn()`]
+
+.pull-left[
+```{r espn, eval=FALSE}
+mtcars %>%
+  rownames_to_column(var = 'model') %>% 
+  mutate(Make = word(model, 1)) %>% 
+  group_by(Make) %>% 
+  summarize(
+    `Avg MPG` = round(mean(mpg), 0),
+    `Avg HP` = round(mean(hp), 0)
+  ) %>% 
+  reactable(
+    theme = espn() #<<
+  )
+```
+]
+
+.pull-right[
+```{r ref.label="espn", echo=FALSE}
+```
+]
+]
+
+
+.panel[.panel-name[`sanfran()`]
+
+.pull-left[
+```{r sanfran, eval=FALSE}
+mtcars %>%
+  rownames_to_column(var = 'model') %>% 
+  mutate(Make = word(model, 1)) %>% 
+  group_by(Make) %>% 
+  summarize(
+    `Avg MPG` = round(mean(mpg), 0),
+    `Avg HP` = round(mean(hp), 0)
+  ) %>% 
+  reactable(
+    theme = sanfran() #<<
+  )
+```
+]
+
+.pull-right[
+```{r ref.label="sanfran", echo=FALSE}
+```
+]
+]
+
+
+.panel[.panel-name[`dark()`]
+
+.pull-left[
+```{r dark, eval=FALSE}
+mtcars %>%
+  rownames_to_column(var = 'model') %>% 
+  mutate(Make = word(model, 1)) %>% 
+  group_by(Make) %>% 
+  summarize(
+    `Avg MPG` = round(mean(mpg), 0),
+    `Avg HP` = round(mean(hp), 0)
+  ) %>% 
+  reactable(
+    theme = dark() #<<
+  )
+```
+]
+
+.pull-right[
+```{r ref.label="dark", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[`hoverdark()`]
+
+.pull-left[
+```{r hoverdark, eval=FALSE}
+mtcars %>%
+  rownames_to_column(var = 'model') %>% 
+  mutate(Make = word(model, 1)) %>% 
+  group_by(Make) %>% 
+  summarize(
+    `Avg MPG` = round(mean(mpg), 0),
+    `Avg HP` = round(mean(hp), 0)
+  ) %>% 
+  reactable(
+    theme = hoverdark() #<<
+  )
+```
+]
+
+.pull-right[
+```{r ref.label="hoverdark", echo=FALSE}
+```
+]
+]
+]
+
+
+---
+class: middle, center
+#**Table elements**
+
+---
+# Table formatting options
+.panelset[
+.panel[.panel-name[`add_title()`]
+
+.pull-left[
+```{r add_title, eval=FALSE}
+mtcars %>%
+  rownames_to_column(var = 'model') %>% 
+  mutate(Make = word(model, 1)) %>% 
+  group_by(Make) %>% 
+  summarize(
+    `Avg MPG` = round(mean(mpg), 0),
+    `Avg HP` = round(mean(hp), 0)
+  ) %>% 
+  reactable(
+    defaultPageSize = 8,
+    columns = list(
+      `Avg MPG` = colDef(
+        cell = icon_assign(., icon = "star", buckets = 5, align_icons = "right")
+      ),
+      `Avg HP` = colDef(
+        cell = icon_assign(., icon = "star", buckets = 5, align_icons = "right")
+      )
+    )
+  ) %>% 
+  add_title("MPG & HP Ratings") #<<
+```
+]
+
+.pull-right[
+```{r ref.label="add_title", echo=FALSE}
+```
+]
+]
+
+
+.panel[.panel-name[`add_subtitle()`]
+
+.pull-left[
+```{r add_subtitle, eval=FALSE}
+mtcars %>%
+  rownames_to_column(var = 'model') %>% 
+  mutate(Make = word(model, 1)) %>% 
+  group_by(Make) %>% 
+  summarize(
+    `Avg MPG` = round(mean(mpg), 0),
+    `Avg HP` = round(mean(hp), 0)
+  ) %>% 
+  reactable(
+    defaultPageSize = 8,
+    columns = list(
+      `Avg MPG` = colDef(
+        cell = icon_assign(., icon = "star", buckets = 5, align_icons = "right")
+      ),
+      `Avg HP` = colDef(
+        cell = icon_assign(., icon = "star", buckets = 5, align_icons = "right")
+      )
+    )
+  ) %>% 
+  add_title("MPG & HP Ratings") %>% 
+  add_subtitle("by car manufacturer", font_color = "#555555", margin = reactablefmtr::margin(t=-10,r=0,b=0,l=0)) #<<
+```
+]
+
+.pull-right[
+```{r ref.label="add_subtitle", echo=FALSE}
+```
+]
+]
+
+
+.panel[.panel-name[`add_source()`]
+
+.pull-left[
+```{r add_source, eval=FALSE}
+mtcars %>%
+  rownames_to_column(var = 'model') %>% 
+  mutate(Make = word(model, 1)) %>% 
+  group_by(Make) %>% 
+  summarize(
+    `Avg MPG` = round(mean(mpg), 0),
+    `Avg HP` = round(mean(hp), 0)
+  ) %>% 
+  reactable(
+    defaultPageSize = 8,
+    columns = list(
+      `Avg MPG` = colDef(
+        cell = icon_assign(., icon = "star", buckets = 5, align_icons = "right")
+      ),
+      `Avg HP` = colDef(
+        cell = icon_assign(., icon = "star", buckets = 5, align_icons = "right")
+      )
+    )
+  ) %>% 
+  add_source("Data from 1974 Motor Trend Test (mtcars)", font_style = "italic") #<<
+```
+]
+
+.pull-right[
+```{r ref.label="add_source", echo=FALSE}
+```
+]
+]
+
+.panel[.panel-name[`add_legend()`]
+
+.pull-left[
+```{r add_legend, eval=FALSE}
+df <- mtcars %>%
+  rownames_to_column(var = 'model') %>% 
+  mutate(Make = word(model, 1)) %>% 
+  group_by(Make) %>% 
+  summarize(`Min` = round(min(mpg), 0),
+            `Avg` = round(mean(mpg), 0),
+            `Max` = round(max(mpg), 0))
+
+reactable(
+  df,
+  defaultSorted = 'Max',
+  defaultSortOrder = 'desc',
+  defaultPageSize = 7,
+  columnGroups = list(colGroup(name='MPG',columns=c('Min','Avg','Max'))),
+  defaultColDef = colDef(
+      width = 90,
+      style = color_scales(df, show_text = FALSE)
+    )
+  ) %>% 
+  add_legend(data = df, col_name = 'Max', bins = 7, labels = TRUE) #<<
+```
+]
+
+.pull-right[
+```{r ref.label="add_legend", echo=FALSE}
+```
+]
+]
+]
+
+
+---
+class: middle, center, inverse
+# Additional resources
+
+
+---
+# {reactablefmtr} site
+### **https://kcuilla.github.io/reactablefmtr/index.html**
+
+![Image description](https://raw.githubusercontent.com/kcuilla/reactablefmtr/main/man/figures/reactablefmtr_site.PNG)
+
+
+---
+class: center, middle
+# Thank you!
+
+<i class='fa fa-twitter'></i> @kc_analytics, 
+<i class='fa fa-github'></i> @kcuilla
