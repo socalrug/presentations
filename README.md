@@ -5,6 +5,8 @@ Presentation materials from our monthly meetings
 ---
 
 ## 2022 ##
+* 06/28/2022 *Emil Hvitfeldt* [I Did Advent of Code and Here is What I Learned](https://github.com/socalrug/presentations/tree/master/2022-06-28_I_Did_Advent_of_Code_and_Here_is_What_I%20Learned)
+
 * 04/27/2022 *Steven Paul Sanderson II* [Intro to the Healthyverse Packages](https://github.com/socalrug/presentations/tree/master/2022-04-27_Intro_to_Healthyverse)
 
 * 02/22/2022: *Julia Silge*, [Creating features for machine learning from text](https://github.com/socalrug/presentations/blob/master/2022-02-22_Creating_features_for_machine_learning_from_text/silge-la-rug.pdf)
