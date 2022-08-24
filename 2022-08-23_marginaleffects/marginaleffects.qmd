@@ -1,0 +1,655 @@
+---
+format:
+  revealjs:
+    self-contained: true
+code-line-numbers: false
+execute:
+  echo: true
+---
+
+## I fit a model... now what?
+
+![](fig/logo_mfx.png)
+
+```{r}
+#| include: false
+#setwd("/Users/vince/Dropbox/marginaleffects")
+setwd("~/Dropbox/research/marginaleffects_talk")
+library(ggplot2)
+theme_set(theme_minimal())
+options(modelsummary_factory_default = "gt")
+```
+
+## About me
+
+:::: {.columns}
+
+::: {.column}
+* Québécois
+* PhD University of Michigan
+* Associate Professor of Political Science, Université de Montréal
+  - Social Science Research Methods
+  - Political Economy
+* First upload to CRAN: 2009-06-03
+:::
+
+::: {.column}
+![](fig/moose.jpg)
+:::
+
+::::
+
+## Problem 1: Inconsistency 
+
+Predicted probabilities with standard errors:
+
+```{r}
+library(nnet)
+
+# logit
+mod1 <- glm(vs ~ hp + mpg, data = mtcars, family = binomial)
+
+# Multinomial logit
+mod2 <- multinom(factor(gear) ~ hp + am, data = mtcars, trace = FALSE)
+
+pred1 <- predict(mod1, se.fit = TRUE, type = "response")
+pred2 <- predict(mod2, se.fit = TRUE, type = "probs")
+```
+
+## Problem 1: Inconsistency 
+
+Logit:
+
+```{r}
+str(pred1)
+```
+
+Multinomial logit:
+
+```{r}
+str(pred2)
+```
+
+## Problem 2: Interpretation
+
+:::: {.columns}
+::: {.column}
+```{r}
+summary(mod1)
+```
+:::
+::: {.column}
+```{r}
+summary(mod2)
+```
+:::
+::::
+
+What does "log odds" mean in the real world?
+
+## Solution: `marginaleffects`
+
+:::: {.columns}
+
+::: {.column}
+Interpretation:
+
+* Post-estimation methods to interpret statistical models
+
+Consistency:
+
+* 5 general purpose technologies
+* 68 classes of models supported
+:::
+
+::: {.column}
+![](fig/logo_mfx.png)
+:::
+
+::::
+
+## Alternatives (try them!)
+
+:::: {.columns}
+::: {.column}
+`emmeans`
+
+* Most popular
+* Feature gap is closing (reversing?)
+* Fewer models supported
+* Feels complicated (to me!)
+
+`margins`:
+
+* Author has recommended `marginaleffects`
+:::
+
+::: {.column}
+`modelbased` and `ggeffects`
+
+* Easy
+* Great plots
+* Wrappers around `emmeans`
+* Less flexible
+
+Try them; they're great!
+:::
+::::
+
+
+## So why `marginaleffects`?
+
+* Simple
+* Powerful
+* Composable
+* Valid
+* More models
+* Active development (I have tenure and love this stuff.)
+
+## Five general purpose technologies 
+
+Interpret statistical models with:
+
+1. Delta method
+1. Adjusted predictions
+1. Contrasts
+1. Marginal effects
+1. Marginal means
+
+## Demo: 1892 free CSVs on RDatasets
+
+![](fig/rdatasets.jpg)
+
+[https://vincentarelbundock.github.io/Rdatasets/](https://vincentarelbundock.github.io/Rdatasets/)
+
+## Fair's Affairs (1969)
+
+Number of extra-marital affairs, children, age, etc.
+
+```{r}
+affairs <- read.csv("https://vincentarelbundock.github.io/Rdatasets/csv/AER/Affairs.csv")
+tail(affairs)
+```
+
+## Fair's Affairs (1969)
+
+Poisson model:
+
+```{r}
+library(marginaleffects)
+mod <- glm(
+  affairs ~ children + gender + yearsmarried,
+  family = poisson,
+  data = affairs)
+summary(mod)
+```
+
+# Delta method
+
+Standard errors for functions of parameters.
+
+## Delta method
+
+The `childrenyes` and `gendermale` coefficients are close:
+
+```{r}
+coef(mod)
+```
+
+::: {.fragment .fade-in-then-semi-out}
+Tests of equality:
+
+```{r}
+deltamethod(mod, hypothesis = "childrenyes = gendermale")
+```
+:::
+
+::: {.fragment .fade-in-then-semi-out}
+```{r}
+deltamethod(mod, hypothesis = "b2 = b3")
+```
+:::
+
+::: {.fragment .fade-in-then-semi-out}
+```{r}
+deltamethod(mod, hypothesis = c(0, 1, -1, 0))
+```
+:::
+
+## Delta method
+
+```{r}
+deltamethod(mod, hypothesis = "b2 * exp(b3) = 0.02")
+```
+
+* Non-linear functions of the params
+* Standard errors everywhere
+* All `marginaleffects` functions have a `hypothesis` argument
+  - Are two predictions/contrasts/mfx equal?
+  - Cross-group contrasts
+ 
+# Adjusted Predictions
+
+> The outcome predicted by a fitted model on a specified scale for a given combination of values of the predictor variables, such as their observed values, their means, or factor levels (“reference grid”).
+
+aka, in-sample predictions, fitted values.
+
+::: {.fragment .fade-in-then-semi-out}
+
+One predicted value per observation, the usual way:
+```{r}
+predict(mod, type = "response")
+```
+:::
+
+## Fitted values for the original data
+
+Simple data frame with `broom` naming convention: 
+
+```{r}
+predictions(mod)
+```
+
+## Predictions on a user-specified grid
+
+::: {.fragment .fade-in-then-semi-out}
+Use the `datagrid()` function and `newdata` argument:
+
+```{r}
+predictions(
+    mod,
+    newdata = datagrid(yearsmarried = c(1, 25)))
+```
+
+Unspecified variables held at their mean or mode.
+:::
+
+::: {.fragment .fade-in-then-semi-out}
+```{r}
+predictions(
+    mod,
+    newdata = datagrid(yearsmarried = range))
+```
+:::
+
+## Predictions: `hypothesis`
+
+Two predictions at the `range` of `yearsmarried`:
+
+```{r}
+predictions(
+    mod,
+    newdata = datagrid(yearsmarried = range))
+```
+
+Are they equal?
+
+```{r}
+predictions(
+    mod,
+    hypothesis = "b1 = b2",
+    newdata = datagrid(yearsmarried = range))
+```
+
+## Conditional predictions
+
+How does the outcome predicted by my model change as a function of the predictors?
+
+```{r}
+plot_cap(mod, condition = c("yearsmarried", "children"))
+```
+
+
+## Average predictions
+
+::: {.fragment .fade-in-then-semi-out}
+```{r}
+predictions(mod) |> summary()
+```
+:::
+
+::: {.fragment .fade-in-then-semi-out}
+Average predictions by subgroup:
+
+```{r}
+predictions(mod, by = "children") |> summary()
+```
+:::
+
+## Predictions on different scales
+
+Response scale (expected counts)
+
+```{r}
+predictions(mod, type = "response") |> head(2)
+```
+
+::: {.fragment .fade-in}
+Link scale (log)
+
+```{r}
+predictions(mod, type = "link") |> head(2)
+```
+:::
+
+# Contrasts
+
+> The difference, ratio, or other function of two adjusted predictions, calculated for meaningfully different regressor values (e.g., College graduates vs. Others). 
+
+## Contrasts are suuuper important
+
+* What is the difference in predicted cholesterol levels between people in the treatment and control groups?
+* What happens to predicted $Y$ if $X$ increases by one standard deviation?
+* Is the estimated probability of conversion higher if the customer sees a blue shirt instead of a red one?
+
+## Manual contrasts
+
+If `children` changes from "no" to "yes", the expected number of affairs increases by...
+
+```{r}
+#| output-location: fragment
+#| code-line-numbers: "1-2|4-6|8-10|12-13"
+# Copy the original data twice
+dat_no <- dat_yes <- affairs
+
+# Set different values for the predictor of interest
+dat_no$children <- "no"
+dat_yes$children <- "yes"
+
+# Predictions
+p_no <- predict(mod, newdata = dat_no, type = "response")
+p_yes <- predict(mod, newdata = dat_yes, type = "response")
+
+# Compute contrasts for each individual
+p_yes - p_no
+```
+
+## Average contrast
+
+```{r}
+dat_no <- dat_yes <- affairs
+
+dat_no$children <- "no"
+dat_yes$children <- "yes"
+
+p_no <- predict(mod, newdata = dat_no, type = "response")
+p_yes <- predict(mod, newdata = dat_yes, type = "response")
+
+mean(p_yes - p_no)
+```
+
+::: {.fragment .fade-in}
+With `marginaleffects`:
+
+```{r}
+comparisons(mod) |> summary()
+```
+:::
+
+##
+
+How many additional affairs when `yearsmarried` increases from 1 to 25?
+
+```{r}
+comparisons(mod, variables = list(yearsmarried = c(1, 25))) |> summary()
+```
+
+::: {.fragment .fade-in}
+
+How many additional affairs when `yearsmarried` increases by 1 SD?
+
+```{r}
+comparisons(mod, variables = list(yearsmarried = "sd")) |> summary()
+```
+
+:::
+
+## Differences, Ratios, and More...
+
+:::: {.columns}
+
+::: {.column width="40%"}
+So far:
+
+$$\hat{Y}_1 - \hat{Y}_0$$
+
+Also:
+
+$$e^{\hat{Y}_1 - \hat{Y}_0}$$
+$$\frac{\hat{Y}_1}{\hat{Y}_0}$$
+$$ln\left (\frac{\hat{Y}_1}{\hat{Y}_0} \right )$$
+$$...$$
+:::
+
+::: {.column width="60%"}
+Shortcuts:
+```{r, eval = FALSE}
+comparisons(mod, transform_pre = "ratio")
+comparisons(mod, transform_pre = "lnratio")
+```
+
+Arbitrary functions:
+
+```{r, eval = FALSE}
+fun <- \(hi, lo) log(mean(hi) / mean(lo))
+comparisons(mod, transform_pre = fun))
+```
+
+Adjusted risk ratios, log odds, etc.
+:::
+
+::::
+
+## Marginal effects
+
+> A partial derivative (slope) of the regression equation with respect to a regressor of interest.
+
+:::: {.columns}
+
+::: {.column}
+
+Terminology disaster
+
+1. "Marginal" = effect of small change (derivative)
+2. "Marginal" = sum or average of unit-level estimates (integral)
+
+:::
+
+::: {.column}
+
+![](fig/dumpster.jpg)
+
+:::
+
+::::
+
+## Marginal effects
+
+In the simplest linear models, the marginal effect is just the coefficient:
+
+$$y = \alpha + \beta x + \varepsilon$$
+$$\frac{\partial y}{\partial x} = \beta$$
+
+In more complicated cases, we need numerical derivatives. 
+
+General purpose technology: The slope/derivative measures the "effect" of a small change in $X$ on $Y$.
+
+## Marginal effects
+
+Linear model with interaction:
+
+```{r}
+mod2 <- lm(mpg ~ hp * wt, data = mtcars)
+mfx <- marginaleffects(mod2)
+summary(mfx)
+```
+
+Elasticity:
+
+```{r}
+marginaleffects(mod2, slope = "eyex") |> summary()
+```
+
+## Conditional marginal effects plot
+
+Interaction means that the "effect" of `hp` depends on the value of `wt`:
+
+```{r}
+plot_cme(mod2, effect = "hp", condition = "wt")
+```
+
+## Marginal Means
+
+> Adjusted predictions of a model, averaged across a "reference grid" of categorical predictors. 
+
+Skipping this. Ask me about it in Q&A.
+
+# Weird model?
+
+It Just Works™
+
+## Bayesian Random Effects
+
+Andrew Heiss: 
+
+* Effect of "Autonomy of Opposition Parties" on "Freedom of the Press"
+
+```{r}
+#| include: false
+library(brms)
+library(ggdist)
+library(patchwork)
+library(marginaleffects)
+tmp <- tempfile()
+download.file("https://github.com/vincentarelbundock/modelarchive/raw/main/data/brms_vdem.rds", tmp)
+mod <- readRDS(tmp)
+```
+
+```{r warning=FALSE, message=FALSE, eval = FALSE}
+#| warning: false
+#| message: false
+library(brms)
+library(ggplot2)
+library(ggdist)
+
+vdem_2015 <- read.csv("https://github.com/vincentarelbundock/marginaleffects/raw/main/data-raw/vdem_2015.csv")
+
+mod <- brm(
+  bf(media_index ~ party_autonomy + civil_liberties + (1 | region),
+     phi ~ (1 | region)),
+  data = vdem_2015,
+  family = Beta(),
+  control = list(adapt_delta = 0.9))
+```
+
+## Posterior predictions
+
+```{r}
+predictions(mod, by = "region") |> summary()
+```
+
+::: {.fragment .fade-in}
+```{r}
+marginaleffects(mod) |> summary()
+```
+:::
+
+
+## Draws from the posterior
+
+```{r}
+p <- comparisons(mod) |> posteriordraws()
+
+ggplot(p, aes(x = draw, y = contrast)) +
+    stat_halfeye() +
+    labs(x = "Posterior Distributions", y = "Contrasts")
+```
+
+
+## Generalized Additive Models
+
+```{r message=FALSE, warning=FALSE}
+#| fig.align: center
+library(mgcv)
+library(itsadug)
+
+# model with smooths
+mod <- bam(Y ~ Group + s(Time, by = Group) + s(Subject, bs = "re"), data = simdat)
+
+plot_cap(mod, condition = "Time")
+```
+
+## Robust Standard Errors
+
+Predictions, contrasts or marginal effects classical or heteroskedasticity or cluster-robust standard errors:
+
+```{r}
+mfx <- marginaleffects(mod2, vcov = ~cyl)
+
+summary(mfx)
+```
+
+## Tables with `modelsummary`
+
+```{r}
+#| output-location: column
+library(modelsummary)
+
+m1 <- lm(am ~ mpg + hp, data = mtcars)
+m2 <- glm(am ~ mpg + hp, family = binomial, data = mtcars)
+
+models <- list("OLS" = m1, "Logit" = m2)
+
+modelsummary(
+  models,
+  title = "OLS and Logit coefficients are very different.")
+```
+
+## Tables with `modelsummary`
+
+```{r}
+#| output-location: column
+#| message: false
+#| warning: false
+mfx <- lapply(models, marginaleffects)
+
+modelsummary(
+  mfx,
+  title = "OLS and Logit marginal effects are pretty similar.")
+```
+
+## `modelsummary`
+
+:::: {.columns}
+
+::: {.column}
+![](fig/modelsummary.jpg)
+:::
+::: {.column}
+![](fig/jss.jpg)
+:::
+::::
+
+ 
+## 20,000+ words docs & case studies
+
+![](fig/toc.jpg)
+
+
+## Thanks to...
+
+* Dependencies: 
+  - `R`
+  - `data.table`: ultra fast and powerful
+  - `checkmate`: user-input checks
+  - `insight`: standardized "extractors" for any model
+* Contributors:
+  - Marco Mendoza Aviña, Marcio Augusto Diniz, Resul Umit, Noah Greifer, Philippe Joly, Andrew Heiss, Tyson Barrett, Grant McDermott
+* You!!
+
+
+## 
+
+![](fig/logo_mfx.png)
+
+[https://vincentarelbundock.github.io/marginaleffects](https://vincentarelbundock.github.io/marginaleffects)
