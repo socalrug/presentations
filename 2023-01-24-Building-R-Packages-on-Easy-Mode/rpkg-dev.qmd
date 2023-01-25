@@ -1,0 +1,422 @@
+---
+title: "Building R Packages on Easy Mode"
+subtitle: "Southern California R User Group"
+author: "Dave Gruenewald"
+date: today
+date-format: iso
+format: 
+  revealjs:
+    theme: solarized
+    logo: socalr.png
+    css: styles.css
+---
+
+## R Package Development
+
+::: columns
+::: {.column width="50%"}
+[![R Packages](https://r-pkgs.org/images/cover.png)](https://r-pkgs.org/)
+:::
+
+::: {.column width="50%"}
+### Why an R Package
+
+-   Consolidate R scripts across projects
+-   Streamline R workflows across reporting
+-   Self-documenting & self-testing
+
+. . .
+
+-   Well-designed conventions
+:::
+:::
+
+## Before we embark
+
+```{r eval=FALSE, echo=TRUE}
+install.packages(
+  c("devtools", # `usethis` is included in devtools
+    "roxygen2", 
+    "testthat", 
+    "pkgdown", 
+    "knitr", 
+    "available")
+)
+
+```
+
+## `.Rprofile` example
+
+```{r echo=TRUE}
+usethis::edit_r_profile()
+```
+
+. . .
+
+```{r eval=FALSE, echo=TRUE}
+# Load in dev packages as default
+if (interactive()) {
+  suppressMessages(require(devtools))
+  suppressMessages(require(testthat))
+}
+
+# usethis package creation
+options(
+  usethis.full_name = "David Gruenewald",
+  usethis.protocol = "ssh",
+  usethis.description = list(
+    'Authors@R' = 'person(
+      "Dave", "Gruenewald",
+      email = "dave.gruenewald@posit.co",
+      role = c("aut", "cre"))'
+  )
+)
+
+```
+
+[`usethis` setup](https://usethis.r-lib.org/articles/usethis-setup.html)
+
+## Use an available name
+
+Before you begin, check if the title of your package is `available`, appropriate and interesting.
+
+For a simple example, we'll be creating a package that returns random quotes for Lord of the Rings 🧙
+
+. . .
+
+```{r echo=TRUE}
+library(available)
+available::available("grond", browse = FALSE)
+```
+
+# Setup
+
+## Setup Steps
+
+-   Create a GitHub repository
+
+-   Checkout a new project from a version control repository
+
+    ![If I take one more step, I'll be the closest to Package Development I've ever been](https://64.media.tumblr.com/b435c243ea252e4a2601991066d1d5ea/9745e9592d69c43a-c9/s500x750/72eaaddaf5b08acb92134dfd78b8b42285745c62.gifv)
+
+. . .
+
+-   `usethis::create_package(".")`
+
+## Check `DESCRIPTION` file
+
+> The job of the `DESCRIPTION` file is to store important metadata about your package. -[R Packages: `DESCRIPTION`](https://r-pkgs.org/description.html)
+
+-   `usethis::use_mit_license()`
+
+-   Make edits to `Title` and `Description`
+
+-   `usethis::use_tidy_description()`
+
+-   Refer to other packages for examples: [`janitor`](https://github.com/sfirke/janitor/blob/main/DESCRIPTION)
+
+# Our code
+
+## R script
+
+-   Scrape [goalcast](https://www.goalcast.com/wise-memorable-lord-rings-quotes/) site for Lord of the Rings quotes with `rvest`
+-   Clean and tidy data to create `lotr_data`
+-   Return a random quote from a given character
+
+## R script
+
+```{r eval=FALSE, echo=TRUE}
+
+library(rvest)
+library(stringr)
+library(dplyr)
+library(tibble)
+
+quote_lotr <- function(character) {
+  
+  # Get html
+  html <- read_html(
+    "https://www.goalcast.com/wise-memorable-lord-rings-quotes/"
+  )
+  
+  # Extract relevant elements
+  lotr_scrape <- html %>% 
+    html_elements(".single-main-content span") %>% 
+    html_text2() %>% 
+    str_remove_all("[“”]") %>% 
+    str_replace_all("[\u2018\u2019\u201A\u201B\u2032\u2035]", "'") %>% 
+    str_subset("—$|―$", negate = TRUE) %>%
+    str_trim() %>% 
+    .[-c(9:12, 81)]
+  
+  # Create tidy data
+  lotr_data <- tibble(
+    quote = lotr_scrape[c(TRUE,FALSE)],
+    character = lotr_scrape[c(FALSE,TRUE)] %>% 
+      str_remove("—|―") %>% 
+      str_trim()
+  )
+  
+  # Pull random quote
+  lotr_data %>% 
+    filter(character == .env$character) %>% 
+    slice_sample(n = 1) %>% 
+    pull(quote)
+}
+
+```
+
+# `usethis::use_r()`
+
+## Our R script {auto-animate="true"}
+
+```{r eval=FALSE, echo=TRUE}
+
+quote_lotr <- function(character) {
+  
+  # Get html
+  html <- read_html(
+    "https://www.goalcast.com/wise-memorable-lord-rings-quotes/"
+  )
+  
+  # Extract relevant elements
+  lotr_scrape <- html %>% 
+    html_elements(".single-main-content span") %>% 
+    html_text2() %>% 
+    str_remove_all("[“”]") %>% 
+    str_replace_all("[\u2018\u2019\u201A\u201B\u2032\u2035]", "'") %>% 
+    str_subset("—$|―$", negate = TRUE) %>%
+    str_trim() %>% 
+    .[-c(9:12, 81)]
+  
+  # Create tidy data
+  lotr_data <- tibble(
+    quote = lotr_scrape[c(TRUE,FALSE)],
+    character = lotr_scrape[c(FALSE,TRUE)] %>% 
+      str_remove("—|―") %>% 
+      str_trim()
+  )
+  
+  # Pull random quote
+  lotr_data %>% 
+    filter(character == .env$character) %>% 
+    slice_sample(n = 1) %>% 
+    pull(quote)
+}
+
+```
+
+## Our R script \[Be Explicit!\] {auto-animate="true"}
+
+```{r eval=FALSE, echo=TRUE}
+
+quote_lotr <- function(character) {
+  
+  # Get html
+  html <- rvest::read_html(
+    "https://www.goalcast.com/wise-memorable-lord-rings-quotes/"
+  )
+  
+  # Extract relevant elements
+  lotr_scrape <- html %>% 
+    rvest::html_elements(".single-main-content span") %>% 
+    rvest::html_text2() %>% 
+    stringr::str_remove_all("[“”]") %>% 
+    str_replace_all("[\u2018\u2019\u201A\u201B\u2032\u2035]", "'") %>% 
+    stringr::str_subset("—$|―$", negate = TRUE) %>%
+    stringr::str_trim() %>% 
+    .[-c(9:12, 81)]
+  
+  # Create tidy data
+  lotr_data <- tibble::tibble(
+    quote = lotr_scrape[c(TRUE,FALSE)],
+    character = lotr_scrape[c(FALSE,TRUE)] %>% 
+      stringr::str_remove("—|―") %>% 
+      stringr::str_trim()
+  )
+  
+  # Pull random quote
+  lotr_data %>% 
+    dplyr::filter(character == .env$character) %>% 
+    dplyr::slice_sample(n = 1) %>% 
+    dplyr::pull(quote)
+}
+
+
+```
+
+## Tips for using `tidyverse`
+
+-   `usethis::use_pipe`
+-   `usethis::use_package_doc`
+
+. . .
+
+```{r eval=FALSE, echo=TRUE}
+#' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
+#' @importFrom rlang .data .env
+## usethis namespace: end
+NULL
+
+utils::globalVariables(c("."))
+```
+
+# Run your code
+
+## Run your code {auto-animate="true"}
+
+-   `source("R/quote_lotr.R")`
+
+## Run your code {auto-animate="true"}
+
+-   ~~`source("R/quote_lotr.R")`~~
+
+-   `devtools::load_all()`
+
+-   `Ctrl`/`Cmd` + `Shift` + `L`
+
+## Run your code
+
+![](images/paste-82CE9DDC.png)
+
+# Now let's see how our package is doing
+
+## R CMD check
+
+`devtools::check()`
+
+-   Checks your package for technical validity
+-   Do from R (or RStudio `Ctrl`/`Cmd` + `Shift` + `E`)
+-   `check()` early, `check()` often
+
+## Address some of your R CMD check issues:
+
+-   Your package should have 0 errors and 0 warnings
+-   Ideally your package should have 0 notes
+-   `usethis::use_package()`
+
+# Document with `roxygen2`
+
+## `roxygen2`
+
+-   [Relevant Chapter in R Packages](https://r-pkgs.org/man.html#roxygen2-basics)
+-   Roxygen begins with `#'` for every line
+-   Relies on tags to be effective
+
+## Essential `roxygen2` tags
+
+| Tag         | Description                                                                                   |
+|-------------------|-----------------------------------------------------|
+| `@export`   | exports your function from your package and makes it available to others.                     |
+| `@param`    | documents how parameters work. These are also used to express non-binding type preconditions. |
+| `@return`   | describes what the function should return.                                                    |
+| `@examples` | gives examples of how the code should be used.                                                |
+
+## Do you need to remember all this?
+
+-   Not if you're using RStudio!
+-   Top Menu -\> Code -\> "Insert Roxygen Skeleton"
+-   See [`janitor::row_to_names`](https://github.com/sfirke/janitor/blob/main/R/row_to_names.R) for an example
+-   `devtools::document` to render your documentation
+    -   RStudio `Ctrl`/`Cmd` + `Shift` + `D`)
+
+# Testing
+
+## [`testthat`](https://testthat.r-lib.org/)
+
+> Testing your code can be painful and tedious, but it greatly increases the quality of your code. testthat tries to make testing as fun as possible, so that you get a visceral satisfaction from writing tests. Testing should be addictive, so you do it all the time.
+
+. . .
+
+-   Open `.R` file you plan to test
+
+-   In console, run `usethis::use_test()`
+
+-   Write your tests!
+
+-   Tests run with `devtools::test()`
+
+## Example Tests
+
+```{r eval=FALSE, echo=TRUE}
+sam <- withr::with_seed(
+  1061,
+  quote_lotr("Sam Gamgee")
+)
+
+test_that("quotes successful", {
+  expect_equal(sam, "Potatoes! Boil 'em, mash 'em, stick 'em in a stew.")
+})
+
+test_that("Wrong Name Errors", {
+  expect_error(quote_lotr("Gandorf"))
+})
+```
+
+# Package Data
+
+## `usethis::use_data_raw()` {.smaller}
+
+::: columns
+::: {.column width="40%"}
+
+-   [Package Data](https://r-pkgs.org/data.html#sec-data-sysdata)
+-   `use_data_raw("lotr_data")`
+-   Document with a `R/data.R` file
+    -   `use_r("data")`
+    -   special use of `roxygen2`
+    
+:::
+
+::: {.column width="60%"}
+
+'R/data.R'
+
+```{r echo=TRUE, eval=FALSE}
+#' Quotes from the Lord of the Rings
+#'
+#' A dataset containing the quotes of main characters throughout the Lord of the
+#'   Rings trilogy
+#'
+#' @format A data frame with 65 rows and 2 variables:
+#' \describe{
+#'   \item{quote}{character string from book}
+#'   \item{character}{Common name of persons from Lord of the Rings}
+#' }
+"lotr_data"
+```
+
+See [`ggplot2` data roxygen](https://github.com/tidyverse/ggplot2/blob/main/R/data.R) for more examples
+
+:::
+:::
+
+# Vignettes and `pkgdown`
+
+## Writing vignettes
+
+1.  Run `usethis::use_vignette("my-vignette")` where "my-vignette" is the desired name of your new vignette.
+2.  Edit your vignette
+3.  Install your package
+4.  Render with `devtools::build_vignettes()`
+
+-   `devtools::check()` also does this by default
+
+*Let's use ChatGPT to cheat this time*
+
+## `pkgdown`
+
+1.  Make sure your package is passing all R CMD checks
+2.  Run `usethis::use_pkgdown()`
+3.  Make edits according to [`pkgdown` docs](https://pkgdown.r-lib.org/)
+
+-   Should be straightforward since we've been using roxygen, tests, and vignettes!
+
+1.  `pkgdown::build_site()`
+
+## Questions
+
+![](http://i.imgur.com/QSilqA6.gif){fig-align="center"}

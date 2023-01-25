@@ -1,0 +1,4 @@
+- source: rpkg-dev.qmd
+  quarto-pub:
+    - id: b51e305e-363a-43f6-b0ad-f51e6b80aa78
+      url: 'https://quartopub.com/sites/dgruenew/building-r-packages-on-easy-mode'
