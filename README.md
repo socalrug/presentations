@@ -4,7 +4,14 @@ Presentation materials from our monthly meetings
 
 ---
 
+## 2023 ##
+* 02/21/2023 *Emil Hvitfeldt* [The Purrrfect In Person Kickoff](https://github.com/socalrug/presentations/tree/master/2023-02-21-Purrrfect-In-Person-Kickoff)
+
+* 01/24/2023 *Dave Gruenewald* [Building R Packages on Easy Mode](https://github.com/socalrug/presentations/tree/master/2023-01-24-Building-R-Packages-on-Easy-Mode)
+
 ## 2022 ##
+* 09/27/2022 *Emily Robinson* [A UseR’s Introduction to Machine Learning in AWS](https://www.meetup.com/socal-rug/events/286845955/)
+
 * 08/23/2022 *Vincent Arel-Bundock* [I fit a model... now what?](https://github.com/socalrug/presentations/tree/master/2022-08-23_marginaleffects)
 
 * 07/26/2022 *Kyle Cuilla* [{reactablefmtr}: Streamlined Table Styling and Formatting for {reactable}](https://github.com/socalrug/presentations/blob/master/2022-07-26_reactablefmtr/reactablefmtr_socal_presentation.Rmd)
