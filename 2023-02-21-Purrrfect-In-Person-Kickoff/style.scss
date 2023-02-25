@@ -1,0 +1,118 @@
+/*-- scss:defaults --*/
+
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Rubik+Beastly&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code_Pro&display=swap');
+
+$font-family-monospace: 'Source Code Pro', monospace;
+
+$theme-orange: #FFB81A;
+$theme-yellow: #FFD571;
+$theme-brown: #E2AE86;
+$theme-pink: #FED7E1;
+
+$body-bg: #F0F2F1;
+$body-color: #5f4938;
+$link-color: $theme-orange;
+$selection-bg: $theme-pink;
+
+/*-- scss:rules --*/
+
+code span.fu {
+  color: #a37100;
+}
+
+.reveal code {
+  color: #a37100;
+}
+
+.mono {
+  font-family: 'Source Code Pro', monospace;
+}
+
+// custom code highlighting ---------------------------------------------------
+
+// Title Theme ----------------------------------------------------------------
+
+.beastly {
+  font-family: 'Rubik Beastly';
+}
+
+.beastly span:nth-child(1) {
+  color: #ef5350;
+}
+
+.theme-title {
+  font-family: 'Permanent Marker';
+  padding: 35px 0;
+  margin: auto;
+  text-align: center;
+  font-size: 135px;
+}
+
+// Theme colors ---------------------------------------------------------------
+.orange {
+  color: $theme-orange;
+  font-weight: bold;
+}
+.yellow {
+  color: $theme-yellow;
+  font-weight: bold;
+}
+.pink {
+  color: $theme-pink;
+  font-weight: bold;
+}
+.brown {
+  color: $theme-brown;
+  font-weight: bold;
+}
+
+// fragment highlight colors --------------------------------------------------
+.reveal .slides section {
+  .fragment.highlight-orange,
+  .fragment.highlight-yellow,
+  .fragment.highlight-pink,
+  .fragment.highlight-brown {
+    opacity: 1;
+    visibility: inherit
+  }
+
+  .fragment.highlight-brown.visible {
+    background-color: $theme-brown;
+  }
+  .fragment.highlight-orange.visible {
+    background-color: $theme-orange;
+  }
+  .fragment.highlight-yellow.visible {
+    background-color: $theme-yellow;
+  }
+  .fragment.highlight-pink.visible {
+    background-color: $theme-pink;
+  }
+}
+
+.background-brown {
+  background-color: $theme-brown;
+}
+.background-orange {
+  background-color: $theme-orange;
+}
+.background-yellow {
+  background-color: $theme-yellow;
+}
+.background-pink {
+  background-color: $theme-pink;
+}
+// letterbox styling ----------------------------------------------------------
+.quarto-light {
+  background-color: #444444;
+}
+
+.quarto-dark {
+  background-color: #444444;
+}
+
+.slides {
+  box-shadow: #222222 0px 0px 30px 0px;
+}

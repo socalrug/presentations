@@ -1,0 +1,732 @@
+---
+format:
+  letterbox-revealjs: 
+    theme: [default, style.scss]
+    menu: false
+    code-line-numbers: false
+knitr:
+  opts_chunk: 
+    echo: true
+---
+
+##  {.theme-title background-image="assets/full.svg" background-size="cover"}
+
+Having a
+
+[p]{.beastly style="color:#FFB81A;"} [u]{.beastly style="color:#FED7E1;"} [r]{.beastly style="color:#E2AE86;"} [r]{.beastly style="color:#FFD571;"} [r]{.beastly style="color:#FFB81A;"}-tastic
+
+time
+
+##  {background-image="assets/full.svg" background-size="cover"}
+
+<br>
+<br>
+<br>
+<br>
+
+::: r-fit-text
+<https://emilhvitfeldt.github.io/talk-purrr-ocrug-2023>
+:::
+
+## 
+
+![](images/purrr.png){.absolute top="0" right="0"}
+
+::: columns
+::: {.column width="40%"}
+::: {.fragment .fade-in}
+<br> <br>
+
+"[{purrr}]{.brown} enhances R's [functional programming]{.fragment .highlight-pink} (FP) toolkit by providing a complete and consistent set of tools for working with [functions]{.fragment .highlight-yellow} and [vectors]{.fragment .highlight-orange}."
+:::
+:::
+:::
+
+::: {background-image="assets/top-left.svg" background-repeat="no-repeat" background-position="0% 0%"}
+:::
+
+::: {background-image="assets/bottom-left.svg" background-repeat="no-repeat" background-position="0% 100%"}
+:::
+
+## 1490 reverse dependencies
+
+![](images/reverse-dependencies.png)
+
+## 
+
+![](images/release.png)
+
+::: {.fragment .fade-in}
+[🎉]{.absolute top="0%" right="25%"} [🎉]{.absolute top="0%" right="75%"} [🎉]{.absolute top="90%" right="25%"} [🎉]{.absolute top="90%" right="75%"} [🎉]{.absolute top="25%" right="0%"} [🎉]{.absolute top="75%" right="0%"} [🎉]{.absolute top="25%" left="0%"} [🎉]{.absolute top="75%" left="0%"}
+:::
+
+::: {background-image="assets/top-left.svg" background-repeat="no-repeat" background-position="0% 0%"}
+:::
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+## Lego set data set
+
+```{r}
+library(tidyverse) #includes {purrr}
+library(jsonlite)
+lego_sets <- read_json("lego_sets.json")
+length(lego_sets)
+```
+
+```{r}
+str(lego_sets[[1]])
+```
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## 🛑 Notation break 🛑
+
+R 4.1.0 introduces a new pipe `|>` it is similar to `%>%` from {magrittr} package
+
+<br>
+
+``` {.r style="font-size:2em;"}
+x |> f()
+```
+
+is (almost) equivalent to
+
+``` {.r style="font-size:2em;"}
+f(x)
+# or
+x %>% f()
+```
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## 🛑 Notation break 🛑
+
+R 4.1.0 also introduced a new shorthand for functions
+
+<br>
+
+``` {.r style="font-size:2em;"}
+function(x) {code that does stuff}
+```
+
+is equivalent to
+
+``` {.r style="font-size:2em;"}
+\(x) {code that does stuff}
+```
+
+<br>
+
+purrr supported function interface
+
+``` {.r style="font-size:2em;"}
+~ .x
+```
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+##  {.theme-title background-image="assets/full.svg" background-size="cover"}
+
+maps
+
+![](images/lego-map.png)
+
+## `map()` functions
+
+<br>
+
+"The map functions transform their input by applying a [function to each element]{.fragment .highlight-pink} of a list or atomic vector and returning an object of the [same length as the input]{.fragment .highlight-yellow}."
+
+::: {background-image="assets/bottom-left.svg" background-repeat="no-repeat" background-position="0% 100%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## 
+
+::: r-fit-text
+::: mono
+map([\<vector\>]{.fragment .highlight-orange}, [\<function\>]{.fragment .highlight-pink})
+:::
+:::
+
+::: columns
+::: {.column width="50%"}
+::: fragment
+```{r}
+#| eval: false
+map(1:4, runif)
+```
+:::
+
+::: fragment
+```{r}
+#| echo: false
+set.seed(1234)
+map(1:4, runif) |> map(round, 3)
+```
+:::
+:::
+
+::: {.column width="50%"}
+::: fragment
+```{r}
+#| eval: false
+map(mtcars, mean)
+```
+:::
+
+::: fragment
+```{r}
+#| echo: false
+map(mtcars, mean)
+```
+:::
+:::
+:::
+
+::: {background-image="assets/bottom-left.svg" background-repeat="no-repeat" background-position="0% 100%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## 
+
+::: r-fit-text
+::: mono
+map([\<vector\>]{.background-orange}, [\<function\>]{.background-pink})
+:::
+:::
+
+::: columns
+::: {.column width="50%"}
+::: fragment
+```{r}
+#| eval: false
+second_lowest <- function(x) {
+  sort(x)[2]
+}
+
+map(mtcars, second_lowest)
+```
+:::
+
+::: fragment
+```{r}
+#| echo: false
+second_lowest <- function(x) {
+  sort(x)[2]
+}
+
+map(mtcars, second_lowest)
+```
+:::
+:::
+
+::: {.column width="50%"}
+::: fragment
+```{r}
+#| eval: false
+map(mtcars, \(x) sort(x)[2])
+```
+:::
+
+::: fragment
+```{r}
+#| echo: false
+map(mtcars, \(x) sort(x)[2])
+```
+:::
+:::
+:::
+
+::: {background-image="assets/bottom-left.svg" background-repeat="no-repeat" background-position="0% 100%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## 
+
+::: r-fit-text
+::: mono
+map([\<vector\>]{.background-orange}, [\<function\>]{.background-pink}, [\<arguments\>]{.fragment .highlight-yellow .fade-in})
+:::
+:::
+
+::: columns
+::: {.column width="45%"}
+::: fragment
+```{r}
+map(mtcars, mean, na.rm = TRUE)
+```
+:::
+:::
+
+::: {.column width="55%"}
+::: fragment
+```{r}
+map(mtcars, \(x) mean(x, na.rm = TRUE))
+```
+:::
+:::
+:::
+
+::: {background-image="assets/bottom-left.svg" background-repeat="no-repeat" background-position="0% 100%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## This feels familiar 👀
+
+Using a `map()` is very close similar to using a `for`-loop and `lapply()`
+
+These two statements are almost identical
+
+<br>
+
+::: fragment
+::: columns
+::: {.column width="45%"}
+```{r}
+#| eval: false
+result <- map(x, f)
+```
+:::
+
+::: {.column width="55%"}
+```{r}
+#| eval: false
+result <- vector("list", length(x))
+for (i in seq_along(x)) {
+  result[[i]] <- f(x[[i]])
+}
+```
+:::
+:::
+:::
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## All the variants!!!
+
+`map()` returns a list
+
+::: columns
+::: {.column width="50%"}
+-   `map_lgl()`
+-   `map_int()`
+-   `map_dbl()`
+-   `map_chr()`
+-   `map_vec()`
+-   `walk`
+:::
+
+::: {.column width="50%"}
+-   logical vector
+-   integer vector
+-   double vector
+-   character vector
+-   Other vector
+-   Side effects
+:::
+:::
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-left.svg" background-repeat="no-repeat" background-position="0% 100%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## Using variants
+
+Extracting all the names
+
+```{r}
+#| eval: false
+map_chr(lego_sets, \(x) x$name[[1]])
+```
+
+::: fragment
+```{r}
+#| echo: false
+map_chr(lego_sets, \(x) x$name[[1]]) |> unname()
+```
+:::
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-left.svg" background-repeat="no-repeat" background-position="0% 100%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## Using variants
+
+Finding the number of parts
+
+```{r}
+lego_sets[[1]]
+```
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-left.svg" background-repeat="no-repeat" background-position="0% 100%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## Using variants
+
+Finding the number of parts
+
+```{r}
+lego_sets[[1]]$parts
+```
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-left.svg" background-repeat="no-repeat" background-position="0% 100%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## Using variants
+
+Finding the number of parts
+
+```{r}
+lego_sets[[1]]$parts[[1]]
+```
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-left.svg" background-repeat="no-repeat" background-position="0% 100%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## Using variants
+
+Finding the number of parts
+
+```{r}
+lego_sets[[1]]$parts[[1]] |> length()
+```
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-left.svg" background-repeat="no-repeat" background-position="0% 100%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## Using variants
+
+Finding the number of parts
+
+```{r}
+map_int(lego_sets, \(set) set$parts[[1]] |> length())
+```
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-left.svg" background-repeat="no-repeat" background-position="0% 100%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## Using variants
+
+```{r}
+#| eval: false
+map_int(lego_sets, \(x) x$parts[[1]])
+```
+
+::: fragment
+```{r}
+#| echo: false
+map_chr(lego_sets, \(x) x$name[[1]]) |> unname()
+```
+:::
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-left.svg" background-repeat="no-repeat" background-position="0% 100%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## Creating data.frames
+
+```{r}
+most_common <- function(x) names(tail(sort(table(x)), 1))
+extract_info <- function(x) {
+  data.frame(
+    year = x$year[[1]],
+    color = map_chr(x$parts[[1]], \(x) x$color_name[[1]]) |> most_common(),
+    name = substr(x$name[[1]], 1, 50)
+  )
+}
+
+map(lego_sets, extract_info) |>
+  list_rbind()
+```
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+## map2()
+
+::: r-fit-text
+::: mono
+map2([\<vector\>]{.background-orange}, [\<vector\>]{.background-orange}, [\<function\>]{.background-pink})
+:::
+:::
+
+::: {.fragment}
+```{r}
+#| eval: false
+map2(1:10, 10:1, \(n, sd) rnorm(n, sd = sd))
+```
+:::
+::: {.fragment}
+```{r}
+#| echo: false
+map2(1:10, 10:1, \(n, sd) rnorm(n, sd = sd)) |> map(round, 3)
+```
+:::
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## pmap()
+
+::: r-fit-text
+::: mono
+pmap([\<list of vectors\>]{.background-orange}, [\<function\>]{.background-pink})
+:::
+:::
+
+::: {.fragment}
+```{r}
+#| eval: false
+x <- list(1, 1, 1)
+y <- list(10, 20, 30)
+z <- list(100, 200, 300)
+pmap(list(x, y, z), sum)
+```
+:::
+::: {.fragment}
+```{r}
+#| echo: false
+x <- list(1, 1, 1)
+y <- list(10, 20, 30)
+z <- list(100, 200, 300)
+pmap(list(x, y, z), sum)
+```
+:::
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## 🚀 progress bars 🚀
+
+![](map-asciicast.svg)
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## plucking
+
+similar to `select()` from {dplyr}, helps with going deep in list
+
+<br>
+<br>
+
+```{r}
+#| eval: false
+lego_sets |> pluck(3, "parts")
+
+lego_sets[[3]][["parts"]]
+```
+
+<br>
+<br>
+
+Great at the end of long chain of pipes
+
+::: {background-image="assets/bottom-left.svg" background-repeat="no-repeat" background-position="0% 100%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## Function modifiers
+
+::: columns
+::: {.column width="50%"}
+- `possibly()`
+- `quietly()`
+- `safely()`
+- `slowly()`
+:::
+
+::: {.column width="50%"}
+- return value if error occurs
+- captures side effects
+- captures errors
+- runs code slow
+:::
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## Function modifiers
+
+Having models that sometimes error are a living nightmare, using `safely()` lets to run everything and diagnose later
+
+<br>
+
+```{r}
+#| eval: false
+results <- map(configs, safely(run_model), .progress = TRUE)
+```
+
+<br>
+
+Web scraping typically calls for delays between fetching, we handle this with `slowly()`
+
+<br>
+
+```{r}
+#| eval: false
+scraped_ids <- map_chr(urls, slowly(scrape_url), .progress = TRUE)
+```
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## Future directions
+
+```{r}
+#| eval: false
+library(furrr)
+
+future_map(mtcars, mean)
+```
+
+![](images/furrr.png){.absolute top="0" right="0"}
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## Future directions
+
+```{r}
+#| eval: false
+library(furrr)
+
+plan(multisession, workers = 2)
+
+future_map(mtcars, mean)
+```
+
+::: {.fragment}
+```{r}
+#| echo: false
+map(mtcars, mean)
+```
+:::
+
+![](images/furrr.png){.absolute top="0" right="0"}
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+## slider
+
+```{r}
+library(slider)
+# Moving average (Aligned right)
+# "The current element + 2 elements before"
+slide_dbl(1:5, mean, .before = 2)
+#> [1] 1.0 1.5 2.0 3.0 4.0
+
+# Align left
+# "The current element + 2 elements after"
+slide_dbl(1:5, mean, .after = 2)
+#> [1] 2.0 3.0 4.0 4.5 5.0
+
+# Center aligned
+# "The current element + 1 element before + 1 element after"
+slide_dbl(1:5, mean, .before = 1, .after = 1)
+#> [1] 1.5 2.0 3.0 4.0 4.5
+```
+
+
+::: {background-image="assets/top-right.svg" background-repeat="no-repeat" background-position="100% 0%"}
+:::
+
+::: {background-image="assets/bottom-right.svg" background-repeat="no-repeat" background-position="100% 100%"}
+:::
+
+##  {.theme-title background-image="assets/full.svg" background-size="cover"}
+
+[T]{.beastly style="color:#FFB81A;"} [H]{.beastly style="color:#FED7E1;"} [A]{.beastly style="color:#E2AE86;"} [N]{.beastly style="color:#FFD571;"} [K]{.beastly style="color:#FFB81A;"}
+
+[Y]{.beastly style="color:#FED7E1;"} [O]{.beastly style="color:#E2AE86;"} [U]{.beastly style="color:#FFD571;"}

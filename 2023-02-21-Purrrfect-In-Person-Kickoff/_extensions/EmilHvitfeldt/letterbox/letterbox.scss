@@ -1,0 +1,102 @@
+/*-- scss:defaults --*/
+
+$border-leftright-width: 80px;
+$border-updown-width: 40px;
+
+/*-- scss:rules --*/
+
+$slide-width: calc(var(--slide-width) + #{$border-leftright-width} * 2);
+$slide-height: calc(var(--slide-height) + #{$border-updown-width} * 2);
+
+@mixin full-screen {
+  position: absolute;
+  top: -$border-updown-width;
+  right: -$border-leftright-width;
+  height: $slide-height !important;
+  width: $slide-width !important;
+  max-height: $slide-height !important;
+  max-width: $slide-width !important;
+  margin: 0 !important;
+  z-index: -1;
+}
+
+.quarto-light {
+  background-color: #D8D8D3;
+}
+
+.quarto-dark {
+  background-color: #D8D8D3;
+}
+
+html.print-pdf .quarto-light {
+  background-color: $body-bg;
+}
+
+html.print-pdf .quarto-dark {
+  background-color: $body-bg;
+}
+
+.slides {
+  background-color: $body-bg;
+  border-style: solid;
+  border-color: $body-bg;
+  box-shadow: #222222 0px 0px 30px 0px;
+
+  border-left-width: 80px;
+  border-right-width: 80px;
+  border-top-width: 40px;
+  border-bottom-width: 40px;
+}
+
+.image-left {
+  @include full-screen;
+  left: -$border-leftright-width;
+  width: $slide-width / 2 !important;
+  max-width: $slide-width / 2 !important;
+}
+
+.image-right {
+  @include full-screen;
+  right: -$border-leftright-width;
+  width: $slide-width / 2 !important;
+  max-width: $slide-width / 2 !important;
+}
+
+.background-color-div {
+  @include full-screen;
+}
+
+.background-image-div {
+  @include full-screen;
+}
+
+.background-video-div {
+  @include full-screen;
+  max-width: none !important;
+  max-height: none !important;
+  -o-object-fit: cover;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.background-iframe-div {
+  @include full-screen;
+  max-width: none !important;
+  max-height: none !important;
+  -o-object-fit: cover;
+  object-fit: cover;
+  z-index: -1 !important;
+}
+
+.reveal .slide-menu-button {
+  left: 8px - $border-leftright-width / 2 !important;
+  bottom: 8px - $border-updown-width / 2 !important;
+  pointer-events: auto;
+}
+
+.reveal .progress {
+  z-index: 100;
+  bottom: - $border-updown-width;
+  width: $slide-width !important;
+  left: -$border-leftright-width;
+}
