@@ -5,6 +5,8 @@ Presentation materials from our monthly meetings
 ---
 
 ## 2023 ##
+* 04/18/2023 *Gabor Szabo* [Intro to {sherlock}: an R Package for Problem Diagnosis](https://github.com/socalrug/presentations/tree/master/2023-04-18_Intro_to_Sherlock)
+
 * 03/21/2023 *Javier Orraca-Deatcu* [Build a Shiny App Demo as a Cover Letter Accessory](https://github.com/socalrug/presentations/tree/master/2023-03-21_Build_a_Shiny_App_Demo)
 
 * 02/21/2023 *Emil Hvitfeldt* [The Purrrfect In Person Kickoff](https://github.com/socalrug/presentations/tree/master/2023-02-21-Purrrfect-In-Person-Kickoff)
