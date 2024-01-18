@@ -1,0 +1,1129 @@
+---
+title: "posit::conf(<FONT COLOR='white'>2023</FONT>)"
+author: "Javier Orraca-Deatcu"
+
+format: 
+  revealjs:
+    embed-resources: false
+    theme: [default, styling.scss]
+    title-slide-attributes:
+      data-background-size: 360px
+      data-background-position: bottom 50px right 50px
+      data-background-color: "#76AADB"
+eval: false
+revealjs-plugins:
+  - codewindow
+knitr: true
+---
+
+```{r}
+#| label: setup
+#| eval: true
+#| include: false
+#| file: setup.R
+```
+
+## Posit Conference
+
+Posit, formerly RStudio, hosts an [annual conference](https://posit.co/conference/) including workshops, lunch-and-learns, and presentations touching on all things data science.
+
+. . .
+
+- 2023 conference was hosted in Chicago
+- Approximately [1,200]{.fragment .highlight-teal} in-person attendees
+
+. . .
+
+R represented the majority of the presentations but there was more Python content than in prior years
+
+::: footer
+Posit | Learn more at [https://posit.co/](https://posit.co/)
+:::
+
+---
+
+::: r-fit-text
+Conference
+:::
+
+::: r-fit-text
+Highlights
+:::
+
+# 1. Quarto
+
+::: footer
+Just to clarify... That's **Quarto**... **Q-U-A-R-T-O**, not #4 in Spanish (or "cuatro").
+:::
+
+## Quarto Presentations `r hexes_svg("quarto")`
+
+These web slides were built with [Quarto](https://quarto.org/) and this section was copied almost entirely from Quarto's Reveal.js demo documentation
+
+. . .
+
+The next few slides cover what you can do with Quarto and [Reveal.js](https://revealjs.com) including:
+
+-   Presenting code and LaTeX equations
+-   Rendering code chunk computations in slide output
+-   Fancy transitions, animations, and code windows
+
+::: footer
+Quarto | Learn more on Quarto's Reveal.js [demo presentation](https://github.com/quarto-dev/quarto-web/blob/main/docs/presentations/revealjs/demo/index.qmd)
+:::
+
+## Pretty Code {auto-animate="true"}
+
+-   Over 20 syntax highlighting themes available
+-   Default theme optimized for accessibility
+
+``` r
+# Define a server for the Shiny app
+function(input, output) {
+  
+  # Fill in the spot we created for a plot
+  output$phonePlot <- renderPlot({
+    # Render a barplot
+  })
+}
+```
+
+::: footer
+Quarto | [Syntax Highlighting](https://quarto.org/docs/output-formats/html-code.html#highlighting)
+:::
+
+## Code Animations {auto-animate="true"}
+
+-   Over 20 syntax highlighting themes available
+-   Default theme optimized for accessibility
+
+``` r
+# Define a server for the Shiny app
+function(input, output) {
+  
+  # Fill in the spot we created for a plot
+  output$phonePlot <- renderPlot({
+    # Render a barplot
+    barplot(WorldPhones[,input$region]*1000, 
+            main=input$region,
+            ylab="Number of Telephones",
+            xlab="Year")
+  })
+}
+```
+
+::: footer
+Quarto | [Code Animations](https://quarto.org/docs/presentations/revealjs/advanced.html#code-animations)
+:::
+
+## Line Highlighting
+
+-   Highlight specific lines for emphasis
+-   Incrementally highlight additional lines
+
+``` {.python code-line-numbers="4-5|7|10"}
+import numpy as np
+import matplotlib.pyplot as plt
+
+r = np.arange(0, 2, 0.01)
+theta = 2 * np.pi * r
+fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+ax.plot(theta, r)
+ax.set_rticks([0.5, 1, 1.5, 2])
+ax.grid(True)
+plt.show()
+```
+
+::: footer
+Quarto | [Line Highlighting](https://quarto.org/docs/presentations/revealjs/#line-highlighting)
+:::
+
+## Code Windows
+
+::: columns
+::: {.column width="50%"}
+::: {.codewindow .quarto}
+index.qmd
+{{< include codewindow_files/example_include.qmd >}}
+:::
+
+:::
+
+::: {.column width="50%"}
+
+::: {.codewindow .html}
+index.html
+<iframe class="slide-deck" src="./codewindow_files/example.html" style="width: 100%; height: 484.47px;"></iframe>
+:::
+:::
+:::
+
+::: footer
+Quarto | [codewindow](https://github.com/EmilHvitfeldt/quarto-revealjs-codewindow) Reveal.js extension & example code above from Emil Hvitfeldt's [Quarto Theming Talk at Posit Conf](https://github.com/EmilHvitfeldt/talk-quarto-theming-positconf)
+:::
+
+## Counters
+
+Great for training purposes or when you've got a time limit
+
+::: columns
+::: {.column width="50%"}
+
+```{r}
+#| eval: false
+#| echo: true
+
+# YOUR TURN! Complete the below 
+# dplyr pipeline to group by and
+# summarize the data set
+
+library(dplyr)
+data(package = "ggplot2", "diamonds")
+
+diamonds |> 
+  <your code here>
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| echo: true
+#| code-fold: true
+#| code-summary: "See {countdown} code"
+library(countdown)
+countdown(
+  minutes = 0, 
+  seconds = 10,
+  play_sound = TRUE,
+  color_border = "#1A4064",
+  color_text = "#76AADB",
+  font_size = "3em"
+)
+```
+:::
+:::
+
+```{r}
+#| eval: true
+#| echo: false
+library(countdown)
+countdown(
+  minutes = 0, 
+  seconds = 10,
+  right = "25%", 
+  bottom = "5%",
+  play_sound = TRUE,
+  color_border = "#1A4064",
+  color_text = "#76AADB",
+  font_size = "3em"
+)
+```
+
+::: footer
+Quarto | Learn more about the [countdown](https://pkg.garrickadenbuie.com/countdown/) package
+:::
+
+# 2. Arrow
+
+::: footer
+Arrow | Learn more at [https://arrow.apache.org/](https://arrow.apache.org/)
+:::
+
+---
+
+## Larger-than-Memory Data
+<br>
+![](images/apache_arrow.png)
+
+::: footer
+Arrow | Learn more at [https://arrow.apache.org/](https://arrow.apache.org/)
+:::
+
+## Arrow and Parquet `r hexes("arrow")`
+
+- Columnar memory format for flat data
+- Ultra-fast read times from Parquet files
+- Easily convert data.frames and tibbles to Arrow tables in-line
+- Plays well with Pandas (Python) and dplyr (R)
+- Arrow will soon be able to process nested list data
+
+::: notes
+Libraries are available for C, C++, C#, Go, Java, JavaScript, Julia, MATLAB, Python, R, Ruby, and Rust
+
+Arrow is organized for efficient analytic operations on modern hardware like CPUs and GPUs.
+
+The Arrow memory format also supports zero-copy reads for lightning-fast data access without serialization overhead
+:::
+
+::: footer
+Arrow | Learn more at [https://arrow.apache.org/](https://arrow.apache.org/)
+:::
+
+## How fast is fast? `r hexes("arrow")`
+
+::: {.incremental}
+- My personal laptop has 24 GB RAM
+- To test Arrow's capabilities, I read a [40 GB dataset]{.fragment .highlight-teal} with over [1.1 billion rows]{.fragment .highlight-teal} and 24 columns
+- The `.parquet` dataset was partitioned by Year and Month (120 files)
+- Important to note that my laptop would not be able to load this object entirely into memory as a data.frame or tibble given my laptop's limited RAM
+:::
+
+::: footer
+Arrow | Learn more at [https://arrow.apache.org/](https://arrow.apache.org/)
+:::
+
+## Benchmarking Read Times `r hexes("arrow", "ggplot2")`
+
+::: {.codewindow .r}
+benchmark_arrow_read.R
+{{< include codewindow_files/benchmark_arrow_read.qmd >}}
+:::
+
+::: footer
+Arrow | Learn more at [https://arrow.apache.org/](https://arrow.apache.org/)
+:::
+
+## Benchmarking Read Times `r hexes("arrow", "ggplot2")`
+
+- Results show read times from a 40GB parquet, 1.1 billion row dataset (benchmarked over 1,000 iterations)
+
+![](images/arrow_read.png){width=55%}
+
+::: footer
+Arrow | Learn more at [https://arrow.apache.org/](https://arrow.apache.org/)
+:::
+
+## Benchmarking dplyr `r hexes("arrow", "dplyr", "ggplot2")`
+
+::: {.codewindow .r}
+benchmark_arrow_dplyr.R
+{{< include codewindow_files/benchmark_arrow_dplyr.qmd >}}
+:::
+
+::: footer
+Arrow | [Arrow + dplyr compatibility](https://r4ds.hadley.nz/arrow.html)
+:::
+
+## Benchmarking dplyr `r hexes("arrow", "dplyr", "ggplot2")`
+
+- Arrow + dplyr summarized 1.1 billion rows in less than 5s (benchmarked over 10 iterations) to a 10 x 4 tibble 
+
+![](images/arrow_group_by.png){width=55%}
+
+::: footer
+Arrow | [Arrow + dplyr compatibility](https://r4ds.hadley.nz/arrow.html)
+:::
+
+## Tidyverse Compatibility `r hexes("arrow", "tidyverse", "stringr")`
+
+- Many functions from the tidyverse collections of packages have 1:1 compatibility with Arrow tables
+- However, sometimes you'll encounter a breaking point
+- Take this `stringr::str_replace_na()` example:
+
+```{r}
+#| echo: true
+#| code-line-numbers: "1-4|3-4"
+nyc_taxi |> 
+  mutate(vendor_name = str_replace_na(vendor_name, "No vendor"))
+#> Error: Expression str_replace_na(vendor_name, "No vendor") 
+#> not supported in Arrow
+```
+
+. . .
+
+- This `stringr` function is not supported by Arrow
+
+::: footer
+Arrow | [Arrow + dplyr compatibility](https://r4ds.hadley.nz/arrow.html)
+:::
+
+---
+
+![](images/crying_cat.gif)
+
+---
+
+::: r-fit-text
+but wait!
+:::
+
+::: r-fit-text
+problem solved
+:::
+
+---
+
+## User Defined Functions `r hexes("arrow", "tidyverse", "dplyr", "stringr")`
+
+- Lucky for us, Arrow allows us to create and register _**User Defined Functions ("UDFs")**_ to the Arrow engine
+- Almost any function can be made compatible with Arrow by registering custom UDFs
+- Let's learn how to register `str_replace_na()` with the Arrow kernel
+
+::: footer
+Arrow | Learn more about registering Arrow [User Defined Functions ("UDFs")](https://arrow.apache.org/docs/r/reference/register_scalar_function.html)
+:::
+
+## Registering UDFs `r hexes("arrow", "dplyr", "stringr", "tidyverse")`
+
+- First, run `arrow::schema()` on your Arrow table to review the field name / data type pairs
+- Since I want to mutate the `vendor_name` field, I know I'll be working with an Arrow `string()` data type
+
+```{r}
+#| echo: true
+#| code-line-numbers: "1-10|3"
+arrow::schema(nyc_taxi)
+#> Schema
+#> vendor_name: string
+#> pickup_datetime: timestamp[ms]
+#> dropoff_datetime: timestamp[ms]
+#> passenger_count: int64
+#> trip_distance: double
+#> pickup_longitude: double
+#> pickup_latitude: double
+#> ...
+```
+
+::: footer
+Arrow | Learn more about registering Arrow [User Defined Functions ("UDFs")](https://arrow.apache.org/docs/r/reference/register_scalar_function.html)
+:::
+
+## Registering UDFs `r hexes("arrow", "dplyr", "stringr", "tidyverse")`
+
+- Next, use `register_scalar_function()`
+- Name your UDF "replace_arrow_nas" and remember to set `auto_convert = TRUE`
+
+```{r}
+#| echo: true
+#| code-line-numbers: "1-13|3-4|3-4,12"
+arrow::register_scalar_function(
+  name = "replace_arrow_nas",
+  # Note: The first argument must always be context
+  function(context, x, replacement) {
+    stringr::str_replace_na(x, replacement)
+  },
+  in_type = schema(
+    x = string(),
+    replacement = string()
+  ),
+  out_type = string(),
+  auto_convert = TRUE
+)
+```
+
+::: notes
+Unless you're developing a package, `auto_convert` should be set to `TRUE`
+:::
+
+::: footer
+Arrow | Learn more about registering Arrow [User Defined Functions ("UDFs")](https://arrow.apache.org/docs/r/reference/register_scalar_function.html)
+:::
+
+## Registering UDFs `r hexes("arrow", "dplyr", "stringr", "tidyverse")`
+
+- Try your new registered function
+
+```{r}
+#| echo: true
+nyc_taxi |> 
+  mutate(vendor_name = replace_arrow_nas(vendor_name, "No vendor")) |> 
+  distinct(vendor_name) |> 
+  arrange(vendor_name) |> 
+  collect()
+#> # A tibble: 3 × 1
+#>   vendor_name
+#>   <chr>      
+#> 1 CMT
+#> 2 No vendor
+#> 3 VTS
+```
+
+::: footer
+Arrow | Learn more about registering Arrow [User Defined Functions ("UDFs")](https://arrow.apache.org/docs/r/reference/register_scalar_function.html)
+:::
+
+---
+
+![](images/pokemon.gif)
+
+::: footer
+Eevee can't believe it... "Wooooooooooow, Javi!"
+:::
+
+## What's next for Arrow? `r hexes("arrow")`
+
+**_ADBC: Arrow Database Connectivity_**
+
+- Competitor to JDBC & ODBC allowing applications to code to this API standard but fetching results in an Arrow format
+
+::: footer
+ADBC (Arrow Database Connectivity) | Learn more at [https://arrow.apache.org/docs/format/ADBC.html](https://arrow.apache.org/docs/format/ADBC.html)
+:::
+
+## What's next for Arrow? `r hexes("arrow")`
+
+**_ADBC: Arrow Database Connectivity_**
+
+![](images/ADBCQuadrants.svg){width=50%}
+
+::: footer
+ADBC (Arrow Database Connectivity) | Learn more at [https://arrow.apache.org/docs/format/ADBC.html](https://arrow.apache.org/docs/format/ADBC.html)
+:::
+
+## What's next for Arrow? `r hexes("arrow")`
+
+**_Arrow Flight SQL_**
+
+- A protocol for interacting with SQL databases using the Arrow in-memory format and the [Flight RPC](https://arrow.apache.org/docs/format/Flight.html) framework
+- Its natural mode is to stream sequences of Arrow "record batches” to reduce or remove the serialization cost associated with data transport
+- The design goal for Flight is to create a new protocol for data services that uses the Arrow columnar format as both the over-the-wire data representation as well as the public API presented to developers
+
+::: footer
+Arrow Flight SQL | Learn more at [https://arrow.apache.org/docs/format/FlightSql.html](https://arrow.apache.org/docs/format/FlightSql.html)
+:::
+
+# 3. DuckDB + duckplyr
+
+::: footer
+duckplyr by DuckDB Labs | Learn more at [https://duckdblabs.com/](https://duckdblabs.com/)
+:::
+
+---
+
+## DuckDB `r hexes_duckdb("duckdb")`
+
+- [DuckDB Labs](https://duckdblabs.com/) created an in-line database management system, like a SQLite database engine, but optimized for distributed compute and optimized for larger-than-memory analysis
+- The `duckdb` package for Python and offers a state-of-the-art optimizer that pushes down filters and projections directly into Arrow scans
+- As a result, only relevant columns and partitions will be read thus significantly accelerates query execution
+
+::: footer
+DuckDB Labs | Learn how [DuckDB quacks Arrow](https://duckdb.org/2021/12/03/duck-arrow.html)
+:::
+
+## DuckDB setup `r hexes_duckdb("duckdb")`
+
+<br><br>
+
+::: columns
+::: {.column width="50%"}
+
+```{r}
+#| eval: false
+#| echo: true
+# R Install
+install.packages("duckdb")
+install.packages("arrow")
+
+# For later use by Python and R:
+arrow::copy_files(
+  from = "s3://ursa-labs-taxi-data", 
+  to = here::here("nyc-taxi")
+)
+```
+:::
+
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+#| echo: true
+# Python Install
+pip install duckdb
+pip install pyarrow
+```
+:::
+:::
+
+::: footer
+DuckDB Labs | Learn how [DuckDB quacks Arrow](https://duckdb.org/2021/12/03/duck-arrow.html)
+:::
+
+## DuckDB Basics `r hexes_duckdb("duckdb")`
+
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| eval: false
+#| echo: true
+library(duckdb)
+library(arrow)
+library(dplyr)
+
+ds <- arrow::open_dataset("nyc-taxi", partitioning = c("year", "month"))
+
+ds |>
+  filter(year > 2014 & passenger_count > 0 & 
+           trip_distance > 0.25 & fare_amount > 0) |>
+  # Pass off to DuckDB
+  to_duckdb() |>
+  group_by(passenger_count) |>
+  mutate(tip_pct = tip_amount / fare_amount) |>
+  summarise(fare_amount = mean(fare_amount, na.rm = TRUE),
+            tip_amount = mean(tip_amount, na.rm = TRUE),
+            tip_pct = mean(tip_pct, na.rm = TRUE)) |>
+  arrange(passenger_count) |>
+  collect()
+```
+
+## Python
+
+```{python}
+#| eval: false
+#| echo: true
+import duckdb
+import pyarrow as pa
+import pyarrow.dataset as ds
+
+# Open dataset using year,month folder partition
+nyc = ds.dataset('nyc-taxi/', partitioning=["year", "month"])
+
+# We transform the nyc dataset into a DuckDB relation
+nyc = duckdb.arrow(nyc)
+
+# Run same query again
+nyc.filter("year > 2014 & passenger_count > 0 & trip_distance > 0.25 & fare_amount > 0")
+    .aggregate("SELECT AVG(fare_amount), AVG(tip_amount), AVG(tip_amount / fare_amount) as tip_pct","passenger_count").arrow()
+```
+
+:::
+
+::: footer
+DuckDB Labs | Learn how [DuckDB quacks Arrow](https://duckdb.org/2021/12/03/duck-arrow.html)
+:::
+
+## DuckDB Streaming `r hexes_duckdb("duckdb")`
+
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| eval: false
+#| echo: true
+# Reads dataset partitioning it in year/month folder
+nyc_dataset = open_dataset("nyc-taxi/", partitioning = c("year", "month"))
+
+# Gets Database Connection
+con <- dbConnect(duckdb::duckdb())
+
+# We can use the same function as before to register our arrow dataset
+duckdb::duckdb_register_arrow(con, "nyc", nyc_dataset)
+
+res <- dbSendQuery(con, "SELECT * FROM nyc", arrow = TRUE)
+
+# DuckDB's queries can now produce a Record Batch Reader
+record_batch_reader <- duckdb::duckdb_fetch_record_batch(res)
+
+# Which means we can stream the whole query per batch.
+# This retrieves the first batch
+cur_batch <- record_batch_reader$read_next_batch()
+```
+
+## Python
+
+```{python}
+#| eval: false
+#| echo: true
+# Reads dataset partitioning it in year/month folder
+nyc_dataset = ds.dataset('nyc-taxi/', partitioning=["year", "month"])
+
+# Gets Database Connection
+con = duckdb.connect()
+
+query = con.execute("SELECT * FROM nyc_dataset")
+
+# DuckDB's queries can now produce a Record Batch Reader
+record_batch_reader = query.fetch_record_batch()
+
+# Which means we can stream the whole query per batch.
+# This retrieves the first batch
+chunk = record_batch_reader.read_next_batch()
+```
+
+:::
+
+::: footer
+DuckDB Labs | Learn how [DuckDB quacks Arrow](https://duckdb.org/2021/12/03/duck-arrow.html)
+:::
+
+## DuckDB Streaming Speed `r hexes_duckdb("duckdb")`
+
+::: {.panel-tabset}
+
+## DuckDB
+
+```{r}
+#| eval: false
+#| echo: true
+# DuckDB via Python
+# Open dataset using year,month folder partition
+nyc = ds.dataset('nyc-taxi/', partitioning=["year", "month"])
+
+# Get database connection
+con = duckdb.connect()
+
+# Run query that selects part of the data
+query = con.execute("SELECT total_amount, passenger_count,year FROM nyc where total_amount > 100 and year > 2014")
+
+# Create Record Batch Reader from Query Result.
+# "fetch_record_batch()" also accepts an extra parameter related to the desired produced chunk size.
+record_batch_reader = query.fetch_record_batch()
+
+# Retrieve all batch chunks
+chunk = record_batch_reader.read_next_batch()
+while len(chunk) > 0:
+    chunk = record_batch_reader.read_next_batch()
+```
+
+## Pandas
+
+```{python}
+#| eval: false
+#| echo: true
+# We must exclude one of the columns of the NYC dataset due to an unimplemented cast in Arrow
+working_columns = ["vendor_id","pickup_at","dropoff_at","passenger_count","trip_distance","pickup_longitude",
+    "pickup_latitude","store_and_fwd_flag","dropoff_longitude","dropoff_latitude","payment_type",
+    "fare_amount","extra","mta_tax","tip_amount","tolls_amount","total_amount","year", "month"]
+
+# Open dataset using year,month folder partition
+nyc_dataset = ds.dataset(dir, partitioning=["year", "month"])
+# Generate a scanner to skip problematic column
+dataset_scanner = nyc_dataset.scanner(columns=working_columns)
+
+# Materialize dataset to an Arrow Table
+nyc_table = dataset_scanner.to_table()
+
+# Generate Dataframe from Arow Table
+nyc_df = nyc_table.to_pandas()
+
+# Apply Filter
+filtered_df = nyc_df[
+    (nyc_df.total_amount > 100) &
+    (nyc_df.year >2014)]
+
+# Apply Projection
+res = filtered_df[["total_amount", "passenger_count","year"]]
+
+# Transform Result back to an Arrow Table
+new_table = pa.Table.from_pandas(res)
+```
+
+:::
+
+::: footer
+DuckDB Labs | Learn how [DuckDB quacks Arrow](https://duckdb.org/2021/12/03/duck-arrow.html)
+:::
+
+## DuckDB Streaming Speed `r hexes_duckdb("duckdb")`
+
+- Pandas runtime was 146.91 seconds
+
+. . .
+
+- DuckDB runtime was [0.05 seconds]{.fragment .highlight-teal}
+
+. . .
+
+![](images/minion.gif){width=60%}
+
+::: footer
+DuckDB Labs | Learn how [DuckDB quacks Arrow](https://duckdb.org/2021/12/03/duck-arrow.html)
+:::
+
+## duckplyr `r hexes_duckdb("duckdb")`
+
+- `duckplyr`, from DuckDB Labs, offers 1:1 compatibility with `dplyr` functions but there are some caveats:
+  - factor columns, nested lists, and nested tibbles are not _yet_ supported
+  - you have to use `.by` in `dplyr::summarize()` as `dplyr::group_by()` will not be supported by the developers
+
+::: footer
+duckplyr | Learn more at [https://duckdblabs.com/](https://duckdblabs.com/)
+:::
+
+## Benchmarking Analysis `r hexes_duckdb("duckdb")`
+
+::: columns
+::: {.column width="43%"}
+- Arrow and DuckDB really stood out for fast manipulation of data using `dplyr` syntax
+:::
+
+::: {.column width="57%"}
+- The code below shows the basic transformation done to the NYC Taxi dataset via `dplyr`, `arrow`, `duckdb`, and `duckplyr`
+:::
+:::
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "1-7|7"
+nyc_taxi |> 
+    dplyr::filter(passenger_count > 1) |> 
+    dplyr::group_by(year) |> 
+    dplyr::summarise(all_trips = n(),
+                     shared_trips = sum(passenger_count, na.rm = T)) |>
+    dplyr::mutate(pct_shared = shared_trips / all_trips * 100) |> 
+    dplyr::collect()
+```
+
+::: footer
+DuckDB Labs | Learn more at [https://duckdblabs.com/](https://duckdblabs.com/)
+:::
+
+## Benchmark: 1 million rows `r hexes_duckdb("duckdb")`
+
+![](images/benchmark_1000000.png)
+
+::: footer
+DuckDB Labs | Learn more at [https://duckdblabs.com/](https://duckdblabs.com/)
+:::
+
+## Benchmark: 10 million rows `r hexes_duckdb("duckdb")`
+
+![](images/benchmark_10000000.png)
+
+::: footer
+DuckDB Labs | Learn more at [https://duckdblabs.com/](https://duckdblabs.com/)
+:::
+
+## Benchmark: 100 million rows `r hexes_duckdb("duckdb")`
+
+![](images/benchmark_100000000.png)
+
+::: footer
+DuckDB Labs | Learn more at [https://duckdblabs.com/](https://duckdblabs.com/)
+:::
+
+## Benchmark: 500 million rows `r hexes_duckdb("duckdb")`
+
+![](images/benchmark_500000000.png)
+
+::: footer
+DuckDB Labs | Learn more at [https://duckdblabs.com/](https://duckdblabs.com/)
+:::
+
+# 4. tidymodels
+
+::: footer
+tidymodels | Learn more at [https://www.tidymodels.org/](https://www.tidymodels.org/)
+:::
+
+## {background-image="images/tm-org.png" background-size="contain"}
+
+::: footer
+tidymodels | Learn more at [https://www.tidymodels.org/](https://www.tidymodels.org/)
+:::
+
+## tidymodels packages `r hexes("tidymodels", "rsample", "parsnip")`
+
+![](images/tidymodels_1.png){width=75%}
+
+::: footer
+tidymodels | Learn more at [https://www.tidymodels.org/](https://www.tidymodels.org/)
+:::
+
+## tidymodels packages `r hexes("recipes", "workflows", "tune")`
+
+![](images/tidymodels_2.png){width=75%}
+
+::: footer
+tidymodels | Learn more at [https://www.tidymodels.org/](https://www.tidymodels.org/)
+:::
+
+## tidymodels packages `r hexes("yardstick", "broom", "dials")`
+
+![](images/tidymodels_3.png){width=75%}
+
+::: footer
+tidymodels | Learn more at [https://www.tidymodels.org/](https://www.tidymodels.org/)
+:::
+
+## usemodels `r hexes("tidymodels")`
+
+- The `usemodels` package generates easy-to-use boilerplate code for modeling
+- `usemodels::use_glmnet()` generates code that eases the setup of using the [glmnet](https://glmnet.stanford.edu/index.html) algorithm, _and others_, within the `tidymodels` framework 
+
+### usemodels input example
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "1-4|4"
+library(usemodels)
+library(palmerpenguins)
+data(penguins)
+use_glmnet(body_mass_g ~ ., data = penguins)
+```
+
+::: footer
+usemodels | Learn more at [https://usemodels.tidymodels.org/](https://usemodels.tidymodels.org/)
+:::
+
+## usemodels output `r hexes("tidymodels")`
+
+```{r}
+#| eval: false
+#| echo: true
+
+glmnet_recipe <- recipe(formula = body_mass_g ~ ., data = penguins) |>
+  step_zv(all_predictors()) |>
+  step_normalize(all_numeric_predictors()) 
+
+glmnet_spec <- multinom_reg(penalty = tune(), mixture = tune()) |>
+  set_mode("classification") |>
+  set_engine("glmnet") 
+
+glmnet_workflow <- workflow() |>
+  add_recipe(glmnet_recipe) |>
+  add_model(glmnet_spec) 
+
+glmnet_grid <- tidyr::crossing(penalty = 10^seq(-6, -1, length.out = 20), 
+                               mixture = c(0.05, 0.2, 0.4, 0.6, 0.8, 1)) 
+
+glmnet_tune <- 
+  tune_grid(glmnet_workflow,
+            resamples = stop("add your rsample object"), 
+            grid = glmnet_grid) 
+```
+
+::: footer
+usemodels | Learn more at [https://usemodels.tidymodels.org/](https://usemodels.tidymodels.org/)
+:::
+
+## usemodels templates `r hexes("tidymodels")`
+
+- `usemodels` isn't new but still in early development
+- the following model templates can be called using one of the `usemodels::use_*()` variants below:
+
+```{r}
+#| eval: false
+#| echo: true
+> ls("package:usemodels", pattern = "use_")
+[1] "use_C5.0"             "use_cubist"           "use_earth"           
+[4] "use_glmnet"           "use_kernlab_svm_poly" "use_kernlab_svm_rbf" 
+[7] "use_kknn"             "use_ranger"           "use_xgboost"         
+```
+
+::: footer
+usemodels | Learn more at [https://usemodels.tidymodels.org/](https://usemodels.tidymodels.org/)
+:::
+
+## Hyperparameter Tuning `r hexes("dials", "tune")`
+
+The main two strategies for optimization are:
+
+. . .
+
+- **Grid search** 💠 which tests a pre-defined set of candidate values
+
+- **Iterative search** 🌀 which suggests/estimates new values of candidate parameters to evaluate
+
+::: footer
+Slide credit | [Posit, Advanced Tidymodels Workshop](https://workshops.tidymodels.org/#advanced-tidymodels)
+:::
+
+## Grid Search `r hexes("tune")`
+
+- In this example, we see a large grid showing all points with our goal being to minimize MAE via learning rate: 
+
+![](images/grid-large-1.png){width=55%}
+
+::: footer
+Slide & illustration credit | [Posit, Advanced Tidymodels Workshop](https://workshops.tidymodels.org/#advanced-tidymodels)
+:::
+
+## Grid Search `r hexes("tune")`
+
+- In reality we would probably sample the space more densely with, for example, a three point grid: 
+
+![](images/grid-large-sampled-1.png){width=55%}
+
+::: footer
+Slide & illustration credit | [Posit, Advanced Tidymodels Workshop](https://workshops.tidymodels.org/#advanced-tidymodels)
+:::
+
+## Iterative Search `r hexes("tune")`
+
+- We could start with a few points and search the space using an iterative approach via the `tune` package:
+
+![](images/tidymodels_animated_gp_fast_600.gif)
+
+::: footer
+Slide & illustration credit | [Posit, Advanced Tidymodels Workshop](https://workshops.tidymodels.org/#advanced-tidymodels)
+:::
+
+## Gaussian Process & Optimization
+
+We can make a “meta-model” with a small set of historical performance results
+
+_Gaussian Processes (GP)_ models are a good choice to model performance
+
+- It is a Bayesian model so we are using _Bayesian Optimization (BO)_
+
+- The GP model can take candidate tuning parameter combinations as inputs and make predictions for performance (e.g. MAE)
+
+::: footer
+Slide credit | [Posit, Advanced Tidymodels Workshop](https://workshops.tidymodels.org/#advanced-tidymodels)
+:::
+
+## Acquisition Functions
+
+We’ll use an acquisition function to select a new candidate
+
+The most popular method appears to be _Expected Improvement (EI)_ above the current best results
+
+- Zero at existing data points.
+- The expected improvement is integrated over all possible improvement (“expected” in the probability sense).
+
+We would probably pick the point with the largest EI as the next point to iterate
+
+::: footer
+Slide credit | [Posit, Advanced Tidymodels Workshop](https://workshops.tidymodels.org/#advanced-tidymodels)
+:::
+
+## Iteration Approach
+
+Once we pick the candidate point, we measure performance for it (e.g. resampling)
+
+Another GP is fit, EI is recomputed, and so on
+
+We stop when we have completed the allowed number of iterations or if we don’t see any improvement after a pre-set number of attempts
+
+::: footer
+Slide credit | [Posit, Advanced Tidymodels Workshop](https://workshops.tidymodels.org/#advanced-tidymodels)
+:::
+
+## Iteration & EI Visualized
+
+![](images/anime_improvement.gif)
+
+::: footer
+Slide & illustration credit | [Posit, Advanced Tidymodels Workshop](https://workshops.tidymodels.org/#advanced-tidymodels)
+:::
+
+## Bayesian Optimization `r hexes("tune")`
+
+- We’ll use a function called `tune_bayes()` that has very similar syntax to `tune_grid()`
+
+- It has an additional `initial` argument for the initial set of performance estimates and parameter combinations for the GP model
+
+- `initial` can be the results of another `tune_*()` function or an integer (in which case `tune_grid()` is used under to hood)
+
+- Max Kuhn suggests at least the # of tuning parameters plus two as the `initial` grid
+
+::: footer
+tune | Learn more about [tune, a tidymodels package](https://tune.tidymodels.org/index.html)
+:::
+
+## Initial Grid with tune_grid() `r hexes("tune")`
+
+```{r}
+#| eval: false
+#| echo: true
+reg_metrics <- metric_set(mae, rsq)
+
+set.seed(12)
+init_res <-
+  lgbm_wflow %>%
+  tune_grid(
+    resamples = hotel_rs,
+    grid = nrow(lgbm_param) + 2, # lgbm_param <- workflow() |> extract_parameter_set_dials()
+    param_info = lgbm_param,
+    metrics = reg_metrics
+  )
+
+show_best(init_res, metric = "mae")
+#> # A tibble: 5 × 11
+#>   trees min_n   learn_rate `agent hash` `company hash` .metric .estimator  mean     n std_err .config             
+#>   <int> <int>        <dbl>        <int>          <int> <chr>   <chr>      <dbl> <int>   <dbl> <chr>               
+#> 1   390    10 0.0139                 13             62 mae     standard    11.3    10   0.202 Preprocessor1_Model1
+#> 2   718    31 0.00112                72             25 mae     standard    29.0    10   0.335 Preprocessor4_Model1
+#> 3  1236    22 0.0000261              11             17 mae     standard    51.8    10   0.416 Preprocessor7_Model1
+#> 4  1044    25 0.00000832             34             12 mae     standard    52.8    10   0.424 Preprocessor5_Model1
+#> 5  1599     7 0.0000000402          254            179 mae     standard    53.2    10   0.427 Preprocessor6_Model1
+```
+
+::: footer
+tune | Learn more about [tune, a tidymodels package](https://tune.tidymodels.org/index.html)
+:::
+
+## BO with tune_bayes() `r hexes("tune")`
+
+```{r} 
+#| eval: false
+#| echo: true
+#| code-line-numbers: "4,6-8|"
+
+set.seed(15)
+lgbm_bayes_res <-
+  lgbm_wflow %>%
+  tune_bayes(
+    resamples = hotel_rs,
+    initial = init_res,     # <- initial results
+    iter = 20,
+    param_info = lgbm_param, # lgbm_param <- workflow() |> extract_parameter_set_dials()
+    metrics = reg_metrics
+  )
+
+show_best(lgbm_bayes_res, metric = "mae")
+#> # A tibble: 5 × 12
+#>   trees min_n learn_rate `agent hash` `company hash` .metric .estimator  mean     n std_err .config .iter
+#>   <int> <int>      <dbl>        <int>          <int> <chr>   <chr>      <dbl> <int>   <dbl> <chr>   <int>
+#> 1  1769     2     0.0299          114            245 mae     standard    9.41    10   0.160 Iter13     13
+#> 2  1969     3     0.0270          240             99 mae     standard    9.49    10   0.189 Iter11     11
+#> 3  1780     5     0.0403           27             78 mae     standard    9.54    10   0.164 Iter17     17
+#> 4  1454     3     0.0414          114             10 mae     standard    9.55    10   0.144 Iter10     10
+#> 5  1253     2     0.0312          131            207 mae     standard    9.56    10   0.145 Iter19     19
+```
+
+::: footer
+tune | Learn more about [tune, a tidymodels package](https://tune.tidymodels.org/index.html)
+:::
+
+## Plotting BO Results `r hexes("ggplot2", "tune")`
+
+```{r} 
+#| eval: false
+#| echo: true
+autoplot(lgbm_bayes_res, metric = "mae")
+```
+
+![](images/bo_results.png)
+
+::: footer
+tune | Learn more about [tune, a tidymodels package](https://tune.tidymodels.org/index.html)
+:::
+
+## Plotting BO Results `r hexes("ggplot2", "tune")`
+
+```{r} 
+#| eval: false
+#| echo: true
+autoplot(lgbm_bayes_res, metric = "mae", type = "parameters")
+```
+
+![](images/bo_results_parameters.png)
+
+::: footer
+tune | Learn more about [tune, a tidymodels package](https://tune.tidymodels.org/index.html)
+:::
+
+# 5. Other Highlights
+
+---
+
+## Other Highlights
+
+- [WebR](https://docs.r-wasm.org/webr/latest/): R in the web
+- [shinylive](https://posit-dev.github.io/r-shinylive/): serverless Shiny via WebR
+  - Excellent [tutorial](https://github.com/RamiKrispin/shinylive-r) by Rami Krispin
+  - Rami's [shinylive example](https://ramikrispin.github.io/shinylive-r/) on GitHub Pages
+- [epoxy](https://pkg.garrickadenbuie.com/epoxy/index.html): extra-strength {glue} for scripts, reports, and apps
+- [agua](https://agua.tidymodels.org/): tidymodels extension to fit, optimize, model via H2O
+- [R for Data Science 2e](https://r4ds.hadley.nz/): new _Import_ set of chapters
+- [R Packages 2e](https://r-pkgs.org/whole-game.html): new _The Whole Game_ chapter for devs
+
+::: footer
+posit::conf(2023) | [Watch keynote presentations and review talk materials](https://posit.co/blog/keynotes-and-talks-at-posit-conf-2023/)
+:::

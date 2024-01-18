@@ -1,0 +1,17 @@
+```markdown
+# 1. Open Arrow connection to dataset (40 GB)
+nyc_taxi <- open_dataset(here::here("data/nyc-taxi"))
+
+# 2. Benchmark dplyr pipeline
+bnch <- bench::mark(
+  min_iterations = 10,
+  arrow = nyc_taxi |> 
+    dplyr::group_by(year) |> 
+    dplyr::summarise(all_trips = n(),
+                     shared_trips = sum(passenger_count > 1, na.rm = T)) |>
+    dplyr::mutate(pct_shared = shared_trips / all_trips * 100) |> 
+    dplyr::collect()
+)
+
+autoplot(bnch)
+```

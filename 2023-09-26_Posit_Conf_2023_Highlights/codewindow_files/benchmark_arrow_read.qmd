@@ -1,0 +1,23 @@
+```markdown
+# 0. Load Libraries to Download & Benchmark Data
+library(here)
+library(arrow)
+library(dplyr)
+library(ggplot2)
+library(bench)
+
+# 1. NYC Taxi Data download (40 GB)
+data_path <- here::here("data/nyc-taxi")
+
+open_dataset("s3://voltrondata-labs-datasets/nyc-taxi") |>
+  filter(year %in% 2012:2021) |> 
+  write_dataset(data_path, partitioning = c("year", "month"))
+
+# 2. Benchmark Read Times
+bnch <- bench::mark(
+  min_iterations = 1000,
+  arrow = open_dataset(here::here("data/nyc-taxi"))
+)
+
+autoplot(bnch)
+```

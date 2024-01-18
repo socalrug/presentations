@@ -1,0 +1,113 @@
+/*-- scss:defaults --*/
+
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,500;1,500&display=swap');
+
+// custom colors set to Sass variables
+$custom-charcoal: #1A162D;
+$custom-teal: #50847B;
+$custom-blue: #76AADB;
+$custom-dark-blue: #1A4064;
+
+// fonts
+$font-family-sans-serif: 'Jost', sans-serif;
+$font-family-serif: 'Zilla Slab', serif;
+
+// setting the colors to content elements
+$body-bg: white;
+$body-color: $custom-charcoal;
+$link-color: $custom-teal;
+$code-color: $custom-teal;
+
+// headings
+$presentation-heading-font: 'DM Sans', sans-serif;
+$presentation-heading-color: $custom-charcoal;
+
+/*-- scss:rules --*/
+
+h1, .quarto-title-authors {
+  color: $custom-dark-blue !important;
+}
+
+.reveal h1 {
+  font-size: 8rem;
+}
+
+h2, h3 {
+  color: $custom-blue !important;
+}
+
+.reveal p {
+  margin-bottom: 20px;
+}
+
+.r-fit-text {
+  color: $custom-blue !important;
+  top: 50% !important;
+}
+
+code, .reveal code {
+  font-size: 85%;
+  background-color: #f6f6f6 !important;
+}
+
+.countdown .countdown-time {
+  background-color: white !important;
+}
+
+.codewindow .header .file,
+.codewindow .textarea {
+  background-color: #f6f6f6 !important;
+}
+
+summary {
+  color: #6a737b !important;
+  font-size: 1.2rem;
+  font-weight: 200;
+}
+
+.annotation-link {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  font-size: 75px;
+}
+
+.reveal .column-output-location .column:first-of-type div.sourceCode {
+  height: unset !important;
+}
+
+// underline link text
+.reveal a {
+  text-decoration: underline;
+}
+
+// fragment highlight colors
+.reveal .slides section {
+  .fragment.highlight-blue,
+  .fragment.highlight-teal {
+    opacity: 1;
+    visibility: inherit
+  }
+
+  .fragment.highlight-teal.visible {
+    background-color: $custom-teal;
+    color: white;
+    border-radius: 10px;
+    padding: 2px
+  }
+  .fragment.highlight-blue.visible {
+    background-color: rgba($custom-blue, 0.2);
+    color: $custom-charcoal;
+    border-radius: 15px;
+    padding: 10px;
+  }
+}
+
+.reveal .slide figure>figcaption, 
+.reveal .slide img.stretch+p.caption, 
+.reveal .slide img.r-stretch+p.caption {
+  font-size: 0.3em;
+  text-align: center;
+}
