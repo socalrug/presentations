@@ -5,7 +5,15 @@ Presentation materials from our monthly meetings
 ---
 
 ## 2023 ##
+* 09/26/2023 *Emil Hvitfeldt* and *Javier Orraca-Deatcu* [Highlights and Learnings from posit::conf(2023)](https://github.com/socalrug/presentations/tree/master/2023-09-26_Posit_Conf_2023_Highlights)
+
 * 08/15/2023 *Sep Dadsetan* [Version Control, {renv}, and Reproducibility](https://github.com/socalrug/presentations/tree/master/2023-08-15_Version_Control_renv_and_Reproducibility)
+
+* 07/18/2023 *Chelsea Parlett-Pelleriti* [Building Shiny for Python apps for Data Science](https://github.com/socalrug/presentations/tree/master/2023-07-18_Shiny_for_Python)
+
+* 06/27/2023 [2023 SoCal RUG Hackathon Winners Presentations](https://github.com/socalrug/presentations/tree/master/2023-06-27_2023_Hackathon_Winners)
+
+* 05/16/2023 *Luke Morris* [Reducing Emergency Department Overutilization by Broadening Homelessness Services](https://github.com/socalrug/presentations/tree/master/2023-05-16_Reducing_ER_Overutilization)
 
 * 04/18/2023 *Gabor Szabo* [Intro to {sherlock}: an R Package for Problem Diagnosis](https://github.com/socalrug/presentations/tree/master/2023-04-18_Intro_to_Sherlock)
 
