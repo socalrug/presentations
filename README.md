@@ -4,6 +4,11 @@ Presentation materials from our monthly meetings
 
 ---
 
+## 2024 ##
+* 02/15/2024 *TBD*
+
+* 01/18/2024 *Beau Walker* [Intellectual Property Protections for Data Scientists](https://www.meetup.com/socal-rug/events/298019037)
+
 ## 2023 ##
 * 09/26/2023 *Emil Hvitfeldt* and *Javier Orraca-Deatcu* [Highlights and Learnings from posit::conf(2023)](https://github.com/socalrug/presentations/tree/master/2023-09-26_Posit_Conf_2023_Highlights)
 
