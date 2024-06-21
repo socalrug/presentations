@@ -5,7 +5,15 @@ Presentation materials from our monthly meetings
 ---
 
 ## 2024 ##
-* 02/15/2024 *TBD*
+* 06/20/2024 *Daniel Chu, PhD MPH* [Automating and Simplifying ML Workflows at Scale with {targets}](https://www.meetup.com/socal-rug/events/301573794/)
+
+* 05/23/2024 *Kaija Gahm* [Free-Ranging Griffon Vultures: Movement, Social Network, and {targets}](https://www.meetup.com/socal-rug/events/300876592/)
+
+* 04/18/2024 *Quinn Gates* [Research Computational Data Science at CHOC](https://www.meetup.com/socal-rug/events/300437693/)
+
+* 03/21/2024 *Travis Gerke, ScD* [G-Thangs: Causal Inference with R](https://www.meetup.com/socal-rug/events/299308290/)
+
+* 02/15/2024 *Various Posit Conf Presenters* [What's New in Quarto & Lightning Talks](https://www.meetup.com/socal-rug/events/299006489/)
 
 * 01/18/2024 *Beau Walker* [Intellectual Property Protections for Data Scientists](https://www.meetup.com/socal-rug/events/298019037)
 
